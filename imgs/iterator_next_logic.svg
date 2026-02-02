@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="420" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+    </marker>
+  </defs>
+
+  <rect width="600" height="420" fill="#f8f9fa" rx="16" stroke="#e0e0e0" stroke-width="1" />
+  <text x="300" y="35" font-family="JetBrains Mono, monospace" font-size="18" fill="#333" text-anchor="middle" font-weight="bold">迭代器状态机：内存布局与状态转移</text>
+
+  <!-- Stack 区域 -->
+  <g transform="translate(30, 70)">
+    <rect width="180" height="240" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="8" />
+    <text x="90" y="-10" font-family="JetBrains Mono, monospace" font-size="14" fill="#1976d2" text-anchor="middle" font-weight="bold">Stack (栈)</text>
+    
+    <!-- Iterator 结构体 -->
+    <g transform="translate(15, 30)">
+      <rect width="150" height="180" fill="#fff" stroke="#2196f3" rx="4" />
+      <text x="75" y="25" font-family="JetBrains Mono, monospace" font-size="12" fill="#1976d2" text-anchor="middle" font-weight="bold">Iter&lt;T&gt; Struct</text>
+      
+      <!-- ptr 字段 -->
+      <g transform="translate(10, 50)">
+        <rect width="130" height="50" fill="#fff8e1" stroke="#ff9800" rx="4" />
+        <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#e65100">ptr (current)</text>
+        <text x="65" y="42" font-family="JetBrains Mono, monospace" font-size="13" fill="#e65100" text-anchor="middle" font-weight="bold">
+          <tspan>0x1001<animate attributeName="display" values="inline;none;none;none;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+          <tspan>0x1002<animate attributeName="display" values="none;inline;none;none;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+          <tspan>0x1003<animate attributeName="display" values="none;none;inline;none;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+          <tspan>0x1004<animate attributeName="display" values="none;none;none;inline;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+          <tspan>0x1005<animate attributeName="display" values="none;none;none;none;inline" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+        </text>
+      </g>
+      
+      <!-- end 字段 -->
+      <g transform="translate(10, 110)">
+        <rect width="130" height="50" fill="#f5f5f5" stroke="#9e9e9e" rx="4" />
+        <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#616161">end (boundary)</text>
+        <text x="65" y="42" font-family="JetBrains Mono, monospace" font-size="13" fill="#616161" text-anchor="middle" font-weight="bold">0x1005</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Heap/Data 区域 -->
+  <g transform="translate(250, 70)">
+    <rect width="320" height="150" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" rx="8" />
+    <text x="160" y="-10" font-family="JetBrains Mono, monospace" font-size="14" fill="#2e7d32" text-anchor="middle" font-weight="bold">Heap/Data (底层数据)</text>
+    
+    <!-- 数组元素 (间距 60) -->
+    <g transform="translate(20, 40)">
+      <g>
+        <rect width="50" height="70" fill="#fff" stroke="#4caf50" rx="4" />
+        <text x="25" y="35" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">A</text>
+        <text x="25" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c" text-anchor="middle">0x1001</text>
+      </g>
+      <g transform="translate(60, 0)">
+        <rect width="50" height="70" fill="#fff" stroke="#4caf50" rx="4" />
+        <text x="25" y="35" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">B</text>
+        <text x="25" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c" text-anchor="middle">0x1002</text>
+      </g>
+      <g transform="translate(120, 0)">
+        <rect width="50" height="70" fill="#fff" stroke="#4caf50" rx="4" />
+        <text x="25" y="35" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">C</text>
+        <text x="25" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c" text-anchor="middle">0x1003</text>
+      </g>
+      <g transform="translate(180, 0)">
+        <rect width="50" height="70" fill="#fff" stroke="#4caf50" rx="4" />
+        <text x="25" y="35" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">D</text>
+        <text x="25" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c" text-anchor="middle">0x1004</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- 动态指针箭头 -->
+  <!-- 调整后的起始位置：
+       Heap 起点 250 + 元素内偏移 20 = 270 (A 框左侧边缘)
+       箭头长度 70, 故 Base 位于 200, Tip 位于 270
+  -->
+  <g transform="translate(200, 145)">
+    <path d="M 0 0 L 70 0" fill="none" stroke="#ff9800" stroke-width="3" marker-end="url(#arrowhead)">
+      <animateTransform attributeName="transform" type="translate" 
+        values="0,0; 60,0; 120,0; 180,0; 180,0" 
+        dur="7.5s" repeatCount="indefinite" calcMode="discrete" />
+      <animate attributeName="display" values="inline;inline;inline;inline;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" />
+    </path>
+    <text x="35" y="-10" font-family="JetBrains Mono" font-size="11" fill="#e65100" text-anchor="middle" font-weight="bold">
+      deref
+      <animateTransform attributeName="transform" type="translate" 
+        values="0,0; 60,0; 120,0; 180,0; 180,0" 
+        dur="7.5s" repeatCount="indefinite" calcMode="discrete" />
+      <animate attributeName="display" values="inline;inline;inline;inline;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" />
+    </text>
+  </g>
+
+  <!-- 返回结果框 -->
+  <g transform="translate(410, 280)">
+    <rect x="-100" y="0" width="200" height="50" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="25" />
+    <text y="32" font-family="JetBrains Mono, monospace" font-size="16" fill="#7b1fa2" text-anchor="middle" font-weight="bold">
+      <tspan>Some(&amp;A)<animate attributeName="display" values="inline;none;none;none;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+      <tspan>Some(&amp;B)<animate attributeName="display" values="none;inline;none;none;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+      <tspan>Some(&amp;C)<animate attributeName="display" values="none;none;inline;none;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+      <tspan>Some(&amp;D)<animate attributeName="display" values="none;none;none;inline;none" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+      <tspan>None<animate attributeName="display" values="none;none;none;none;inline" dur="7.5s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+    </text>
+    <text x="0" y="-15" font-family="JetBrains Mono" font-size="12" fill="#7b1fa2" text-anchor="middle">next() Output</text>
+  </g>
+
+  <text x="300" y="410" font-family="JetBrains Mono, monospace" font-size="12" fill="#90a4ae" text-anchor="middle">结构体 ptr 字段存储堆内存地址，通过解引用 (Deref) 访问数据</text>
+</svg>

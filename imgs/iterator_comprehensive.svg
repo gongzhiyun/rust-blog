@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="720" viewBox="0 0 800 720" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+<feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+<feOffset dx="1" dy="1" result="offsetblur" />
+<feComponentTransfer><feFuncA type="linear" slope="0.1" /></feComponentTransfer>
+<feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+</filter>
+<marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#2196f3" />
+</marker>
+</defs>
+<rect width="800" height="720" fill="#fcfcfc" rx="12" stroke="#eee" stroke-width="1" />
+<text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="20" fill="#333" text-anchor="middle" font-weight="bold">迭代器深度透视：逻辑流转与字段级内存布局</text>
+<g transform="translate(50, 60)">
+<rect width="700" height="110" fill="#fff" stroke="#cfd8dc" stroke-width="1" rx="8" stroke-dasharray="4,4" />
+<text x="15" y="22" font-family="JetBrains Mono" font-size="14" fill="#546e7a" font-weight="bold">1. 逻辑流水线 (Logical Pipeline)</text>
+<g transform="translate(40, 60)">
+<circle cx="0" cy="0" r="20" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" />
+<text x="0" y="38" font-family="JetBrains Mono" font-size="10" fill="#0d47a1" text-anchor="middle">Source</text>
+<g transform="translate(180, 0)">
+<rect x="-35" y="-18" width="70" height="36" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="4" />
+<text x="0" y="5" font-family="JetBrains Mono" font-size="10" fill="#e65100" text-anchor="middle">filter</text>
+</g>
+<g transform="translate(360, 0)">
+<rect x="-35" y="-18" width="70" height="36" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="4" />
+<text x="0" y="5" font-family="JetBrains Mono" font-size="10" fill="#4a148c" text-anchor="middle">map</text>
+</g>
+<g transform="translate(580, 0)">
+<circle cx="0" cy="0" r="25" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" />
+<text x="0" y="5" font-family="JetBrains Mono" font-size="11" fill="#1b5e20" text-anchor="middle" font-weight="bold">sum</text>
+</g>
+<line x1="20" y1="0" x2="145" y2="0" stroke="#cfd8dc" stroke-width="1.5" />
+<line x1="215" y1="0" x2="325" y2="0" stroke="#cfd8dc" stroke-width="1.5" />
+<line x1="395" y1="0" x2="555" y2="0" stroke="#cfd8dc" stroke-width="1.5" />
+<circle r="4" fill="#ef5350">
+<animateMotion dur="2s" repeatCount="indefinite" path="M 555 0 L 20 0" />
+<animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
+</circle>
+<rect width="8" height="8" fill="#2196f3" rx="2">
+<animateMotion dur="2s" repeatCount="indefinite" path="M 20 0 L 555 0" begin="0.2s" />
+<animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.2s" />
+</rect>
+</g>
+</g>
+<g transform="translate(50, 190)">
+<rect width="700" height="500" fill="#fff" stroke="#cfd8dc" stroke-width="1" rx="8" stroke-dasharray="4,4" />
+<text x="15" y="25" font-family="JetBrains Mono" font-size="14" fill="#546e7a" font-weight="bold">2. 字段级内存布局 (Field-level Stack Layout)</text>
+<g transform="translate(60, 60)">
+<line x1="-5" y1="0" x2="-5" y2="320" stroke="#cfd8dc" stroke-width="1" />
+<text x="-45" y="15" font-family="JetBrains Mono" font-size="10" fill="#b0bec5">0x00</text>
+<text x="-45" y="315" font-family="JetBrains Mono" font-size="10" fill="#b0bec5">0x28</text>
+<g transform="translate(10, 0)">
+<g>
+<rect width="280" height="40" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" rx="2" />
+<text x="140" y="25" font-family="JetBrains Mono" font-size="11" fill="#1b5e20" text-anchor="middle">acc: i32 (+padding)</text>
+<text x="290" y="25" font-family="JetBrains Mono" font-size="10" fill="#78909c">Sum (结果累加器)</text>
+</g>
+<g transform="translate(0, 40)">
+<rect width="280" height="80" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="2" />
+<text x="140" y="35" font-family="JetBrains Mono" font-size="11" fill="#4a148c" text-anchor="middle">transform: |x| x * 2</text>
+<text x="140" y="60" font-family="JetBrains Mono" font-size="9" fill="#7b1fa2" text-anchor="middle" font-style="italic">(Map 变换闭包)</text>
+<text x="290" y="45" font-family="JetBrains Mono" font-size="10" fill="#78909c">Map 字段</text>
+</g>
+<g transform="translate(0, 120)">
+<rect width="280" height="80" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="2" />
+<text x="140" y="35" font-family="JetBrains Mono" font-size="11" fill="#e65100" text-anchor="middle">predicate: |x| *x > 0</text>
+<text x="140" y="60" font-family="JetBrains Mono" font-size="9" fill="#ef6c00" text-anchor="middle" font-style="italic">(Filter 过滤闭包)</text>
+<text x="290" y="45" font-family="JetBrains Mono" font-size="10" fill="#78909c">Filter 字段</text>
+</g>
+<g transform="translate(0, 200)" id="veciter_fields">
+<rect width="280" height="120" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="2" />
+<g transform="translate(10, 20)">
+<rect width="260" height="40" fill="#fff" stroke="#2196f3" stroke-width="1" />
+<text x="130" y="25" font-family="JetBrains Mono" font-size="10" fill="#0d47a1" text-anchor="middle">ptr: *const i32</text>
+<rect y="50" width="260" height="40" fill="#fff" stroke="#2196f3" stroke-width="1" />
+<text x="130" y="75" font-family="JetBrains Mono" font-size="10" fill="#0d47a1" text-anchor="middle">end: *const i32</text>
+</g>
+<text x="290" y="65" font-family="JetBrains Mono" font-size="10" fill="#78909c">VecIter (数据源指针)</text>
+</g>
+<path d="M -15 0 L -25 0 L -25 320 L -15 320" fill="none" stroke="#546e7a" stroke-width="1.5" />
+<text x="-35" y="165" font-family="JetBrains Mono" font-size="12" fill="#546e7a" text-anchor="middle" transform="rotate(-90 -35 165)" font-weight="bold">整体是一个嵌套结构体</text>
+</g>
+</g>
+<g transform="translate(500, 100)">
+<text x="0" y="-10" font-family="JetBrains Mono" font-size="12" fill="#455a64" font-weight="bold">Heap (堆内存)</text>
+<rect width="180" height="100" fill="#fafafa" stroke="#90a4ae" stroke-width="2" rx="4" />
+<g transform="translate(15, 15)">
+<rect width="150" height="70" fill="#e3f2fd" stroke="#2196f3" stroke-width="1" />
+<line x1="0" y1="35" x2="150" y2="35" stroke="#2196f3" stroke-width="0.5" />
+<line x1="50" y1="0" x2="50" y2="70" stroke="#2196f3" stroke-width="0.5" />
+<line x1="100" y1="0" x2="100" y2="70" stroke="#2196f3" stroke-width="0.5" />
+<text x="25" y="22" font-family="JetBrains Mono" font-size="10" fill="#0d47a1" text-anchor="middle">10</text>
+<text x="75" y="22" font-family="JetBrains Mono" font-size="10" fill="#0d47a1" text-anchor="middle">-5</text>
+<text x="75" y="55" font-family="JetBrains Mono" font-size="9" fill="#1976d2" text-anchor="middle">data: [i32; N]</text>
+</g>
+</g>
+<path d="M 140 285 Q 350 300 510 160" fill="none" stroke="#2196f3" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowBlue)">
+<animate attributeName="stroke-dashoffset" from="10" to="0" dur="0.5s" repeatCount="indefinite" />
+</path>
+<g transform="translate(480, 360)">
+<rect width="200" height="110" fill="#fffde7" rx="6" stroke="#fbc02d" stroke-width="1" filter="url(#shadow)" />
+<text x="100" y="25" font-family="JetBrains Mono" font-size="11" fill="#f57f17" text-anchor="middle" font-weight="bold">零成本抽象 (Zero-Cost)</text>
+<text x="15" y="50" font-family="JetBrains Mono" font-size="9" fill="#f57f17">1. 闭包直接嵌入结构体字段</text>
+<text x="15" y="70" font-family="JetBrains Mono" font-size="9" fill="#f57f17">2. 栈上连续内存，无堆分配</text>
+<text x="15" y="90" font-family="JetBrains Mono" font-size="9" fill="#f57f17">3. 静态分发，支持内联优化</text>
+</g>
+</g>
+</svg>

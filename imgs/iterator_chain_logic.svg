@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="420" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <feOffset dx="2" dy="2" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.2" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <marker id="arrowHead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#607d8b" />
+    </marker>
+  </defs>
+
+  <rect width="600" height="420" fill="#f8f9fa" rx="12" />
+  <text x="300" y="35" font-family="JetBrains Mono, monospace" font-size="18" fill="#333" text-anchor="middle" font-weight="bold">迭代器层级模型：包装器与驱动源</text>
+
+  <!-- 1. 编译期：类型嵌套结构 (The Onion Model) -->
+  <g transform="translate(50, 60)">
+    <text x="0" y="0" font-family="JetBrains Mono" font-size="14" fill="#546e7a" font-weight="bold">1. 编译期：类型包装 (Type Nesting)</text>
+    
+    <!-- Sum (Outer) -->
+    <rect x="20" y="20" width="500" height="120" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" rx="8" filter="url(#shadow)" />
+    <text x="35" y="45" font-family="JetBrains Mono" font-size="12" fill="#1b5e20" font-weight="bold">Sum &lt;...&gt; (Consumer)</text>
+
+    <!-- Map (Middle) -->
+    <rect x="100" y="55" width="400" height="70" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="6" stroke-dasharray="4,2" />
+    <text x="115" y="75" font-family="JetBrains Mono" font-size="11" fill="#4a148c">Map &lt;...&gt; (Adapter)</text>
+
+    <!-- Filter (Inner) -->
+    <rect x="180" y="85" width="300" height="30" fill="#fff3e0" stroke="#ff9800" stroke-width="2" rx="4" stroke-dasharray="4,2" />
+    <text x="195" y="105" font-family="JetBrains Mono" font-size="11" fill="#e65100">Filter &lt;Iter&gt; (Adapter)</text>
+    
+    <text x="530" y="85" font-family="JetBrains Mono" font-size="10" fill="#78909c" transform="rotate(90, 530, 85)">逐层包装</text>
+  </g>
+
+  <!-- 2. 运行时：执行流转 (The Execution Wave) -->
+  <g transform="translate(50, 240)">
+    <text x="0" y="0" font-family="JetBrains Mono" font-size="14" fill="#546e7a" font-weight="bold">2. 运行时：执行驱动 (Execution Drive)</text>
+    
+    <!-- 背景轴 -->
+    <line x1="50" y1="60" x2="500" y2="60" stroke="#e0e0e0" stroke-width="4" stroke-linecap="round" />
+    
+    <!-- 节点 -->
+    <circle cx="80" cy="60" r="12" fill="#2196f3" stroke="#fff" stroke-width="2" />
+    <text x="80" y="90" font-family="JetBrains Mono" font-size="11" fill="#0d47a1" text-anchor="middle">Source</text>
+    
+    <circle cx="230" cy="60" r="10" fill="#9c27b0" stroke="#fff" stroke-width="2" />
+    <text x="230" y="90" font-family="JetBrains Mono" font-size="11" fill="#4a148c" text-anchor="middle">Filter</text>
+    
+    <circle cx="380" cy="60" r="10" fill="#9c27b0" stroke="#fff" stroke-width="2" />
+    <text x="380" y="90" font-family="JetBrains Mono" font-size="11" fill="#4a148c" text-anchor="middle">Map</text>
+    
+    <circle cx="500" cy="60" r="15" fill="#4caf50" stroke="#fff" stroke-width="2" />
+    <text x="500" y="90" font-family="JetBrains Mono" font-size="11" fill="#1b5e20" text-anchor="middle">Sum</text>
+
+    <!-- 动画：驱动信号 (Pull) -->
+    <circle r="4" fill="#ef5350">
+      <animateMotion dur="2s" repeatCount="indefinite" path="M 500 60 L 80 60" keyTimes="0;0.5;1" keyPoints="0;1;1" calcMode="linear" />
+      <animate attributeName="opacity" values="1;1;0" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <text x="290" y="45" font-family="JetBrains Mono" font-size="10" fill="#ef5350" text-anchor="middle" font-weight="bold">1. 信号拉取 (next)</text>
+
+    <!-- 动画：数据流 (Push) -->
+    <rect width="10" height="10" fill="#2196f3" rx="2">
+      <animateMotion dur="2s" repeatCount="indefinite" path="M 80 60 L 500 60" keyTimes="0;0.5;1" keyPoints="0;0;1" calcMode="linear" />
+      <animate attributeName="opacity" values="0;1;1" dur="2s" repeatCount="indefinite" />
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1s" repeatCount="indefinite" />
+    </rect>
+    <text x="290" y="80" font-family="JetBrains Mono" font-size="10" fill="#1976d2" text-anchor="middle" font-weight="bold">2. 数据回传 (Some)</text>
+  </g>
+
+  <!-- 核心对比 -->
+  <g transform="translate(50, 360)">
+    <rect width="500" height="40" fill="#fffde7" stroke="#fbc02d" stroke-width="1" rx="4" />
+    <text x="250" y="25" font-family="JetBrains Mono" font-size="12" fill="#f57f17" text-anchor="middle">
+      <tspan font-weight="bold">本质区别：</tspan>适配器是<tspan font-weight="bold">装饰者</tspan>(装饰类型)，消费者是<tspan font-weight="bold">驱动泵</tspan>(触发循环)
+    </text>
+  </g>
+</svg>

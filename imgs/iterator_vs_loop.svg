@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="340" viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#ef5350" />
+    </marker>
+  </defs>
+  <rect width="600" height="340" fill="#f8f9fa" rx="16" stroke="#e0e0e0" stroke-width="1" />
+  
+  <!-- 手动循环部分 -->
+  <g transform="translate(40, 60)">
+    <text x="110" y="-25" font-family="JetBrains Mono, monospace" font-size="14" fill="#c62828" text-anchor="middle" font-weight="bold">命令式索引：运行时边界风险</text>
+    <rect width="220" height="220" fill="#ffebee" stroke="#ef5350" stroke-width="1" rx="8" stroke-dasharray="4,4" />
+    
+    <!-- 数据方框 -->
+    <g transform="translate(25, 45)">
+      <rect id="box0" x="0" y="0" width="40" height="40" fill="#fff" stroke="#ef5350" rx="4" />
+      <rect x="45" y="0" width="40" height="40" fill="#fff" stroke="#ef5350" rx="4" />
+      <rect x="90" y="0" width="40" height="40" fill="#fff" stroke="#ef5350" rx="4" />
+      <rect x="135" y="0" width="40" height="40" fill="#ef5350" opacity="0.1" stroke="#ef5350" rx="4" stroke-dasharray="2,2" />
+      
+      <text x="20" y="25" font-family="JetBrains Mono" font-size="12" text-anchor="middle" fill="#333">0</text>
+      <text x="65" y="25" font-family="JetBrains Mono" font-size="12" text-anchor="middle" fill="#333">1</text>
+      <text x="110" y="25" font-family="JetBrains Mono" font-size="12" text-anchor="middle" fill="#333">2</text>
+      <text x="155" y="25" font-family="JetBrains Mono" font-size="12" text-anchor="middle" fill="#ef5350" font-weight="bold">3</text>
+    </g>
+    
+    <!-- 红色指针 -->
+    <g transform="translate(45, 40)">
+      <path d="M 0 65 L 0 15" stroke="#ef5350" stroke-width="3" fill="none" marker-end="url(#arrowRed)">
+        <animateTransform attributeName="transform" type="translate" values="0,0; 45,0; 90,0; 135,0" dur="4s" repeatCount="indefinite" calcMode="discrete" />
+      </path>
+      
+      <!-- 崩溃提示动画 -->
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0,0; 45,0; 90,0; 135,0" dur="4s" repeatCount="indefinite" calcMode="discrete" />
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;0;1" dur="4s" repeatCount="indefinite" calcMode="discrete" />
+          <circle cx="0" cy="15" r="25" fill="#f44336" opacity="0.4" filter="url(#glow)" />
+          <text x="0" y="-15" font-family="JetBrains Mono" font-size="14" fill="#c62828" text-anchor="middle" font-weight="bold">Panic: OOB!</text>
+          <text x="0" y="5" font-family="JetBrains Mono" font-size="10" fill="#c62828" text-anchor="middle">Index 3 Out of Bounds</text>
+        </g>
+      </g>
+    </g>
+
+    <g transform="translate(35, 125)">
+      <text x="0" y="20" font-family="JetBrains Mono" font-size="13" fill="#c62828" font-weight="bold">Index i = </text>
+      <rect x="65" y="0" width="40" height="30" fill="#fff" stroke="#ef5350" rx="4" />
+      <text x="85" y="20" font-family="JetBrains Mono" font-size="16" fill="#c62828" font-weight="bold" text-anchor="middle">
+        <tspan>0<animate attributeName="display" values="inline;none;none;none" dur="4s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+        <tspan>1<animate attributeName="display" values="none;inline;none;none" dur="4s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+        <tspan>2<animate attributeName="display" values="none;none;inline;none" dur="4s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+        <tspan>3<animate attributeName="display" values="none;none;none;inline" dur="4s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+      </text>
+      <text x="75" y="55" font-family="JetBrains Mono" font-size="11" fill="#78909c" text-anchor="middle">逻辑风险：依赖手动边界检查</text>
+    </g>
+  </g>
+  
+  <!-- 迭代器部分 -->
+  <g transform="translate(340, 60)">
+    <text x="110" y="-25" font-family="JetBrains Mono, monospace" font-size="14" fill="#1b5e20" text-anchor="middle" font-weight="bold">声明式迭代：BCE 优化与安全</text>
+    <rect width="220" height="220" fill="#e8f5e9" stroke="#4caf50" stroke-width="1" rx="8" />
+    
+    <g transform="translate(25, 45)">
+      <rect width="40" height="40" fill="#fff" stroke="#4caf50" rx="4" />
+      <rect x="45" y="0" width="40" height="40" fill="#fff" stroke="#4caf50" rx="4" />
+      <rect x="90" y="0" width="40" height="40" fill="#fff" stroke="#4caf50" rx="4" />
+      <text x="20" y="25" font-family="JetBrains Mono" font-size="12" text-anchor="middle" fill="#333">0</text>
+      <text x="65" y="25" font-family="JetBrains Mono" font-size="12" text-anchor="middle" fill="#333">1</text>
+      <text x="110" y="25" font-family="JetBrains Mono" font-size="12" text-anchor="middle" fill="#333">2</text>
+    </g>
+    
+    <!-- 迭代器扫描框 -->
+    <g transform="translate(45, 40)">
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0,0; 45,0; 90,0; 90,0" dur="4s" repeatCount="indefinite" calcMode="discrete" />
+        <rect x="-15" y="-5" width="30" height="50" fill="none" stroke="#4caf50" stroke-width="2" rx="4" />
+      </g>
+      
+      <!-- 成功提示 -->
+      <g>
+        <animateTransform attributeName="transform" type="translate" values="0,0; 45,0; 90,0; 90,0" dur="4s" repeatCount="indefinite" calcMode="discrete" />
+        <g opacity="0">
+          <animate attributeName="opacity" values="0;0;0;1" dur="4s" repeatCount="indefinite" calcMode="discrete" />
+          <rect x="35" y="5" width="60" height="30" fill="#e8f5e9" stroke="#1b5e20" rx="4" />
+          <text x="65" y="25" font-family="JetBrains Mono" font-size="12" fill="#1b5e20" text-anchor="middle" font-weight="bold">Done</text>
+        </g>
+      </g>
+    </g>
+
+    <g transform="translate(35, 125)">
+      <rect width="150" height="65" fill="#fff" stroke="#4caf50" rx="4" />
+      <text x="75" y="20" font-family="JetBrains Mono" font-size="12" fill="#2e7d32" text-anchor="middle">Iterator Engine</text>
+      <text x="75" y="45" font-family="JetBrains Mono, monospace" font-size="13" fill="#1b5e20" text-anchor="middle" font-weight="bold">
+        <tspan>Some(0)<animate attributeName="display" values="inline;none;none;none" dur="4s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+        <tspan>Some(1)<animate attributeName="display" values="none;inline;none;none" dur="4s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+        <tspan>Some(2)<animate attributeName="display" values="none;none;inline;none" dur="4s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+        <tspan>None<animate attributeName="display" values="none;none;none;inline" dur="4s" repeatCount="indefinite" calcMode="discrete" /></tspan>
+      </text>
+      <text x="75" y="85" font-family="JetBrains Mono" font-size="11" fill="#78909c" text-anchor="middle">BCE 边界消除优化</text>
+    </g>
+  </g>
+</svg>
