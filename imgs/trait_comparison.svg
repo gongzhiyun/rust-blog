@@ -1,0 +1,61 @@
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="400" fill="#ffffff" />
+  
+  <!-- Title -->
+  <text x="400" y="30" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="20" font-weight="bold" fill="#2d3436" text-anchor="middle">静态分发 vs 动态分发 全维度对比</text>
+
+  <!-- Table Headers -->
+  <rect x="50" y="60" width="150" height="40" fill="#f1f2f6" rx="5" />
+  <text x="125" y="85" font-family="PingFang SC" font-size="14" font-weight="bold" fill="#2d3436" text-anchor="middle">维度</text>
+
+  <rect x="210" y="60" width="270" height="40" fill="#e3f2fd" rx="5" />
+  <text x="345" y="85" font-family="PingFang SC" font-size="14" font-weight="bold" fill="#1976d2" text-anchor="middle">静态分发 (Monomorphization)</text>
+
+  <rect x="490" y="60" width="270" height="40" fill="#fff3e0" rx="5" />
+  <text x="625" y="85" font-family="PingFang SC" font-size="14" font-weight="bold" fill="#e67e22" text-anchor="middle">动态分发 (Trait Object)</text>
+
+  <!-- Row 1: Dispatch Time -->
+  <rect x="50" y="110" width="150" height="50" fill="#f8f9fa" />
+  <text x="125" y="140" font-family="PingFang SC" font-size="13" fill="#636e72" text-anchor="middle">决策时间</text>
+  
+  <rect x="210" y="110" width="270" height="50" fill="#ffffff" stroke="#e3f2fd" />
+  <text x="345" y="140" font-family="PingFang SC" font-size="13" fill="#2d3436" text-anchor="middle">编译期 (Compile-time)</text>
+
+  <rect x="490" y="110" width="270" height="50" fill="#ffffff" stroke="#fff3e0" />
+  <text x="625" y="140" font-family="PingFang SC" font-size="13" fill="#2d3436" text-anchor="middle">运行期 (Runtime)</text>
+
+  <!-- Row 2: Runtime Speed -->
+  <rect x="50" y="170" width="150" height="50" fill="#f8f9fa" />
+  <text x="125" y="200" font-family="PingFang SC" font-size="13" fill="#636e72" text-anchor="middle">执行效率</text>
+  
+  <rect x="210" y="170" width="270" height="50" fill="#ffffff" stroke="#e3f2fd" />
+  <text x="345" y="200" font-family="PingFang SC" font-size="13" fill="#2d3436" text-anchor="middle">极快 (可深度内联优化)</text>
+
+  <rect x="490" y="170" width="270" height="50" fill="#ffffff" stroke="#fff3e0" />
+  <text x="625" y="200" font-family="PingFang SC" font-size="13" fill="#2d3436" text-anchor="middle">稍慢 (指针跳转，无法内联)</text>
+
+  <!-- Row 3: Binary Size -->
+  <rect x="50" y="230" width="150" height="50" fill="#f8f9fa" />
+  <text x="125" y="260" font-family="PingFang SC" font-size="13" fill="#636e72" text-anchor="middle">产物大小</text>
+  
+  <rect x="210" y="230" width="270" height="50" fill="#ffffff" stroke="#e3f2fd" />
+  <text x="345" y="260" font-family="PingFang SC" font-size="13" fill="#2d3436" text-anchor="middle">较大 (代码膨胀 Code Bloat)</text>
+
+  <rect x="490" y="230" width="270" height="50" fill="#ffffff" stroke="#fff3e0" />
+  <text x="625" y="260" font-family="PingFang SC" font-size="13" fill="#2d3436" text-anchor="middle">较小 (共享同一份函数实现)</text>
+
+  <!-- Row 4: Flexibility -->
+  <rect x="50" y="290" width="150" height="50" fill="#f8f9fa" />
+  <text x="125" y="320" font-family="PingFang SC" font-size="13" fill="#636e72" text-anchor="middle">灵活性</text>
+  
+  <rect x="210" y="290" width="270" height="50" fill="#ffffff" stroke="#e3f2fd" />
+  <text x="345" y="320" font-family="PingFang SC" font-size="13" fill="#2d3436" text-anchor="middle">低 (类型需在编译期确定)</text>
+
+  <rect x="490" y="290" width="270" height="50" fill="#ffffff" stroke="#fff3e0" />
+  <text x="625" y="320" font-family="PingFang SC" font-size="13" fill="#2d3436" text-anchor="middle">高 (支持异构集合，如 Vec&lt;dyn T&gt;)</text>
+
+  <!-- Bottom Tip -->
+  <path d="M 50 360 L 750 360" stroke="#dfe6e9" stroke-width="1" stroke-dasharray="5,5" />
+  <text x="400" y="385" font-family="PingFang SC" font-size="12" fill="#b2bec3" text-anchor="middle">Tip: 优先选择静态分发，除非需要处理编译期未知的异构类型集合。</text>
+</svg>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="800" height="400" fill="#f8f9fa" rx="12"/>
+  
+  <!-- 标题 -->
+  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">痛点：没有特型时的代码冗余</text>
+
+  <!-- 类型 1 的处理函数 -->
+  <g transform="translate(50, 80)">
+    <rect width="320" height="110" rx="8" fill="#ffebee" stroke="#ef5350" stroke-width="2"/>
+    <text x="160" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef5350">针对 u32 的函数</text>
+    <text x="15" y="55" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">fn print_u32(x: u32) {</text>
+    <text x="30" y="75" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">println!("Value: {}", x);</text>
+    <text x="15" y="95" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">}</text>
+  </g>
+
+  <!-- 类型 2 的处理函数 -->
+  <g transform="translate(430, 80)">
+    <rect width="320" height="110" rx="8" fill="#ffebee" stroke="#ef5350" stroke-width="2"/>
+    <text x="160" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef5350">针对 String 的函数</text>
+    <text x="15" y="55" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">fn print_str(x: String) {</text>
+    <text x="30" y="75" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">println!("Value: {}", x);</text>
+    <text x="15" y="95" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">}</text>
+  </g>
+
+  <!-- 冲突与复杂性 -->
+  <g transform="translate(200, 220)">
+    <rect width="400" height="100" rx="8" fill="#fff3e0" stroke="#ff9800" stroke-width="1" stroke-dasharray="5,5"/>
+    <text x="200" y="35" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="#ff9800">随着类型增多...</text>
+    <text x="20" y="65" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">❌ 逻辑完全一致，却要写 N 份副本</text>
+    <text x="20" y="85" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">❌ 无法编写通用的“打印任何东西”的函数</text>
+  </g>
+
+  <!-- 结论 -->
+  <text x="400" y="360" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">我们需要一个“契约”来统一这些行为</text>
+  
+  <!-- 装饰线条 -->
+  <path d="M 370 135 L 430 135" stroke="#ef5350" stroke-width="2" stroke-dasharray="4,4"/>
+</svg>
