@@ -1,0 +1,33 @@
+<svg width="600" height="320" viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="600" height="320" rx="12" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
+<!-- Thread 1 -->
+<rect x="40" y="40" width="160" height="240" rx="10" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
+<text x="120" y="70" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#e65100">Thread 1</text>
+<rect x="55" y="100" width="130" height="120" rx="6" fill="#ffffff" stroke="#ffb74d" stroke-width="1"/>
+<text x="65" y="125" font-family="monospace" font-size="11" fill="#333333">rc.clone()</text>
+<text x="65" y="150" font-family="monospace" font-size="10" fill="#d32f2f" font-weight="bold">count += 1</text>
+<path d="M 120 160 L 120 200" stroke="#d32f2f" stroke-width="2" stroke-dasharray="4"/>
+<!-- Thread 2 -->
+<rect x="400" y="40" width="160" height="240" rx="10" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
+<text x="480" y="70" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#e65100">Thread 2</text>
+<rect x="415" y="100" width="130" height="120" rx="6" fill="#ffffff" stroke="#ffb74d" stroke-width="1"/>
+<text x="425" y="125" font-family="monospace" font-size="11" fill="#333333">rc.clone()</text>
+<text x="425" y="150" font-family="monospace" font-size="10" fill="#d32f2f" font-weight="bold">count += 1</text>
+<path d="M 480 160 L 480 200" stroke="#d32f2f" stroke-width="2" stroke-dasharray="4"/>
+<!-- Central Heap Data -->
+<rect x="230" y="100" width="140" height="140" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="300" y="125" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#1b5e20">RcBox&lt;T&gt;</text>
+<line x1="230" y1="135" x2="370" y2="135" stroke="#4caf50" stroke-width="1"/>
+<text x="245" y="165" font-family="monospace" font-size="14" font-weight="bold" fill="#d32f2f">count: 1</text>
+<text x="245" y="185" font-family="monospace" font-size="10" fill="#666666">(Non-atomic)</text>
+<!-- Conflict Arrows -->
+<path d="M 185 145 L 225 155" stroke="#d32f2f" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 415 145 L 375 155" stroke="#d32f2f" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="300" y="270" text-anchor="middle" font-family="monospace" font-size="12" fill="#d32f2f" font-weight="bold">Race Condition!</text>
+<text x="300" y="290" text-anchor="middle" font-family="monospace" font-size="10" fill="#d32f2f">(引用计数更新冲突)</text>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L0,10 L10,5 Z" fill="#d32f2f"/>
+</marker>
+</defs>
+</svg>

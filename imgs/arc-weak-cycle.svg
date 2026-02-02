@@ -1,0 +1,32 @@
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="600" height="300" rx="12" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
+<!-- Node A -->
+<rect x="50" y="80" width="180" height="140" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="140" y="105" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#1b5e20">Node A</text>
+<rect x="65" y="120" width="150" height="80" rx="6" fill="#ffffff" stroke="#2e7d32" stroke-width="1"/>
+<text x="140" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#333333">Arc&lt;NodeB&gt;</text>
+<text x="140" y="175" text-anchor="middle" font-family="monospace" font-size="10" fill="#d32f2f" font-weight="bold">Strong Ref</text>
+<!-- Node B -->
+<rect x="370" y="80" width="180" height="140" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="460" y="105" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#1b5e20">Node B</text>
+<rect x="385" y="120" width="150" height="80" rx="6" fill="#ffffff" stroke="#2e7d32" stroke-width="1"/>
+<text x="460" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#333333">Weak&lt;NodeA&gt;</text>
+<text x="460" y="175" text-anchor="middle" font-family="monospace" font-size="10" fill="#2196f3" font-weight="bold">Weak Ref</text>
+<!-- Arrows -->
+<!-- A to B (Strong) -->
+<path d="M 230 140 L 360 140" stroke="#4caf50" stroke-width="3" marker-end="url(#green-arrow)"/>
+<text x="295" y="130" text-anchor="middle" font-family="monospace" font-size="11" fill="#1b5e20" font-weight="bold">Strong</text>
+<!-- B to A (Weak) -->
+<path d="M 370 170 L 240 170" stroke="#2196f3" stroke-width="2" stroke-dasharray="4" marker-end="url(#blue-arrow)"/>
+<text x="305" y="190" text-anchor="middle" font-family="monospace" font-size="11" fill="#0d47a1" font-weight="bold">Weak (No Cycle)</text>
+<!-- Legend -->
+<text x="300" y="260" text-anchor="middle" font-family="monospace" font-size="12" fill="#333333" font-weight="bold">Using Weak&lt;T&gt; to Break Cycles</text>
+<defs>
+<marker id="green-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L0,10 L10,5 Z" fill="#4caf50"/>
+</marker>
+<marker id="blue-arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L0,10 L10,5 Z" fill="#2196f3"/>
+</marker>
+</defs>
+</svg>
