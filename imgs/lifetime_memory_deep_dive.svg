@@ -2,61 +2,65 @@
 <svg width="600" height="340" viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg">
   <!-- 背景 -->
   <rect x="0" y="0" width="600" height="340" rx="12" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
-  <text x="300" y="35" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#333333">内存深度分析：地址有效性验证</text>
+  <text x="300" y="35" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#333333">内存深度分析：悬垂引用的产生机制</text>
 
-  <!-- Stack Area -->
-  <g transform="translate(30, 60)">
-    <rect x="0" y="0" width="250" height="240" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
-    <text x="125" y="20" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#0d47a1">Stack (栈内存)</text>
+  <!-- Stack Memory Area -->
+  <g transform="translate(40, 60)">
+    <rect x="0" y="0" width="280" height="240" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+    <text x="140" y="20" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#0d47a1">Stack Memory (栈内存)</text>
+
+    <!-- Frame: main() -->
+    <rect x="20" y="40" width="240" height="60" rx="4" fill="#ffffff" stroke="#1565c0" stroke-width="1"/>
+    <text x="30" y="60" font-family="monospace" font-size="11" fill="#0d47a1">Frame: main()</text>
     
-    <!-- Frame main (Active) -->
-    <rect x="15" y="35" width="220" height="60" rx="4" fill="#ffffff" stroke="#1565c0" stroke-width="1"/>
-    <text x="25" y="55" font-family="monospace" font-size="11" fill="#0d47a1">Frame: main() [Active]</text>
-    <text x="25" y="80" font-family="monospace" font-size="12" fill="#333333" font-weight="bold">r: 0x7FF1 (&'a str)</text>
+    <!-- Variable r -->
+    <text x="30" y="85" font-family="monospace" font-size="12" fill="#333333" font-weight="bold">let r;</text>
+    <rect x="160" y="70" width="80" height="20" rx="2" fill="#fff9c4" stroke="#fbc02d" stroke-width="1"/>
+    <text x="200" y="84" text-anchor="middle" font-family="monospace" font-size="11" fill="#f57f17">Addr: 0x2008</text>
+
+    <!-- Frame: inner scope (Popped) -->
+    <rect x="20" y="120" width="240" height="100" rx="4" fill="#fafafa" stroke="#ef5350" stroke-width="1" stroke-dasharray="4"/>
+    <rect x="20" y="120" width="240" height="100" rx="4" fill="url(#diagonalHatch)" opacity="0.3"/>
+    <text x="30" y="140" font-family="monospace" font-size="11" fill="#c62828">Frame: Inner Scope [已销毁]</text>
     
-    <!-- Frame inner (Popped/Invalid) -->
-    <rect x="15" y="115" width="220" height="100" rx="4" fill="#fafafa" stroke="#ef5350" stroke-width="1" stroke-dasharray="4"/>
-    <rect x="15" y="115" width="220" height="100" rx="4" fill="url(#diagonalHatch)" opacity="0.3"/>
-    <text x="25" y="135" font-family="monospace" font-size="11" fill="#c62828">Frame: inner() [Popped!]</text>
-    <text x="25" y="165" font-family="monospace" font-size="12" fill="#999999" text-decoration="line-through">x: "Hello" (Owner)</text>
-    <text x="25" y="190" font-family="monospace" font-size="11" fill="#ef5350" font-weight="bold">地址 0x7FF1 已失效</text>
+    <!-- Variable x -->
+    <text x="30" y="170" font-family="monospace" font-size="12" fill="#333333" font-weight="bold">let x = 5;</text>
+    <rect x="160" y="155" width="80" height="20" rx="2" fill="#ffcdd2" stroke="#ef5350" stroke-width="1"/>
+    <text x="200" y="169" text-anchor="middle" font-family="monospace" font-size="11" fill="#b71c1c">Addr: 0x2008</text>
+    <text x="200" y="210" text-anchor="middle" font-family="monospace" font-size="10" fill="#c62828">此处内存已被标记为无效</text>
   </g>
 
-  <!-- Borrow Checker Logic (Middle) -->
-  <g transform="translate(280, 160)">
-    <!-- Scanning Circle -->
-    <circle cx="20" cy="0" r="35" fill="none" stroke="#ff9800" stroke-width="2" stroke-dasharray="4">
-      <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" repeatCount="indefinite" />
-    </circle>
-    <text x="20" y="-45" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#e65100">借用检查器</text>
-    <text x="20" y="50" text-anchor="middle" font-family="monospace" font-size="10" fill="#f57c00">静态地址追踪</text>
-    
-    <!-- Conflict Cross -->
-    <line x1="5" y1="-15" x2="35" y2="15" stroke="#ef5350" stroke-width="4" stroke-linecap="round" />
-    <line x1="35" y1="-15" x2="5" y2="15" stroke="#ef5350" stroke-width="4" stroke-linecap="round" />
+  <!-- Right Side: The Problem -->
+  <g transform="translate(360, 60)">
+    <!-- Borrow Checker Interception -->
+    <g transform="translate(0, 80)">
+       <circle cx="100" cy="40" r="50" fill="#fff3e0" stroke="#ff9800" stroke-width="2" stroke-dasharray="4"/>
+       <text x="100" y="35" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#e65100">借用检查器</text>
+       <text x="100" y="55" text-anchor="middle" font-family="monospace" font-size="10" fill="#e65100">发现生命周期冲突</text>
+       
+       <!-- Cross mark -->
+       <line x1="80" y1="65" x2="120" y2="25" stroke="#ef5350" stroke-width="3"/>
+       <line x1="120" y1="65" x2="80" y2="25" stroke="#ef5350" stroke-width="3"/>
+    </g>
+
+    <!-- Explanation Box -->
+    <rect x="0" y="160" width="200" height="80" rx="6" fill="#ffebee" stroke="#ef5350" stroke-width="1"/>
+    <text x="10" y="180" font-family="monospace" font-size="11" font-weight="bold" fill="#b71c1c">致命错误：</text>
+    <text x="10" y="200" font-family="monospace" font-size="10" fill="#333333">指针 r 试图保存地址</text>
+    <text x="10" y="215" font-family="monospace" font-size="10" fill="#d32f2f" font-weight="bold">0x2008</text>
+    <text x="10" y="230" font-family="monospace" font-size="10" fill="#333333">但该地址属于已销毁栈帧</text>
   </g>
 
-  <!-- Heap/Data Area -->
-  <g transform="translate(340, 60)">
-    <rect x="0" y="0" width="230" height="240" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
-    <text x="115" y="20" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#1b5e20">Target Data (目标地址)</text>
-    
-    <!-- Data Block -->
-    <rect x="15" y="45" width="200" height="60" rx="6" fill="#ffffff" stroke="#2e7d32" stroke-width="1.5"/>
-    <text x="100" y="80" text-anchor="middle" font-family="monospace" font-size="14" fill="#333333">"Hello Rust"</text>
-    <text x="100" y="100" text-anchor="middle" font-family="monospace" font-size="10" fill="#666666">Addr: 0x7FF1</text>
-
-    <!-- Error Banner -->
-    <rect x="15" y="140" width="200" height="80" rx="6" fill="#ffebee" stroke="#ef5350" stroke-width="1.5"/>
-    <text x="100" y="165" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#c62828">🚫 非法访问拦截</text>
-    <text x="100" y="185" text-anchor="middle" font-family="monospace" font-size="10" fill="#d32f2f">引用的标签 'a 显示其</text>
-    <text x="100" y="200" text-anchor="middle" font-family="monospace" font-size="10" fill="#d32f2f">活得比目标地址更久</text>
-  </g>
-
+  <!-- Visual Pointer Arrow -->
+  <path d="M 240 90 C 300 90, 300 165, 250 165" stroke="#ef5350" stroke-width="2" fill="none" stroke-dasharray="4" marker-end="url(#arrow-red)"/>
+  
   <!-- Definitions -->
   <defs>
     <pattern id="diagonalHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <line x1="0" y1="0" x2="0" y2="10" stroke="#ef5350" stroke-width="1" />
     </pattern>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ef5350" />
+    </marker>
   </defs>
 </svg>
