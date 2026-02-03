@@ -1,54 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
-  <rect width="800" height="450" fill="#f8f9fa"/>
-  <text x="400" y="30" font-family="JetBrains Mono, monospace" font-size="24" font-weight="bold" text-anchor="middle" fill="#333333">Rust 字符串内存布局</text>
-  <rect x="50" y="70" width="200" height="350" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
-  <text x="150" y="95" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="#2196f3">Stack (栈)</text>
-  <g transform="translate(60, 110)">
-    <rect width="180" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="1"/>
-    <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333333">String (s1)</text>
-    <line x1="0" y1="35" x2="180" y2="35" stroke="#2196f3" stroke-width="1"/>
-    <text x="10" y="55" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">ptr: 0x1234</text>
-    <text x="10" y="80" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">len: 5</text>
-    <text x="10" y="105" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">cap: 8</text>
-  </g>
-  <g transform="translate(60, 250)">
-    <rect width="180" height="90" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="1"/>
-    <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333333">&amp;str (s2)</text>
-    <line x1="0" y1="35" x2="180" y2="35" stroke="#2196f3" stroke-width="1"/>
-    <text x="10" y="55" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">ptr: 0x1235</text>
-    <text x="10" y="80" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">len: 3</text>
-  </g>
-  <rect x="450" y="70" width="300" height="350" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
-  <text x="600" y="95" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="#4caf50">Heap (堆)</text>
-  <g transform="translate(470, 120)">
-    <rect width="260" height="50" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="1"/>
-    <rect x="0" y="0" width="32" height="50" fill="#fff8e1" stroke="#4caf50" stroke-width="1"/>
-    <text x="16" y="30" font-family="JetBrains Mono, monospace" font-size="16" text-anchor="middle" fill="#333333">'H'</text>
-    <rect x="32" y="0" width="32" height="50" fill="#fff8e1" stroke="#4caf50" stroke-width="1"/>
-    <text x="48" y="30" font-family="JetBrains Mono, monospace" font-size="16" text-anchor="middle" fill="#333333">'e'</text>
-    <rect x="64" y="0" width="32" height="50" fill="#fff8e1" stroke="#4caf50" stroke-width="1"/>
-    <text x="80" y="30" font-family="JetBrains Mono, monospace" font-size="16" text-anchor="middle" fill="#333333">'l'</text>
-    <rect x="96" y="0" width="32" height="50" fill="#fff8e1" stroke="#4caf50" stroke-width="1"/>
-    <text x="112" y="30" font-family="JetBrains Mono, monospace" font-size="16" text-anchor="middle" fill="#333333">'l'</text>
-    <rect x="128" y="0" width="32" height="50" fill="#fff8e1" stroke="#4caf50" stroke-width="1"/>
-    <text x="144" y="30" font-family="JetBrains Mono, monospace" font-size="16" text-anchor="middle" fill="#333333">'o'</text>
-    <rect x="160" y="0" width="32" height="50" fill="#f8f9fa" stroke="#e0e0e0" stroke-dasharray="4" stroke-width="1"/>
-    <rect x="192" y="0" width="32" height="50" fill="#f8f9fa" stroke="#e0e0e0" stroke-dasharray="4" stroke-width="1"/>
-    <rect x="224" y="0" width="32" height="50" fill="#f8f9fa" stroke="#e0e0e0" stroke-dasharray="4" stroke-width="1"/>
-    <text x="210" y="70" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">容量 (Capacity)</text>
-    <path d="M 0 60 L 256 60" stroke="#78909c" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-  </g>
-  <path d="M 180 165 L 470 145" stroke="#ff9800" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <text x="325" y="140" font-family="JetBrains Mono, monospace" font-size="12" fill="#ff9800" text-anchor="middle">s1 指向开头</text>
-  <path d="M 180 305 L 502 145" stroke="#9c27b0" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-  <text x="341" y="240" font-family="JetBrains Mono, monospace" font-size="12" fill="#9c27b0" text-anchor="middle">s2 切片指向 'e'</text>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#ff9800"/>
-    </marker>
-    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#9c27b0"/>
-    </marker>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+<rect width="800" height="520" fill="#f8f9fa"/>
+<text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="26" font-weight="bold" text-anchor="middle" fill="#263238">String 与 &amp;str 内存布局详解</text>
+<!-- Stack Container -->
+<rect x="40" y="80" width="240" height="400" rx="12" fill="#e3f2fd" stroke="#1976d2" stroke-width="2.5"/>
+<text x="160" y="110" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#0d47a1">Stack (栈)</text>
+<!-- String s1 -->
+<g transform="translate(60, 130)">
+<rect width="200" height="130" rx="8" fill="#ffffff" stroke="#1976d2" stroke-width="2"/>
+<text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#263238">String (s1)</text>
+<line x1="0" y1="35" x2="200" y2="35" stroke="#cfd8dc" stroke-width="1.5"/>
+<text x="15" y="60" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#263238">ptr:</text>
+<text x="175" y="60" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#546e7a" text-anchor="end">0x100</text>
+<text x="15" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#263238">len:</text>
+<text x="175" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#546e7a" text-anchor="end">5</text>
+<text x="15" y="110" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#263238">cap:</text>
+<text x="175" y="110" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#546e7a" text-anchor="end">8</text>
+<circle cx="185" cy="55" r="5" fill="#ff9800"/>
+</g>
+<!-- &str s2 -->
+<g transform="translate(60, 310)">
+<rect width="200" height="100" rx="8" fill="#ffffff" stroke="#7b1fa2" stroke-width="2"/>
+<text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#263238">&amp;str (s2)</text>
+<line x1="0" y1="35" x2="200" y2="35" stroke="#cfd8dc" stroke-width="1.5"/>
+<text x="15" y="60" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#263238">ptr:</text>
+<text x="175" y="60" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#546e7a" text-anchor="end">0x101</text>
+<text x="15" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#263238">len:</text>
+<text x="175" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#546e7a" text-anchor="end">3</text>
+<circle cx="185" cy="55" r="5" fill="#9c27b0"/>
+</g>
+<!-- Heap Container -->
+<rect x="360" y="80" width="410" height="400" rx="12" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+<text x="565" y="110" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#1b5e20">Heap (堆内存)</text>
+<!-- Data Cells -->
+<g transform="translate(380, 160)">
+<g transform="translate(0, 0)">
+<rect width="45" height="80" fill="#fff8e1" stroke="#2e7d32" stroke-width="2"/>
+<text x="22.5" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#263238">H</text>
+<text x="22.5" y="60" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#546e7a">0x48</text>
+<text x="22.5" y="100" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">0x100</text>
+</g>
+<g transform="translate(45, 0)">
+<rect width="45" height="80" fill="#fff8e1" stroke="#2e7d32" stroke-width="2"/>
+<text x="22.5" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#263238">e</text>
+<text x="22.5" y="60" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#546e7a">0x65</text>
+<text x="22.5" y="100" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">0x101</text>
+</g>
+<g transform="translate(90, 0)">
+<rect width="45" height="80" fill="#fff8e1" stroke="#2e7d32" stroke-width="2"/>
+<text x="22.5" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#263238">l</text>
+<text x="22.5" y="60" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#546e7a">0x6C</text>
+<text x="22.5" y="100" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">0x102</text>
+</g>
+<g transform="translate(135, 0)">
+<rect width="45" height="80" fill="#fff8e1" stroke="#2e7d32" stroke-width="2"/>
+<text x="22.5" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#263238">l</text>
+<text x="22.5" y="60" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#546e7a">0x6C</text>
+<text x="22.5" y="100" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">0x103</text>
+</g>
+<g transform="translate(180, 0)">
+<rect width="45" height="80" fill="#fff8e1" stroke="#2e7d32" stroke-width="2"/>
+<text x="22.5" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#263238">o</text>
+<text x="22.5" y="60" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#546e7a">0x6F</text>
+<text x="22.5" y="100" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#1b5e20">0x104</text>
+</g>
+<!-- Unused Cells -->
+<g transform="translate(225, 0)">
+<rect width="45" height="80" fill="#eceff1" stroke="#90a4ae" stroke-dasharray="4" stroke-width="1.5"/>
+<text x="22.5" y="45" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#78909c">Unused</text>
+</g>
+<g transform="translate(270, 0)">
+<rect width="45" height="80" fill="#eceff1" stroke="#90a4ae" stroke-dasharray="4" stroke-width="1.5"/>
+<text x="22.5" y="45" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#78909c">Unused</text>
+</g>
+<g transform="translate(315, 0)">
+<rect width="45" height="80" fill="#eceff1" stroke="#90a4ae" stroke-dasharray="4" stroke-width="1.5"/>
+<text x="22.5" y="45" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" text-anchor="middle" fill="#78909c">Unused</text>
+</g>
+<!-- Measurements -->
+<path d="M 0 135 L 225 135" stroke="#1976d2" stroke-width="2.5" marker-start="url(#dot)" marker-end="url(#dot)"/>
+<text x="112.5" y="155" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="#0d47a1">Length (5 bytes)</text>
+<path d="M 0 175 L 360 175" stroke="#546e7a" stroke-width="1.5" stroke-dasharray="4" marker-start="url(#dot-grey)" marker-end="url(#dot-grey)"/>
+<text x="180" y="195" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#455a64">Capacity (8 bytes)</text>
+<!-- Slice Box -->
+<rect x="45" y="-5" width="135" height="90" fill="none" stroke="#7b1fa2" stroke-width="3" rx="6" stroke-dasharray="6,4"/>
+<text x="112.5" y="-15" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#4a148c" text-anchor="middle">Slice [1..4]</text>
+</g>
+<!-- Pointers -->
+<path d="M 245 185 Q 300 185 370 200" stroke="#ff9800" stroke-width="3" fill="none" marker-end="url(#arrow-orange)"/>
+<text x="310" y="175" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#f57f17" text-anchor="middle">s1 ptr</text>
+<path d="M 245 365 Q 330 365 422 245" stroke="#9c27b0" stroke-width="3" fill="none" marker-end="url(#arrow-purple)"/>
+<text x="330" y="370" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#7b1fa2" text-anchor="middle">s2 ptr</text>
+<!-- Definitions -->
+<defs>
+<marker id="arrow-orange" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="#ff9800"/>
+</marker>
+<marker id="arrow-purple" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 Z" fill="#9c27b0"/>
+</marker>
+<marker id="dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6">
+<circle cx="5" cy="5" r="3" fill="#1976d2"/>
+</marker>
+<marker id="dot-grey" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6">
+<circle cx="5" cy="5" r="2.5" fill="#546e7a"/>
+</marker>
+</defs>
 </svg>

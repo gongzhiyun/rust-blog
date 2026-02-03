@@ -1,88 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 550">
-  <rect width="850" height="550" fill="#f8f9fa"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 550">
+  <rect width="950" height="550" fill="#f8f9fa"/>
   <!-- Title -->
-  <text x="425" y="40" font-family="JetBrains Mono, monospace" font-size="26" font-weight="bold" text-anchor="middle" fill="#333333">Rust 字符串转换全景图</text>
+  <text x="475" y="45" font-family="JetBrains Mono, monospace" font-size="28" font-weight="bold" text-anchor="middle" fill="#263238">Rust 字符串转换全景图</text>
   
   <!-- Legend -->
-  <g transform="translate(630, 20)">
-    <rect width="200" height="80" rx="5" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
-    <line x1="10" y1="25" x2="40" y2="25" stroke="#4caf50" stroke-width="2"/>
-    <text x="50" y="30" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">零成本/所有权转移</text>
-    <line x1="10" y1="55" x2="40" y2="55" stroke="#ef5350" stroke-width="2" stroke-dasharray="4"/>
-    <text x="50" y="60" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">涉及内存分配 (O(n))</text>
+  <g transform="translate(680, 15)">
+    <rect width="215" height="85" rx="8" fill="#ffffff" stroke="#cfd8dc" stroke-width="1.5"/>
+    <line x1="15" y1="30" x2="45" y2="30" stroke="#2e7d32" stroke-width="2.5"/>
+    <text x="55" y="35" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#263238">零成本/所有权转移</text>
+    <line x1="15" y1="60" x2="45" y2="60" stroke="#d32f2f" stroke-width="2.5" stroke-dasharray="6,4"/>
+    <text x="55" y="65" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#263238">涉及内存分配 (O(n))</text>
   </g>
 
   <!-- Core Types -->
   <!-- &str (Borrowed) -->
-  <g transform="translate(325, 100)">
-    <rect width="200" height="70" rx="10" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
-    <text x="100" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#ff9800">&amp;str</text>
-    <text x="100" y="58" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" fill="#78909c">借用 / 字符串切片</text>
+  <g transform="translate(385, 100)">
+    <rect width="200" height="70" rx="12" fill="#fffde7" stroke="#ffb300" stroke-width="2.5"/>
+    <text x="100" y="38" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#f57f17">&amp;str</text>
+    <text x="100" y="60" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#546e7a">借用 / 字符串切片</text>
   </g>
 
   <!-- String (Owned) -->
-  <g transform="translate(325, 300)">
-    <rect width="200" height="70" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
-    <text x="100" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#4caf50">String</text>
-    <text x="100" y="58" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" fill="#78909c">拥有所有权 / 堆分配</text>
+  <g transform="translate(385, 300)">
+    <rect width="200" height="70" rx="12" fill="#e8f5e9" stroke="#4caf50" stroke-width="2.5"/>
+    <text x="100" y="38" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#1b5e20">String</text>
+    <text x="100" y="60" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#546e7a">拥有所有权 / 堆分配</text>
   </g>
 
   <!-- Cow<'a, str> (Smart Pointer) -->
-  <g transform="translate(600, 215)">
-    <rect width="200" height="70" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
-    <text x="100" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#2196f3">Cow&lt;'a, str&gt;</text>
-    <text x="100" y="58" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" fill="#78909c">写时复制 / 枚举</text>
+  <g transform="translate(710, 215)">
+    <rect width="200" height="70" rx="12" fill="#e3f2fd" stroke="#1976d2" stroke-width="2.5"/>
+    <text x="100" y="38" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#0d47a1">Cow&lt;'a, str&gt;</text>
+    <text x="100" y="60" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#546e7a">写时复制 / 枚举</text>
   </g>
 
   <!-- Vec<u8> (Raw Bytes) -->
-  <g transform="translate(0, 300)">
-    <rect width="200" height="70" rx="10" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
-    <text x="100" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#9c27b0">Vec&lt;u8&gt;</text>
-    <text x="100" y="58" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" fill="#78909c">原始字节序列</text>
+  <g transform="translate(15, 300)">
+    <rect width="200" height="70" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2.5"/>
+    <text x="100" y="38" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#4a148c">Vec&lt;u8&gt;</text>
+    <text x="100" y="60" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#546e7a">原始字节序列</text>
   </g>
 
   <!-- Box<str> (Slim Owned) -->
-  <g transform="translate(325, 450)">
-    <rect width="200" height="70" rx="10" fill="#fafafa" stroke="#78909c" stroke-width="2"/>
-    <text x="100" y="35" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" text-anchor="middle" fill="#78909c">Box&lt;str&gt;</text>
-    <text x="100" y="58" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle" fill="#78909c">不可变拥有 / 瘦指针</text>
+  <g transform="translate(385, 450)">
+    <rect width="200" height="70" rx="12" fill="#fafafa" stroke="#90a4ae" stroke-width="2.5"/>
+    <text x="100" y="38" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#37474f">Box&lt;str&gt;</text>
+    <text x="100" y="60" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="middle" fill="#546e7a">不可变拥有 / 瘦指针</text>
   </g>
 
   <!-- Connections -->
   <!-- &str -> String (Alloc) -->
-  <path d="M 390 170 L 390 300" stroke="#ef5350" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow-red)"/>
-  <text x="380" y="235" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="end" fill="#ef5350">.to_string()</text>
+  <path d="M 450 175 L 450 295" stroke="#d32f2f" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arrow-red)"/>
+  <text x="440" y="235" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="end" fill="#d32f2f">.to_string()</text>
 
   <!-- String -> &str (Free) -->
-  <path d="M 460 300 L 460 170" stroke="#4caf50" stroke-width="2" marker-end="url(#arrow-green)"/>
-  <text x="470" y="235" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="start" fill="#4caf50">.as_str() / &amp;s</text>
+  <path d="M 520 295 L 520 175" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <text x="530" y="235" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" text-anchor="start" fill="#2e7d32">.as_str() / &amp;s</text>
 
   <!-- String <-> Vec<u8> (Free) -->
-  <path d="M 325 320 L 200 320" stroke="#4caf50" stroke-width="2" marker-end="url(#arrow-green)"/>
-  <text x="262" y="310" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" fill="#4caf50">.into_bytes()</text>
-  <path d="M 200 350 L 325 350" stroke="#4caf50" stroke-width="2" marker-end="url(#arrow-green)"/>
-  <text x="262" y="370" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="middle" fill="#4caf50">String::from_utf8()</text>
+  <path d="M 380 320 L 220 320" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <text x="300" y="312" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#2e7d32">.into_bytes()</text>
+  <path d="M 220 350 L 380 350" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <text x="300" y="375" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="middle" fill="#2e7d32">String::from_utf8()</text>
 
   <!-- String -> Box<str> (Free-ish) -->
-  <path d="M 425 370 L 425 450" stroke="#4caf50" stroke-width="2" marker-end="url(#arrow-green)"/>
-  <text x="435" y="415" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="start" fill="#4caf50">.into_boxed_str()</text>
+  <path d="M 485 375 L 485 445" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <text x="495" y="415" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="start" fill="#2e7d32">.into_boxed_str()</text>
 
   <!-- &str -> Cow (Free) -->
-  <path d="M 525 135 L 700 135 L 700 215" stroke="#4caf50" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
-  <text x="705" y="175" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="start" fill="#4caf50">Cow::Borrowed(s)</text>
+  <path d="M 585 135 L 785 135 Q 810 135 810 160 L 810 215" stroke="#2e7d32" stroke-width="2.5" fill="none" stroke-linecap="round" marker-end="url(#arrow-green)"/>
+  <text x="805" y="170" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="end" fill="#2e7d32">Cow::Borrowed(s)</text>
 
   <!-- String -> Cow (Free) -->
-  <path d="M 525 335 L 700 335 L 700 285" stroke="#4caf50" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
-  <text x="705" y="320" font-family="JetBrains Mono, monospace" font-size="11" text-anchor="start" fill="#4caf50">Cow::Owned(s)</text>
+  <path d="M 585 335 L 785 335 Q 810 335 810 310 L 810 285" stroke="#2e7d32" stroke-width="2.5" fill="none" stroke-linecap="round" marker-end="url(#arrow-green)"/>
+  <text x="805" y="325" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" text-anchor="end" fill="#2e7d32">Cow::Owned(s)</text>
 
   <!-- Arrow Definitions -->
   <defs>
-    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#ef5350"/>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 Z" fill="#d32f2f"/>
     </marker>
-    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#4caf50"/>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 Z" fill="#2e7d32"/>
     </marker>
   </defs>
 </svg>
