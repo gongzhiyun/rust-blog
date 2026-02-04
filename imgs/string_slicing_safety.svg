@@ -1,110 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="620" viewBox="0 0 800 620" xmlns="http://www.w3.org/2000/svg">
-<rect width="800" height="620" fill="#f8f9fa" rx="12"/>
-<!-- 标题 -->
-<text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">Rust 字符串切片安全边界图解</text>
-<text x="400" y="60" font-family="JetBrains Mono, monospace" font-size="14" fill="#78909c" text-anchor="middle">字符串内容: "Löwe 🦁" (UTF-8 编码)</text>
-<g transform="translate(60, 90)">
-<!-- 垂直引导线 (Guide Lines) -->
-<g stroke="#cfd8dc" stroke-width="1" stroke-dasharray="4,4">
-  <line x1="0" y1="45" x2="0" y2="440" />
-  <line x1="55" y1="45" x2="55" y2="440" />
-  <line x1="110" y1="45" x2="110" y2="440" />
-  <line x1="165" y1="45" x2="165" y2="440" />
-</g>
-<!-- 1. 原始字节层 -->
-<text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2196f3">1. 原始字节层 (Raw Bytes)</text>
-<g>
-<!-- L -->
-<rect x="0" y="0" width="50" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
-<text x="25" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">4C</text>
-<text x="25" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">idx:0</text>
-<!-- ö -->
-<rect x="55" y="0" width="105" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
-<text x="80" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">C3</text>
-<text x="80" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">1</text>
-<text x="135" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">B6</text>
-<text x="135" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">2</text>
-<!-- w -->
-<rect x="165" y="0" width="50" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
-<text x="190" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">77</text>
-<text x="190" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">3</text>
-<!-- e -->
-<rect x="220" y="0" width="50" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
-<text x="245" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">65</text>
-<text x="245" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">4</text>
-<!-- Space -->
-<rect x="275" y="0" width="50" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
-<text x="300" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">20</text>
-<text x="300" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">5</text>
-<!-- 🦁 -->
-<rect x="330" y="0" width="215" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
-<text x="357" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">F0</text>
-<text x="357" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">6</text>
-<text x="411" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">9F</text>
-<text x="411" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">7</text>
-<text x="465" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">A6</text>
-<text x="465" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">8</text>
-<text x="519" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">81</text>
-<text x="519" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">9</text>
-</g>
-<!-- 2. Unicode 字符层 -->
-<g transform="translate(0, 110)">
-<text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ff9800">2. Unicode 字符层 (Characters)</text>
-<rect x="0" y="0" width="50" height="50" fill="#fff8e1" stroke="#ff9800" stroke-width="2" stroke-dasharray="4" rx="8"/>
-<text x="25" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">L</text>
-<rect x="55" y="0" width="105" height="50" fill="#fff8e1" stroke="#ff9800" stroke-width="2" stroke-dasharray="4" rx="8"/>
-<text x="107" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">ö</text>
-<rect x="165" y="0" width="50" height="50" fill="#fff8e1" stroke="#ff9800" stroke-width="2" stroke-dasharray="4" rx="8"/>
-<text x="190" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">w</text>
-<rect x="220" y="0" width="50" height="50" fill="#fff8e1" stroke="#ff9800" stroke-dasharray="4" rx="8"/>
-<text x="245" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">e</text>
-<rect x="275" y="0" width="50" height="50" fill="#fff8e1" stroke="#ff9800" stroke-dasharray="4" rx="8"/>
-<text x="300" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle"> </text>
-<rect x="330" y="0" width="215" height="50" fill="#fff8e1" stroke="#ff9800" stroke-dasharray="4" rx="8"/>
-<text x="437" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">🦁</text>
-</g>
-<!-- 3. 切片逻辑层 -->
-<g transform="translate(0, 230)">
-<text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#9c27b0">3. 切片操作场景对比 (Slicing Scenarios)</text>
-<!-- 场景 A: 合法切片 -->
-<g transform="translate(0, 10)">
-<rect x="0" y="0" width="680" height="85" fill="#e8f5e9" rx="8" opacity="0.6"/>
-<text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="14" fill="#2e7d32" font-weight="bold">合法边界: &amp;s[0..3]</text>
-<!-- 指示线 -->
-<path d="M 0 52 L 165 52" fill="none" stroke="#4caf50" stroke-width="3"/>
-<circle cx="0" cy="52" r="4" fill="#4caf50"/>
-<!-- 成功 勾选标记 -->
-<g transform="translate(165, 52)">
-  <circle r="12" fill="#4caf50"/>
-  <path d="M -6 0 L -2 4 L 6 -4" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-<!-- 结果文字：对齐到右侧列 -->
-<text x="220" y="38" font-family="JetBrains Mono, monospace" font-size="15" fill="#2e7d32" font-weight="bold">结果: "Lö" (成功)</text>
-<text x="220" y="58" font-family="JetBrains Mono, monospace" font-size="12" fill="#66bb6a">落在字符边界 (index 3 为 'w' 的起点)</text>
-</g>
-<!-- 场景 B: 非法切片 -->
-<g transform="translate(0, 110)">
-<rect x="0" y="0" width="680" height="110" fill="#ffebee" rx="8" opacity="0.6"/>
-<text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="14" fill="#c62828" font-weight="bold">非法边界: &amp;s[0..2]</text>
-<!-- 指示线 -->
-<path d="M 0 65 L 110 65" fill="none" stroke="#ef5350" stroke-width="3" stroke-dasharray="6,3"/>
-<circle cx="0" cy="65" r="4" fill="#ef5350"/>
-<!-- Panic 交叉标记 -->
-<g transform="translate(110, 65)">
-  <circle r="12" fill="#ef5350"/>
-  <path d="M -5 -5 L 5 5 M 5 -5 L -5 5" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-</g>
-<!-- 结果文字：对齐到右侧列 -->
-<text x="220" y="40" font-family="JetBrains Mono, monospace" font-size="15" fill="#c62828" font-weight="bold">结果: PANIC!</text>
-<text x="220" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#ef5350">错误: 索引 2 位于 'ö' 内部 (字节 [C3, B6] 之间)</text>
-<text x="220" y="80" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">Rust 要求切片索引必须是完整的 UTF-8 字符边界</text>
-</g>
-</g>
-</g>
-<!-- 底部提示区 -->
-<g transform="translate(60, 560)">
-<rect x="0" y="0" width="680" height="45" fill="#fff3e0" rx="8"/>
-<text x="40" y="28" font-family="JetBrains Mono, monospace" font-size="13" fill="#e65100">核心规则: 字符串切片的索引必须落在 UTF-8 字符的起始字节上，否则会触发 Panic。</text>
-</g>
+<svg width="800" height="660" viewBox="0 0 800 660" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e3f2fd;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bbdefb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad-orange" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff8e1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffecb3;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="660" fill="#ffffff" rx="16" stroke="#eaeff2" stroke-width="1"/>
+  <rect width="800" height="80" fill="#f8fafc" rx="16" clip-path="inset(0 0 580 0)"/>
+
+  <!-- 标题 -->
+  <text x="400" y="38" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="24" font-weight="800" fill="#1e293b" text-anchor="middle">Rust 字符串切片安全边界</text>
+  <text x="400" y="62" font-family="JetBrains Mono, monospace" font-size="15" fill="#64748b" text-anchor="middle">"Löwe 🦁" (UTF-8 编码详解)</text>
+
+  <g transform="translate(60, 110)">
+    <!-- 垂直引导线 (Guide Lines) -->
+    <g stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,2">
+      <line x1="0" y1="40" x2="0" y2="440" />
+      <line x1="55" y1="40" x2="55" y2="440" />
+      <line x1="108" y1="40" x2="108" y2="440" />
+      <line x1="160" y1="40" x2="160" y2="440" />
+      <line x1="215" y1="40" x2="215" y2="440" />
+      <line x1="270" y1="40" x2="270" y2="440" />
+      <line x1="325" y1="40" x2="325" y2="440" />
+      <line x1="378" y1="40" x2="378" y2="440" />
+      <line x1="431" y1="40" x2="431" y2="440" />
+      <line x1="484" y1="40" x2="484" y2="440" />
+      <line x1="537" y1="40" x2="537" y2="440" />
+    </g>
+
+    <!-- 1. 原始字节层 -->
+    <g>
+      <text x="0" y="-15" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#2563eb">1. 原始字节层 (Raw Bytes)</text>
+      
+      <!-- L (1 byte) -->
+      <g>
+        <rect x="0" y="0" width="50" height="45" fill="url(#grad-blue)" stroke="#3b82f6" stroke-width="2" rx="6"/>
+        <text x="25" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">4C</text>
+        <text x="25" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">idx:0</text>
+      </g>
+
+      <!-- ö (2 bytes) -->
+      <g>
+        <rect x="55" y="0" width="100" height="45" fill="url(#grad-blue)" stroke="#3b82f6" stroke-width="2" rx="6"/>
+        <text x="80" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">C3</text>
+        <text x="80" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">1</text>
+        <line x1="105" y1="10" x2="105" y2="35" stroke="#bfdbfe" stroke-width="1"/>
+        <text x="130" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">B6</text>
+        <text x="130" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">2</text>
+      </g>
+
+      <!-- w (1 byte) -->
+      <g>
+        <rect x="160" y="0" width="50" height="45" fill="url(#grad-blue)" stroke="#3b82f6" stroke-width="2" rx="6"/>
+        <text x="185" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">77</text>
+        <text x="185" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">3</text>
+      </g>
+
+      <!-- e (1 byte) -->
+      <g>
+        <rect x="215" y="0" width="50" height="45" fill="url(#grad-blue)" stroke="#3b82f6" stroke-width="2" rx="6"/>
+        <text x="240" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">65</text>
+        <text x="240" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">4</text>
+      </g>
+
+      <!-- Space (1 byte) -->
+      <g>
+        <rect x="270" y="0" width="50" height="45" fill="url(#grad-blue)" stroke="#3b82f6" stroke-width="2" rx="6"/>
+        <text x="295" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">20</text>
+        <text x="295" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">5</text>
+      </g>
+
+      <!-- 🦁 (4 bytes) -->
+      <g>
+        <rect x="325" y="0" width="212" height="45" fill="url(#grad-blue)" stroke="#3b82f6" stroke-width="2" rx="6"/>
+        <text x="351" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">F0</text>
+        <text x="351" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">6</text>
+        <text x="404" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">9F</text>
+        <text x="404" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">7</text>
+        <text x="457" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">A6</text>
+        <text x="457" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">8</text>
+        <text x="510" y="28" font-family="JetBrains Mono, monospace" font-size="17" font-weight="600" fill="#1e40af" text-anchor="middle">81</text>
+        <text x="510" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#94a3b8" text-anchor="middle">9</text>
+      </g>
+    </g>
+
+    <!-- 2. Unicode 字符层 -->
+    <g transform="translate(0, 110)">
+      <text x="0" y="-15" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#d97706">2. Unicode 字符层 (Characters)</text>
+      <rect x="0" y="0" width="50" height="50" fill="url(#grad-orange)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3" rx="10"/>
+      <text x="25" y="34" font-family="Inter, sans-serif" font-size="26" font-weight="600" fill="#1e293b" text-anchor="middle">L</text>
+      
+      <rect x="55" y="0" width="100" height="50" fill="url(#grad-orange)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3" rx="10"/>
+      <text x="105" y="34" font-family="Inter, sans-serif" font-size="26" font-weight="600" fill="#1e293b" text-anchor="middle">ö</text>
+      
+      <rect x="160" y="0" width="50" height="50" fill="url(#grad-orange)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3" rx="10"/>
+      <text x="185" y="34" font-family="Inter, sans-serif" font-size="26" font-weight="600" fill="#1e293b" text-anchor="middle">w</text>
+      
+      <rect x="215" y="0" width="50" height="50" fill="url(#grad-orange)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3" rx="10"/>
+      <text x="240" y="34" font-family="Inter, sans-serif" font-size="26" font-weight="600" fill="#1e293b" text-anchor="middle">e</text>
+      
+      <rect x="270" y="0" width="50" height="50" fill="url(#grad-orange)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3" rx="10"/>
+      <text x="295" y="34" font-family="Inter, sans-serif" font-size="26" font-weight="600" fill="#1e293b" text-anchor="middle"> </text>
+      
+      <rect x="325" y="0" width="212" height="50" fill="url(#grad-orange)" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3" rx="10"/>
+      <text x="431" y="34" font-family="Inter, sans-serif" font-size="28" fill="#1e293b" text-anchor="middle">🦁</text>
+    </g>
+
+    <!-- 3. 切片逻辑层 -->
+    <g transform="translate(0, 230)">
+      <text x="0" y="-15" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#7c3aed">3. 切片操作场景对比 (Slicing Scenarios)</text>
+      
+      <!-- 场景 A: 合法切片 -->
+      <g transform="translate(0, 10)">
+        <rect x="0" y="0" width="680" height="90" fill="#f0fdf4" rx="12" stroke="#bbf7d0" stroke-width="1"/>
+        <text x="15" y="25" font-family="JetBrains Mono, monospace" font-size="14" fill="#166534" font-weight="700">合法边界: &amp;s[0..3]</text>
+        
+        <!-- 指示线 -->
+        <path d="M 0 55 L 160 55" fill="none" stroke="#22c55e" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="0" cy="55" r="5" fill="#22c55e"/>
+        <circle cx="160" cy="55" r="5" fill="#22c55e"/>
+
+        <!-- 成功 勾选标记 -->
+        <g transform="translate(190, 55)">
+          <circle r="14" fill="#22c55e"/>
+          <path d="M -7 0 L -2 5 L 7 -5" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- 结果文字 -->
+        <g transform="translate(230, 45)">
+          <text y="0" font-family="Inter, sans-serif" font-size="16" fill="#166534" font-weight="700">结果: "Lö" (成功)</text>
+          <text y="22" font-family="Inter, sans-serif" font-size="13" fill="#15803d">落在字符边界 (index 3 为 'w' 的起点)</text>
+        </g>
+      </g>
+
+      <!-- 场景 B: 非法切片 -->
+      <g transform="translate(0, 120)">
+        <rect x="0" y="0" width="680" height="110" fill="#fef2f2" rx="12" stroke="#fecaca" stroke-width="1"/>
+        <text x="15" y="25" font-family="JetBrains Mono, monospace" font-size="14" fill="#991b1b" font-weight="700">非法边界: &amp;s[0..2]</text>
+        
+        <!-- 指示线 -->
+        <path d="M 0 65 L 108 65" fill="none" stroke="#ef4444" stroke-width="4" stroke-dasharray="8,4" stroke-linecap="round"/>
+        <circle cx="0" cy="65" r="5" fill="#ef4444"/>
+        
+        <!-- 爆炸/Panic 标记 -->
+        <g transform="translate(108, 65)">
+          <circle r="14" fill="#ef4444"/>
+          <path d="M -6 -6 L 6 6 M 6 -6 L -6 6" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- 结果文字 -->
+        <g transform="translate(230, 45)">
+          <text y="0" font-family="Inter, sans-serif" font-size="17" fill="#991b1b" font-weight="800">结果: 💥 PANIC!</text>
+          <text y="24" font-family="Inter, sans-serif" font-size="13" fill="#b91c1c">错误: 索引 2 位于 'ö' 内部 (字节 [C3, B6] 之间)</text>
+          <text y="42" font-family="Inter, sans-serif" font-size="12" fill="#64748b" font-style="italic">Rust 强制要求切片索引必须是完整的 UTF-8 字符边界</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- 底部提示区 -->
+  <g transform="translate(60, 600)">
+    <rect x="0" y="0" width="680" height="40" fill="#fffbeb" rx="8" stroke="#fef3c7" stroke-width="1"/>
+    <text x="340" y="25" font-family="Inter, sans-serif" font-size="13" fill="#92400e" text-anchor="middle" font-weight="500">
+      💡 核心规则: 字符串切片的索引必须落在 <tspan font-weight="700" fill="#78350f">UTF-8 字符的起始字节</tspan> 上，否则运行时会触发 Panic。
+    </text>
+  </g>
 </svg>
