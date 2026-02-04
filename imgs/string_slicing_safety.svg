@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="620" viewBox="0 0 800 620" xmlns="http://www.w3.org/2000/svg">
+<rect width="800" height="620" fill="#f8f9fa" rx="12"/>
+<!-- 标题 -->
+<text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">Rust 字符串切片安全边界图解</text>
+<text x="400" y="60" font-family="JetBrains Mono, monospace" font-size="14" fill="#78909c" text-anchor="middle">字符串内容: "Löwe 🦁" (UTF-8 编码)</text>
+<g transform="translate(60, 90)">
+<!-- 垂直引导线 (Guide Lines) -->
+<g stroke="#cfd8dc" stroke-width="1" stroke-dasharray="4,4">
+  <line x1="0" y1="45" x2="0" y2="440" />
+  <line x1="55" y1="45" x2="55" y2="440" />
+  <line x1="110" y1="45" x2="110" y2="440" />
+  <line x1="165" y1="45" x2="165" y2="440" />
+</g>
+<!-- 1. 原始字节层 -->
+<text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2196f3">1. 原始字节层 (Raw Bytes)</text>
+<g>
+<!-- L -->
+<rect x="0" y="0" width="50" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+<text x="25" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">4C</text>
+<text x="25" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">idx:0</text>
+<!-- ö -->
+<rect x="55" y="0" width="105" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+<text x="80" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">C3</text>
+<text x="80" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">1</text>
+<text x="135" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">B6</text>
+<text x="135" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">2</text>
+<!-- w -->
+<rect x="165" y="0" width="50" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+<text x="190" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">77</text>
+<text x="190" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">3</text>
+<!-- e -->
+<rect x="220" y="0" width="50" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+<text x="245" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">65</text>
+<text x="245" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">4</text>
+<!-- Space -->
+<rect x="275" y="0" width="50" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+<text x="300" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">20</text>
+<text x="300" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">5</text>
+<!-- 🦁 -->
+<rect x="330" y="0" width="215" height="45" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+<text x="357" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">F0</text>
+<text x="357" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">6</text>
+<text x="411" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">9F</text>
+<text x="411" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">7</text>
+<text x="465" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">A6</text>
+<text x="465" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">8</text>
+<text x="519" y="28" font-family="JetBrains Mono, monospace" font-size="16" fill="#0d47a1" text-anchor="middle">81</text>
+<text x="519" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">9</text>
+</g>
+<!-- 2. Unicode 字符层 -->
+<g transform="translate(0, 110)">
+<text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ff9800">2. Unicode 字符层 (Characters)</text>
+<rect x="0" y="0" width="50" height="50" fill="#fff8e1" stroke="#ff9800" stroke-width="2" stroke-dasharray="4" rx="8"/>
+<text x="25" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">L</text>
+<rect x="55" y="0" width="105" height="50" fill="#fff8e1" stroke="#ff9800" stroke-width="2" stroke-dasharray="4" rx="8"/>
+<text x="107" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">ö</text>
+<rect x="165" y="0" width="50" height="50" fill="#fff8e1" stroke="#ff9800" stroke-width="2" stroke-dasharray="4" rx="8"/>
+<text x="190" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">w</text>
+<rect x="220" y="0" width="50" height="50" fill="#fff8e1" stroke="#ff9800" stroke-dasharray="4" rx="8"/>
+<text x="245" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">e</text>
+<rect x="275" y="0" width="50" height="50" fill="#fff8e1" stroke="#ff9800" stroke-dasharray="4" rx="8"/>
+<text x="300" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle"> </text>
+<rect x="330" y="0" width="215" height="50" fill="#fff8e1" stroke="#ff9800" stroke-dasharray="4" rx="8"/>
+<text x="437" y="32" font-family="JetBrains Mono, monospace" font-size="24" fill="#333333" text-anchor="middle">🦁</text>
+</g>
+<!-- 3. 切片逻辑层 -->
+<g transform="translate(0, 230)">
+<text x="0" y="-15" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#9c27b0">3. 切片操作场景对比 (Slicing Scenarios)</text>
+<!-- 场景 A: 合法切片 -->
+<g transform="translate(0, 10)">
+<rect x="0" y="0" width="680" height="85" fill="#e8f5e9" rx="8" opacity="0.6"/>
+<text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="14" fill="#2e7d32" font-weight="bold">合法边界: &amp;s[0..3]</text>
+<!-- 指示线 -->
+<path d="M 0 52 L 165 52" fill="none" stroke="#4caf50" stroke-width="3"/>
+<circle cx="0" cy="52" r="4" fill="#4caf50"/>
+<!-- 成功 勾选标记 -->
+<g transform="translate(165, 52)">
+  <circle r="12" fill="#4caf50"/>
+  <path d="M -6 0 L -2 4 L 6 -4" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<!-- 结果文字：对齐到右侧列 -->
+<text x="220" y="38" font-family="JetBrains Mono, monospace" font-size="15" fill="#2e7d32" font-weight="bold">结果: "Lö" (成功)</text>
+<text x="220" y="58" font-family="JetBrains Mono, monospace" font-size="12" fill="#66bb6a">落在字符边界 (index 3 为 'w' 的起点)</text>
+</g>
+<!-- 场景 B: 非法切片 -->
+<g transform="translate(0, 110)">
+<rect x="0" y="0" width="680" height="110" fill="#ffebee" rx="8" opacity="0.6"/>
+<text x="15" y="20" font-family="JetBrains Mono, monospace" font-size="14" fill="#c62828" font-weight="bold">非法边界: &amp;s[0..2]</text>
+<!-- 指示线 -->
+<path d="M 0 65 L 110 65" fill="none" stroke="#ef5350" stroke-width="3" stroke-dasharray="6,3"/>
+<circle cx="0" cy="65" r="4" fill="#ef5350"/>
+<!-- Panic 交叉标记 -->
+<g transform="translate(110, 65)">
+  <circle r="12" fill="#ef5350"/>
+  <path d="M -5 -5 L 5 5 M 5 -5 L -5 5" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+</g>
+<!-- 结果文字：对齐到右侧列 -->
+<text x="220" y="40" font-family="JetBrains Mono, monospace" font-size="15" fill="#c62828" font-weight="bold">结果: PANIC!</text>
+<text x="220" y="62" font-family="JetBrains Mono, monospace" font-size="12" fill="#ef5350">错误: 索引 2 位于 'ö' 内部 (字节 [C3, B6] 之间)</text>
+<text x="220" y="80" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">Rust 要求切片索引必须是完整的 UTF-8 字符边界</text>
+</g>
+</g>
+</g>
+<!-- 底部提示区 -->
+<g transform="translate(60, 560)">
+<rect x="0" y="0" width="680" height="45" fill="#fff3e0" rx="8"/>
+<text x="40" y="28" font-family="JetBrains Mono, monospace" font-size="13" fill="#e65100">核心规则: 字符串切片的索引必须落在 UTF-8 字符的起始字节上，否则会触发 Panic。</text>
+</g>
+</svg>
