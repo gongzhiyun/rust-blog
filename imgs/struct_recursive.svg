@@ -1,0 +1,99 @@
+<svg width="800" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="520" fill="#f8f9fa" rx="12"/>
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#ff9800" />
+    </marker>
+  </defs>
+
+  <!-- Header Section -->
+  <g transform="translate(400, 45)">
+    <text font-family="JetBrains Mono, monospace" font-size="24" font-weight="bold" fill="#333333" text-anchor="middle">递归结构体与内存排布</text>
+    <text y="28" font-family="JetBrains Mono, monospace" font-size="14" fill="#78909c" text-anchor="middle">Recursive Structs &amp; Memory Allocation</text>
+  </g>
+
+  <!-- Scenario A: Error Card -->
+  <g transform="translate(40, 110)">
+    <rect width="350" height="360" fill="#ffffff" stroke="#e0e0e0" rx="8" stroke-width="1"/>
+    <rect width="350" height="40" fill="#ffebee" rx="8" clip-path="inset(0 0 320 0)"/>
+    <text x="20" y="26" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#ef5350">直接递归 (编译失败)</text>
+    
+    <!-- Code -->
+    <text x="20" y="75" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">struct List { val: i32, next: List }</text>
+    
+    <!-- Infinite Nesting Visualization -->
+    <g transform="translate(175, 200)">
+      <!-- Base Layer -->
+      <rect x="-90" y="-70" width="180" height="130" rx="4" fill="#ffebee" stroke="#ef5350" stroke-width="2"/>
+      <text x="-80" y="-55" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#c62828">Instance 1</text>
+      <rect x="-75" y="-40" width="150" height="25" rx="2" fill="#fff" stroke="#ef9a9a"/>
+      <text x="0" y="-23" font-family="JetBrains Mono, monospace" font-size="10" fill="#b71c1c" text-anchor="middle">val: i32 (4B)</text>
+      
+      <!-- Nesting Level 2 -->
+      <rect x="-75" y="-5" width="150" height="55" rx="4" fill="#ffffff" stroke="#ef5350" stroke-width="1.5" stroke-dasharray="4 2"/>
+      <text x="-65" y="10" font-family="JetBrains Mono, monospace" font-size="9" font-weight="bold" fill="#c62828">next: List (Inst 2)</text>
+      
+      <!-- Nesting Level 3 -->
+      <rect x="-60" y="20" width="120" height="25" rx="2" fill="#ef9a9a" stroke="#ef5350" stroke-width="1" stroke-dasharray="2 1"/>
+      <text x="0" y="38" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#b71c1c" text-anchor="middle">∞ RECURSION</text>
+    </g>
+
+    <text x="20" y="340" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef5350">⚠️ 编译器无法确定无限嵌套结构的大小。</text>
+  </g>
+
+  <!-- Scenario B: Success Card -->
+  <g transform="translate(410, 110)">
+    <rect width="350" height="360" fill="#ffffff" stroke="#e0e0e0" rx="8" stroke-width="1"/>
+    <rect width="350" height="40" fill="#e8f5e9" rx="8" clip-path="inset(0 0 320 0)"/>
+    <text x="20" y="26" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#4caf50">间接递归 (Box 堆分配)</text>
+
+    <!-- Code -->
+    <text x="20" y="75" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">struct List { val: i32, next: Box&lt;List&gt; }</text>
+
+    <!-- Memory Layout -->
+    <g transform="translate(30, 110)">
+      <!-- Stack -->
+      <text x="45" y="10" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2196f3" text-anchor="middle">Stack (栈)</text>
+      <rect y="20" width="90" height="180" rx="4" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
+      
+      <g transform="translate(5, 30)">
+        <rect width="80" height="40" rx="2" fill="#ffffff" stroke="#bbdefb"/>
+        <text x="40" y="20" font-family="JetBrains Mono, monospace" font-size="10" fill="#333" text-anchor="middle">val: i32</text>
+        <text x="40" y="32" font-family="JetBrains Mono, monospace" font-size="8" fill="#78909c" text-anchor="middle">4 Bytes</text>
+      </g>
+      
+      <g transform="translate(5, 75)">
+        <rect width="80" height="30" rx="2" fill="#f5f5f5" stroke="#e0e0e0" stroke-dasharray="2"/>
+        <text x="40" y="18" font-family="JetBrains Mono, monospace" font-size="9" fill="#999" text-anchor="middle">Padding</text>
+      </g>
+      
+      <g transform="translate(5, 110)">
+        <rect width="80" height="80" rx="2" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+        <text x="40" y="35" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#e65100" text-anchor="middle">Box&lt;T&gt;</text>
+        <text x="40" y="55" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c" text-anchor="middle">Pointer</text>
+        <text x="40" y="68" font-family="JetBrains Mono, monospace" font-size="8" fill="#78909c" text-anchor="middle">8 Bytes</text>
+      </g>
+
+      <!-- Heap -->
+      <text x="235" y="10" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#4caf50" text-anchor="middle">Heap (堆)</text>
+      <rect x="170" y="20" width="130" height="120" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+      <rect x="185" y="35" width="100" height="85" rx="2" fill="#ffffff" stroke="#a5d6a7"/>
+      <text x="235" y="70" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#1b5e20" text-anchor="middle">List Instance</text>
+      <text x="235" y="85" font-family="JetBrains Mono, monospace" font-size="8" fill="#78909c" text-anchor="middle">(Size: 16B)</text>
+      <text x="235" y="100" font-family="JetBrains Mono, monospace" font-size="8" fill="#78909c" text-anchor="middle">Fixed Size</text>
+
+      <!-- Pointer Arrow -->
+      <path d="M 85 150 C 120 150, 140 75, 170 75" stroke="#ff9800" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+      <text x="130" y="100" font-family="JetBrains Mono, monospace" font-size="9" fill="#e65100" transform="rotate(-15, 130, 100)">Points to</text>
+    </g>
+
+    <text x="20" y="340" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">💡 指针使栈上大小固定，从而允许递归。</text>
+  </g>
+
+  <!-- Footer Info -->
+  <g transform="translate(400, 495)">
+    <text font-family="JetBrains Mono, monospace" font-size="12" fill="#90a4ae" text-anchor="middle">Rust 通过堆分配或引用打破“物理包含”，实现递归数据结构</text>
+  </g>
+</svg>
