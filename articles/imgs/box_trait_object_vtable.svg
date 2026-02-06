@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="960" height="560" viewBox="0 0 960 560" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect x="0" y="0" width="960" height="560" rx="12" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
+<text x="480" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">Box&lt;dyn Trait&gt; 深度内存布局图解</text>
+<g transform="translate(40, 100)">
+<rect x="0" y="0" width="280" height="420" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+<text x="140" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#0d47a1">Stack (栈)</text>
+<g transform="translate(30, 80)">
+<rect x="0" y="0" width="220" height="160" rx="8" fill="#ffffff" stroke="#2196f3" stroke-width="1.5"/>
+<text x="110" y="-15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#0d47a1">胖指针 (Fat Pointer)</text>
+<rect x="10" y="15" width="200" height="60" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5"/>
+<text x="20" y="40" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#333333">data_ptr</text>
+<text x="20" y="60" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">指向具体数据的内存地址</text>
+<rect x="10" y="85" width="200" height="60" rx="4" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
+<text x="20" y="110" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#333333">vtable_ptr</text>
+<text x="20" y="130" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">指向虚函数表 (只读区)</text>
+</g>
+<text x="140" y="300" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">usize (8 Bytes) x 2</text>
+<text x="140" y="320" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">总计 16 字节</text>
+</g>
+<g transform="translate(420, 80)">
+<rect x="0" y="0" width="240" height="180" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+<text x="120" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#1b5e20">Heap (堆)</text>
+<g transform="translate(25, 60)">
+<rect x="0" y="0" width="190" height="90" rx="6" fill="#ffffff" stroke="#4caf50" stroke-width="1.5"/>
+<text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1b5e20">Concrete Instance</text>
+<text x="10" y="50" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">field_1: 42</text>
+<text x="10" y="70" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">field_2: "Rust"</text>
+</g>
+</g>
+<g transform="translate(420, 300)">
+<rect x="0" y="0" width="240" height="220" rx="10" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+<text x="120" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#4a148c">VTable (虚表)</text>
+<g transform="translate(20, 45)">
+<rect x="0" y="0" width="200" height="155" rx="6" fill="#ffffff" stroke="#9c27b0" stroke-width="1.5"/>
+<text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">Metadata:</text>
+<text x="10" y="40" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#4a148c">drop_in_place</text>
+<text x="10" y="60" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#4a148c">size: 24 | align: 8</text>
+<line x1="0" y1="70" x2="200" y2="70" stroke="#e1bee7" stroke-width="1"/>
+<text x="10" y="85" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">Trait Methods:</text>
+<text x="10" y="105" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#9c27b0">method_1() ptr</text>
+<text x="10" y="135" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#9c27b0">method_2() ptr</text>
+</g>
+</g>
+<g transform="translate(740, 350)">
+<rect x="0" y="0" width="180" height="150" rx="8" fill="#eceff1" stroke="#607d8b" stroke-width="2"/>
+<text x="90" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#37474f">Text Section (代码)</text>
+<rect x="15" y="45" width="150" height="25" rx="4" fill="#ffffff" stroke="#607d8b" stroke-width="1"/>
+<text x="25" y="62" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">fn drop_in_place()</text>
+<rect x="15" y="80" width="150" height="25" rx="4" fill="#ffffff" stroke="#607d8b" stroke-width="1"/>
+<text x="25" y="97" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">fn implement_1()</text>
+<rect x="15" y="115" width="150" height="25" rx="4" fill="#ffffff" stroke="#607d8b" stroke-width="1"/>
+<text x="25" y="132" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">fn implement_2()</text>
+</g>
+<defs>
+  <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+    <path d="M0,2.5 L10,5 L0,7.5 Z" fill="#ff9800"/>
+  </marker>
+  <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto">
+    <path d="M0,2.5 L10,5 L0,7.5 Z" fill="#9c27b0"/>
+  </marker>
+  <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+    <path d="M0,2 L8,4 L0,6 Z" fill="#78909c"/>
+  </marker>
+</defs>
+<path d="M 290 225 L 320 225 C 370 225, 370 185, 420 185" stroke="#ff9800" stroke-width="2" fill="none" marker-end="url(#arrow-orange)"/>
+<path d="M 290 295 L 320 295 C 380 295, 360 422.5, 420 422.5" stroke="#9c27b0" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+<path d="M 640 385 C 680 385, 700 407.5, 740 407.5" stroke="#78909c" stroke-width="1.2" stroke-dasharray="4,2" fill="none" marker-end="url(#arrow-gray)"/>
+<path d="M 640 450 C 680 450, 700 442.5, 740 442.5" stroke="#78909c" stroke-width="1.2" stroke-dasharray="4,2" fill="none" marker-end="url(#arrow-gray)"/>
+<path d="M 640 480 C 680 480, 700 477.5, 740 477.5" stroke="#78909c" stroke-width="1.2" stroke-dasharray="4,2" fill="none" marker-end="url(#arrow-gray)"/>
+</svg>

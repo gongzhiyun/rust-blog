@@ -14,7 +14,7 @@
 <text x="450" y="50" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#1b5e20">Heap (堆)</text>
 <!-- RcBox on Heap -->
 <rect x="340" y="70" width="220" height="180" rx="6" fill="#ffffff" stroke="#2e7d32" stroke-width="1.5"/>
-<text x="450" y="95" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1b5e20">RcBox&lt;T&gt;</text>
+<text x="450" y="95" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1b5e20">Rc 堆内存块</text>
 <line x1="340" y1="105" x2="560" y2="105" stroke="#2e7d32" stroke-width="1"/>
 <!-- Reference Counts -->
 <text x="355" y="130" font-family="monospace" font-size="12" fill="#333333">strong: 1</text>

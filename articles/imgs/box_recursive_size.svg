@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="480" rx="12" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" fill="#333333">递归类型：从尺寸爆炸到常量大小</text>
+
+  <!-- Left Side: Infinite Expansion -->
+  <g transform="translate(40, 70)">
+    <!-- Container -->
+    <rect width="340" height="380" rx="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <rect width="340" height="40" rx="10" fill="#ffebee" stroke="#ef5350" stroke-width="2"/>
+    <text x="170" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#c62828">非法的递归定义 (Infinite Size)</text>
+    
+    <!-- Code Snippet -->
+    <rect x="20" y="55" width="300" height="35" rx="4" fill="#f5f5f5" stroke="#d0d0d0"/>
+    <text x="170" y="77" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">enum List { Cons(i32, List), Nil }</text>
+    
+    <!-- Memory Layout Visualization -->
+    <g transform="translate(60, 110)">
+      <text x="110" y="-8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#c62828">Memory (内存布局)</text>
+      
+      <!-- Outer Box -->
+      <rect width="220" height="200" rx="6" fill="#ffebee" stroke="#ef5350" stroke-width="1.5" stroke-dasharray="4,2"/>
+      
+      <!-- Slot 1: i32 -->
+      <rect x="10" y="10" width="200" height="35" rx="3" fill="#ffffff" stroke="#ef5350" stroke-width="1"/>
+      <text x="110" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">i32 (4 bytes)</text>
+      
+      <!-- Slot 2: Recursive List -->
+      <g transform="translate(10, 55)">
+        <rect width="200" height="135" rx="3" fill="#ffffff" stroke="#ef5350" stroke-width="1" stroke-dasharray="2,1"/>
+        <text x="100" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#c62828" font-weight="bold">field: List (Recursive)</text>
+        
+        <!-- Nested Content -->
+        <g transform="translate(10, 30)">
+          <rect width="180" height="30" rx="2" fill="#ffebee" stroke="#ef5350" stroke-width="0.5"/>
+          <text x="90" y="20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333">i32 (4 bytes)</text>
+          
+          <g transform="translate(0, 40)">
+            <rect width="180" height="55" rx="2" fill="#ffebee" stroke="#ef5350" stroke-width="0.5" stroke-dasharray="1,1"/>
+            <text x="90" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ef5350">∞ 递归嵌套</text>
+            <text x="90" y="45" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#c62828">尺寸理论上趋于无限</text>
+          </g>
+        </g>
+      </g>
+    </g>
+    
+    <!-- Bottom Warning -->
+    <text x="170" y="355" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#c62828" font-weight="bold">Error: recursive type has infinite size</text>
+    <text x="170" y="375" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">编译器在编译期无法计算其大小</text>
+  </g>
+
+  <!-- Right Side: Box Indirection -->
+  <g transform="translate(420, 70)">
+    <!-- Container -->
+    <rect width="340" height="380" rx="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <rect width="340" height="40" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+    <text x="170" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">Box 引入间接层 (Fixed Size)</text>
+    
+    <!-- Code Snippet -->
+    <rect x="20" y="55" width="300" height="35" rx="4" fill="#f5f5f5" stroke="#d0d0d0"/>
+    <text x="170" y="77" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">enum List { Cons(i32, Box&lt;List&gt;), Nil }</text>
+    
+    <!-- Stack Section -->
+    <g transform="translate(30, 110)">
+      <text x="65" y="-8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2196f3">Stack (栈)</text>
+      <rect width="130" height="100" rx="6" fill="#e3f2fd" stroke="#2196f3" stroke-width="1.5"/>
+      
+      <rect x="10" y="10" width="110" height="35" rx="3" fill="#ffffff" stroke="#2196f3" stroke-width="1"/>
+      <text x="65" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">i32 (4 bytes)</text>
+      
+      <rect x="10" y="50" width="110" height="40" rx="3" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+      <text x="65" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#e65100" font-weight="bold">Box&lt;List&gt;</text>
+      <text x="65" y="85" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#78909c">(8 bytes ptr)</text>
+    </g>
+
+    <!-- Heap Section -->
+    <g transform="translate(185, 220)">
+      <text x="65" y="-8" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#4caf50">Heap (堆)</text>
+      <rect width="130" height="90" rx="6" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+      
+      <rect x="10" y="10" width="110" height="70" rx="4" fill="#ffffff" stroke="#4caf50" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="65" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#2e7d32" font-weight="bold">Next Node</text>
+      <text x="65" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333">Cons or Nil</text>
+    </g>
+
+    <!-- Arrow -->
+    <path d="M 160,185 C 200,185 200,195 200,220" fill="none" stroke="#ff9800" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+      </marker>
+    </defs>
+    
+    <!-- Indirection Label -->
+    <rect x="180" y="170" width="80" height="20" rx="10" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
+    <text x="220" y="184" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e65100" font-weight="bold">间接寻址</text>
+    
+    <!-- Result Text -->
+    <text x="170" y="355" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#2e7d32" font-weight="bold">通过 Box 消除递归嵌套</text>
+    <text x="170" y="375" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">编译器可以确定栈上空间大小</text>
+  </g>
+</svg>

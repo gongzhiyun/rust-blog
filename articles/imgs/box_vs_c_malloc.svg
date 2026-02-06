@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="850" height="500" viewBox="0 0 850 500" xmlns="http://www.w3.org/2000/svg">
+<rect width="850" height="500" rx="12" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
+<text x="425" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">Box&lt;T&gt; vs C malloc：手动管理与自动 RAII 的深度对比</text>
+<!-- C Language Side -->
+<g transform="translate(40, 70)">
+<rect width="360" height="340" rx="10" fill="#ffffff" stroke="#ef5350" stroke-width="1.5"/>
+<rect width="360" height="40" rx="10" fill="#ffebee" stroke="none"/>
+<path d="M 0 40 L 360 40" stroke="#ef5350" stroke-width="1.5"/>
+<text x="180" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#c62828">C 语言 (手动管理)</text>
+<!-- Code Area -->
+<g transform="translate(20, 60)">
+<text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">int *p = (int*)malloc(sizeof(int));</text>
+<text x="0" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef5350" font-weight="bold">// 必须检查是否为 NULL，否则崩溃</text>
+<text x="0" y="45" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">if (p == NULL) return;</text>
+<text x="0" y="75" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">*p = 5;</text>
+<text x="0" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef5350" font-weight="bold">// 必须手动释放，否则内存泄漏</text>
+<text x="0" y="125" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">free(p);</text>
+<text x="0" y="145" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef5350" font-weight="bold">// p 仍指向原地址，成为悬垂指针</text>
+</g>
+<!-- Visualization Area -->
+<g transform="translate(20, 245)">
+<text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#78909c">内存状态：</text>
+<rect x="0" y="15" width="80" height="30" rx="4" fill="#e3f2fd" stroke="#2196f3"/>
+<text x="40" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#2196f3">指针 p</text>
+<path d="M 80 30 L 140 30" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)"/>
+<rect x="150" y="15" width="80" height="30" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+<text x="190" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#4caf50">堆内存</text>
+<text x="150" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef5350">风险：遗忘 free() → 泄漏</text>
+<text x="150" y="80" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef5350">风险：多次 free() → 崩溃</text>
+</g>
+</g>
+<!-- Rust Side -->
+<g transform="translate(450, 70)">
+<rect width="360" height="340" rx="10" fill="#ffffff" stroke="#4caf50" stroke-width="1.5"/>
+<rect width="360" height="40" rx="10" fill="#e8f5e9" stroke="none"/>
+<path d="M 0 40 L 360 40" stroke="#4caf50" stroke-width="1.5"/>
+<text x="180" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#2e7d32">Rust (Box&lt;T&gt; RAII)</text>
+<!-- Code Area -->
+<g transform="translate(20, 60)">
+<text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">let b = Box::new(5);</text>
+<text x="0" y="30" font-family="JetBrains Mono, monospace" font-size="11" fill="#4caf50" font-weight="bold">// 编译期保证分配成功 (或 Panic)</text>
+<text x="0" y="50" font-family="JetBrains Mono, monospace" font-size="11" fill="#4caf50" font-weight="bold">// 拥有所有权，自动管理生命周期</text>
+<text x="0" y="100" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">} // &lt;-- 作用域结束</text>
+<text x="0" y="125" font-family="JetBrains Mono, monospace" font-size="11" fill="#4caf50" font-weight="bold">// 自动调用 Drop::drop()</text>
+<text x="0" y="145" font-family="JetBrains Mono, monospace" font-size="11" fill="#4caf50" font-weight="bold">// 自动释放内存，无须手动干预</text>
+</g>
+<!-- Visualization Area -->
+<g transform="translate(20, 245)">
+<text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#78909c">内存状态：</text>
+<rect x="0" y="15" width="80" height="30" rx="4" fill="#e3f2fd" stroke="#2196f3"/>
+<text x="40" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#2196f3">Box b</text>
+<path d="M 80 30 L 140 30" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)"/>
+<rect x="150" y="15" width="80" height="30" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+<text x="190" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#4caf50">堆内存</text>
+<path d="M 240 15 L 260 15 L 260 45 L 240 45" fill="none" stroke="#4caf50" stroke-width="1.5"/>
+<text x="270" y="35" font-family="JetBrains Mono, monospace" font-size="11" fill="#2e7d32">生命周期绑定</text>
+<text x="0" y="80" font-family="JetBrains Mono, monospace" font-size="12" fill="#2e7d32" font-weight="bold">安全：编译期消除内存风险</text>
+</g>
+</g>
+<!-- Summary Bottom -->
+<g transform="translate(40, 430)">
+<rect width="770" height="50" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+<text x="20" y="30" font-family="JetBrains Mono, monospace" font-size="14" fill="#333333"><tspan font-weight="bold" fill="#9c27b0">核心差异：</tspan>C 依赖程序员的记忆力与谨慎；Rust 依赖类型系统与 RAII 机制实现内存安全。</text>
+</g>
+<defs>
+<marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#ff9800"/>
+</marker>
+</defs>
+</svg>

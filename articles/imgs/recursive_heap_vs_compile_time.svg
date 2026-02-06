@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="400" rx="12" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">编译期确定性 vs 运行时动态性</text>
+
+  <!-- Left Side: Compile Time (Static) -->
+  <g transform="translate(50, 80)">
+    <rect width="320" height="280" rx="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <rect width="320" height="40" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+    <text x="160" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">编译期：关注“句柄”大小</text>
+    
+    <!-- Stack Frame -->
+    <g transform="translate(40, 60)">
+      <text x="0" y="20" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">Stack Frame</text>
+      <rect x="0" y="30" width="240" height="120" rx="4" fill="#f5f5f5" stroke="#d0d0d0"/>
+      
+      <!-- Box Variable -->
+      <rect x="20" y="50" width="200" height="40" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
+      <text x="120" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#e65100">Box&lt;Node&gt; (8 bytes)</text>
+      
+      <text x="120" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">编译器只关心这 8 个字节</text>
+    </g>
+    
+    <text x="160" y="250" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333" font-weight="bold">确定性 (Deterministic)</text>
+    <text x="160" y="265" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">无论递归多深，栈上永远是 8 字节</text>
+  </g>
+
+  <!-- Right Side: Runtime (Dynamic) -->
+  <g transform="translate(430, 80)">
+    <rect width="320" height="280" rx="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <rect width="320" height="40" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+    <text x="160" y="26" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">运行时：关注“实体”深度</text>
+    
+    <!-- Heap Growth -->
+    <g transform="translate(40, 60)">
+      <text x="0" y="20" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">Heap Memory</text>
+      
+      <!-- Node 1 -->
+      <rect x="0" y="30" width="100" height="40" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+      <text x="50" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Node 1</text>
+      
+      <!-- Arrow -->
+      <path d="M 100,50 L 130,50" fill="none" stroke="#4caf50" stroke-width="1" marker-end="url(#arrowhead_green)"/>
+      
+      <!-- Node 2 -->
+      <rect x="135" y="30" width="100" height="40" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+      <text x="185" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Node 2</text>
+      
+      <!-- Arrow -->
+      <path d="M 185,70 L 185,100" fill="none" stroke="#4caf50" stroke-width="1" marker-end="url(#arrowhead_green)"/>
+      
+      <!-- Node 3 -->
+      <rect x="135" y="105" width="100" height="40" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+      <text x="185" y="130" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Node 3...</text>
+      
+      <defs>
+        <marker id="arrowhead_green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#4caf50" />
+        </marker>
+      </defs>
+    </g>
+    
+    <text x="160" y="250" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333" font-weight="bold">动态性 (Dynamic)</text>
+    <text x="160" y="265" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">总大小取决于运行时插入了多少数据</text>
+  </g>
+
+  <!-- Connection -->
+  <path d="M 290,160 C 350,160 370,140 430,140" fill="none" stroke="#ff9800" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="360" y="130" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#e65100" font-weight="bold">解耦 (Decoupling)</text>
+</svg>

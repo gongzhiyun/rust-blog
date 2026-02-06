@@ -18,7 +18,7 @@
 4.  **[特征 (Trait)](./articles/Trait.md)** - 接口抽象的底层实现
 5.  **[生命周期 (Lifetime)](./articles/Lifetime.md)** - 引用安全的时空边界
 6.  **[高级特征 (Trait Advanced)](./articles/Trait_Advanced.md)** - 泛型与关联类型深度解析
-7.  **[智能指针 Box](./articles/Box.md)** - 堆内存分配的基础
+7.  **[智能指针 Box](./articles/Box.md)** - 堆内存分配与尺寸适配的艺术
 8.  **[引用计数 Rc](./articles/Rc.md)** - 单线程共享所有权
 9.  **[原子引用计数 Arc](./articles/Arc.md)** - 多线程共享所有权
 10. **[迭代器 (Iterator)](./articles/Iterator.md)** - 零成本抽象的艺术
@@ -35,11 +35,12 @@
 
 ## 🖼️ 核心图解示例
 
-例如，在 [Iterator.md](./articles/Iterator.md) 中，通过以下图解展示了迭代器的逻辑流水线与物理内存布局的深度统一：
+在 [Box.md](./articles/Box.md) 中，通过直观的对比展示了 `Box` 如何将栈上的固定尺寸指针映射到堆上的动态数据：
 
 <div align="center">
-  <img src="./articles/imgs/iterator_comprehensive.svg" alt="迭代器逻辑流水线与内存布局全景图" width="800" />
+  <img src="./articles/imgs/box_layout.svg" alt="Box 内存布局图解" width="800" />
 </div>
+
 
 ---
 
