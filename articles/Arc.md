@@ -1,4 +1,4 @@
-# 图解 Rust：Arc<T> (Atomic Reference Counted)
+# 图解 Rust Arc： 多线程环境下的原子引用计数与共享所有权
 
 在 Rust 的并发世界中，`Arc<T>` (Atomic Reference Counted) 是处理多线程所有权共享的“瑞士军刀”。如果你曾因 `Rc<T>` 无法在线程间安全传递而苦恼，或者在 C++ 中因 `std::shared_ptr` 的线程安全边界模糊而踩坑，那么深入理解 `Arc` 的设计哲学将是你迈向 Rust 并发高手的必经之路。
 
