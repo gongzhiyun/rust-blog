@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+  <rect width="800" height="450" fill="#f8f9fa" rx="12"/>
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#78909c" />
+    </marker>
+  </defs>
+  <text x="400" y="45" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">泛型与特征约束 (Trait Bounds)</text>
+  <text x="400" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#78909c">编译期类型筛选机制</text>
+  <!-- Input Types Section -->
+  <g transform="translate(60, 120)">
+    <text x="60" y="-20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#2196f3">输入候选类型</text>
+    <!-- i32 -->
+    <g transform="translate(0, 0)">
+      <rect width="120" height="45" rx="8" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" filter="url(#shadow)"/>
+      <text x="60" y="28" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#1565c0">i32</text>
+      <path d="M 120 22.5 L 235 22.5" stroke="#78909c" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="4,2"/>
+    </g>
+    <!-- String -->
+    <g transform="translate(0, 70)">
+      <rect width="120" height="45" rx="8" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" filter="url(#shadow)"/>
+      <text x="60" y="28" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#1565c0">String</text>
+      <path d="M 120 22.5 L 235 22.5" stroke="#78909c" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="4,2"/>
+    </g>
+    <!-- Vec<T> -->
+    <g transform="translate(0, 140)">
+      <rect width="120" height="45" rx="8" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" filter="url(#shadow)"/>
+      <text x="60" y="28" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#1565c0">Vec&lt;T&gt;</text>
+      <path d="M 120 22.5 L 235 22.5" stroke="#78909c" stroke-width="2" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="4,2"/>
+    </g>
+  </g>
+  <!-- The Filter (Trait Bound) -->
+  <g transform="translate(300, 100)">
+    <rect width="180" height="280" rx="20" fill="#f3e5f5" stroke="#9c27b0" stroke-width="3" filter="url(#shadow)"/>
+    <text x="90" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#9c27b0">特征约束门槛</text>
+    <rect x="30" y="60" width="120" height="40" rx="4" fill="#ffffff" stroke="#9c27b0" stroke-width="1"/>
+    <text x="90" y="85" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#7b1fa2">T: Display</text>
+    <!-- Sieve/Filter Visualization -->
+    <line x1="20" y1="120" x2="160" y2="120" stroke="#9c27b0" stroke-width="2" stroke-dasharray="2,2"/>
+    <circle cx="90" cy="180" r="40" fill="none" stroke="#9c27b0" stroke-width="2" stroke-dasharray="5,3"/>
+    <text x="90" y="175" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#9c27b0">匹配能力检查</text>
+    <text x="90" y="195" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">(静态检查)</text>
+    <path d="M 180 80 L 255 35" stroke="#4caf50" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+    <path d="M 180 205 L 255 205" stroke="#ef5350" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  </g>
+  <!-- Results Section -->
+  <g transform="translate(560, 120)">
+    <!-- Success -->
+    <g transform="translate(0, -30)">
+      <rect width="180" height="90" rx="12" fill="#e8f5e9" stroke="#4caf50" stroke-width="2" filter="url(#shadow)"/>
+      <text x="90" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#2e7d32">编译通过 (Pass)</text>
+      <text x="90" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#4caf50">类型已实现 Display</text>
+      <text x="90" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">i32, String</text>
+    </g>
+    <!-- Failure -->
+    <g transform="translate(0, 140)">
+      <rect width="180" height="90" rx="12" fill="#ffebee" stroke="#ef5350" stroke-width="2" filter="url(#shadow)"/>
+      <text x="90" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#c62828">编译拒绝 (Reject)</text>
+      <text x="90" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#ef5350">未实现 Display 特征</text>
+      <text x="90" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">Vec&lt;T&gt;</text>
+    </g>
+  </g>
+  <!-- Annotation -->
+  <path d="M 400 380 Q 400 420 200 420" stroke="#78909c" stroke-width="1" fill="none" stroke-dasharray="4" marker-end="url(#arrowhead)"/>
+  <text x="190" y="425" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">编译器在调用点检查约束</text>
+</svg>

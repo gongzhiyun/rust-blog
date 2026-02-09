@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 800 890" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect width="800" height="890" fill="#f8f9fa" rx="12"/>
+    
+    <!-- Title Area -->
+    <rect x="0" y="0" width="800" height="60" fill="#ffffff" rx="12" fill-opacity="0.5"/>
+    <text x="400" y="38" font-family="JetBrains Mono, SF Mono, monospace" font-size="22" font-weight="bold" fill="#2c3e50" text-anchor="middle">Option&lt;T&gt; 内存布局深度对比</text>
+
+    <!-- Headers -->
+    <g transform="translate(60, 80)">
+        <text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c" text-anchor="start">泛型类型 (Generic Type)</text>
+        <text x="220" y="0" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c" text-anchor="start">内存物理布局 (Physical Layout)</text>
+    </g>
+
+    <!-- Row 1: Option<u8> (Standard Enum Layout) -->
+    <g transform="translate(40, 110)">
+        <rect width="720" height="150" fill="#ffffff" rx="8" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="20" y="75" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333333" text-anchor="start">Option&lt;u8&gt;</text>
+        
+        <!-- Comparison -->
+        <g transform="translate(240, 25)">
+            <!-- Some(v) -->
+            <g transform="translate(0, 0)">
+                <rect x="0" y="0" width="80" height="35" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+                <text x="40" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2196f3" text-anchor="middle">Tag: 1</text>
+                <rect x="80" y="0" width="80" height="35" fill="#fff8e1" stroke="#ff9800" stroke-width="2" rx="4"/>
+                <text x="120" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#ff9800" text-anchor="middle">val</text>
+                <text x="170" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="start">→ Some(u8)</text>
+            </g>
+            <!-- None -->
+            <g transform="translate(0, 45)">
+                <rect x="0" y="0" width="80" height="35" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+                <text x="40" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2196f3" text-anchor="middle">Tag: 0</text>
+                <rect x="80" y="0" width="80" height="35" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="2" rx="4" stroke-dasharray="2,2"/>
+                <text x="120" y="22" font-family="JetBrains Mono, monospace" font-size="11" fill="#90a4ae" text-anchor="middle">??</text>
+                <text x="170" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="start">→ None</text>
+            </g>
+            <text x="0" y="110" font-family="JetBrains Mono, monospace" font-size="11" fill="#90a4ae" text-anchor="start">标准布局：无空隙可用，必须使用额外的 1 字节作为 Tag</text>
+        </g>
+    </g>
+
+    <!-- Row 2: Option<Box<T>> (Pointer Niche) -->
+    <g transform="translate(40, 280)">
+        <rect width="720" height="160" fill="#ffffff" rx="8" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="20" y="80" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333333" text-anchor="start">Option&lt;Box&lt;T&gt;&gt;</text>
+        
+        <g transform="translate(240, 25)">
+            <!-- Some(Box) -->
+            <g transform="translate(0, 0)">
+                <rect x="0" y="0" width="160" height="35" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4"/>
+                <text x="80" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2196f3" text-anchor="middle">Pointer (Non-Zero)</text>
+                <text x="170" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="start">→ Some(ptr)</text>
+                
+                <!-- Curved Pointer Arrow to Heap -->
+                <path d="M 160 17 Q 250 -5, 340 17" stroke="#ff9800" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+                <rect x="350" y="2" width="80" height="30" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5" rx="4"/>
+                <text x="390" y="22" font-family="JetBrains Mono, monospace" font-size="11" fill="#4caf50" text-anchor="middle">Heap Data</text>
+            </g>
+            
+            <!-- None -->
+            <g transform="translate(0, 45)">
+                <rect x="0" y="0" width="160" height="35" fill="#e3f2fd" stroke="#2196f3" stroke-width="2" rx="4" stroke-dasharray="4,2"/>
+                <text x="80" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2196f3" text-anchor="middle">0x0000...00 (Null)</text>
+                <text x="170" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#2196f3" font-weight="bold" text-anchor="start">→ None</text>
+            </g>
+
+            <text x="0" y="115" font-family="JetBrains Mono, monospace" font-size="11" fill="#4caf50" text-anchor="start">空指针优化：利用 0x0 代表 None，非零地址代表 Some(ptr)</text>
+            <text x="0" y="130" font-family="JetBrains Mono, monospace" font-size="11" fill="#90a4ae" text-anchor="start">总大小：8 Bytes (与原始指针一致)</text>
+        </g>
+    </g>
+
+    <!-- Row 3: Option<bool> (Value Niche Comparison) -->
+    <g transform="translate(40, 460)">
+        <rect width="720" height="180" fill="#ffffff" rx="8" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="20" y="90" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333333" text-anchor="start">Option&lt;bool&gt;</text>
+        
+        <!-- Comparison Rows -->
+        <g transform="translate(240, 25)">
+            <!-- Some(false) -->
+            <g transform="translate(0, 0)">
+                <rect x="0" y="0" width="80" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="4"/>
+                <text x="40" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#9c27b0" text-anchor="middle">0x00</text>
+                <text x="100" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="start">→ Some(false)</text>
+            </g>
+            <!-- Some(true) -->
+            <g transform="translate(0, 45)">
+                <rect x="0" y="0" width="80" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="4"/>
+                <text x="40" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#9c27b0" text-anchor="middle">0x01</text>
+                <text x="100" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="start">→ Some(true)</text>
+            </g>
+            <!-- None -->
+            <g transform="translate(0, 90)">
+                <rect x="0" y="0" width="80" height="35" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2" rx="4" stroke-dasharray="4,2"/>
+                <text x="40" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#9c27b0" text-anchor="middle">0x02</text>
+                <text x="100" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#9c27b0" font-weight="bold" text-anchor="start">→ None (Niche Value)</text>
+            </g>
+            
+            <text x="0" y="150" font-family="JetBrains Mono, monospace" font-size="11" fill="#9c27b0" text-anchor="start">利用 bool 的无效位 (0x02..0xFF) 代表 None，不占额外空间</text>
+        </g>
+    </g>
+
+    <!-- Row 4: Option<NonZeroU32> (Explicit Niche) -->
+    <g transform="translate(40, 660)">
+        <rect width="720" height="160" fill="#ffffff" rx="8" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="20" y="80" font-family="JetBrains Mono, monospace" font-size="15" font-weight="bold" fill="#333333" text-anchor="start">Option&lt;NonZeroU32&gt;</text>
+        
+        <g transform="translate(240, 25)">
+            <!-- Some(val) -->
+            <g transform="translate(0, 0)">
+                <rect x="0" y="0" width="120" height="35" fill="#fff8e1" stroke="#ff9800" stroke-width="2" rx="4"/>
+                <text x="60" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#ff9800" text-anchor="middle">0x0000002A</text>
+                <text x="130" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="start">→ Some(42)</text>
+            </g>
+            
+            <!-- None -->
+            <g transform="translate(0, 45)">
+                <rect x="0" y="0" width="120" height="35" fill="#fff8e1" stroke="#ff9800" stroke-width="2" rx="4" stroke-dasharray="4,2"/>
+                <text x="60" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#ff9800" text-anchor="middle">0x00000000</text>
+                <text x="130" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#ff9800" font-weight="bold" text-anchor="start">→ None</text>
+            </g>
+
+            <text x="0" y="115" font-family="JetBrains Mono, monospace" font-size="11" fill="#ff9800" text-anchor="start">类型契约保证 0 永远无效，故 0 可直接代表 None</text>
+            <text x="0" y="130" font-family="JetBrains Mono, monospace" font-size="11" fill="#90a4ae" text-anchor="start">总大小：4 Bytes</text>
+        </g>
+    </g>
+
+    <!-- Arrowhead marker -->
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+        </marker>
+    </defs>
+
+    <!-- Legend -->
+    <g transform="translate(110, 850)">
+        <rect x="0" y="0" width="12" height="12" fill="#e3f2fd" stroke="#2196f3" rx="2"/>
+        <text x="18" y="10" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">栈/标签 (Stack/Tag)</text>
+        
+        <rect x="150" y="0" width="12" height="12" fill="#fff8e1" stroke="#ff9800" rx="2"/>
+        <text x="168" y="10" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">数据载荷 (Payload)</text>
+
+        <rect x="300" y="0" width="12" height="12" fill="#e8f5e9" stroke="#4caf50" rx="2"/>
+        <text x="318" y="10" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">堆内存 (Heap)</text>
+        
+        <rect x="430" y="0" width="12" height="12" fill="#f3e5f5" stroke="#9c27b0" rx="2"/>
+        <text x="448" y="10" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">复合/优化位 (Niche)</text>
+    </g>
+</svg>

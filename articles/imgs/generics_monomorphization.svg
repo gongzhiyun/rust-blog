@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000" height="500" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect width="1000" height="500" fill="#f8f9fa" rx="16"/>
+    <defs>
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.1"/>
+        </filter>
+        <linearGradient id="engine-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f3e5f5;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#e1bee7;stop-opacity:1" />
+        </linearGradient>
+        <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#2196f3"/>
+        </marker>
+        <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#9c27b0"/>
+        </marker>
+        <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#4caf50"/>
+        </marker>
+    </defs>
+
+    <!-- Title Section -->
+    <text x="500" y="45" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="28" font-weight="bold" fill="#333333">单态化 (Monomorphization)</text>
+    <text x="500" y="75" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="16" fill="#78909c">从“通用模板”到“机器指令”的静态展开过程</text>
+
+    <!-- 1. Generic Template (Source Top) -->
+    <g transform="translate(80, 95)">
+        <rect width="260" height="135" rx="10" fill="#ffffff" stroke="#2196f3" stroke-width="2" filter="url(#shadow)"/>
+        <rect width="260" height="30" rx="10" fill="#e3f2fd"/>
+        <text x="130" y="21" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="14" font-weight="bold" fill="#2196f3">泛型函数模板 (Blueprint)</text>
+        <g transform="translate(20, 60)">
+            <text font-family="JetBrains Mono, monospace" font-size="13">
+                <tspan x="0" y="0" fill="#d32f2f">fn</tspan> <tspan fill="#333333">print_it&lt;</tspan><tspan fill="#9c27b0">T</tspan><tspan fill="#333333">: Display&gt;(x: </tspan><tspan fill="#9c27b0">T</tspan><tspan fill="#333333">)</tspan>
+                <tspan x="0" y="24" fill="#333333">{</tspan>
+                <tspan x="15" y="48" fill="#78909c">// 通用逻辑</tspan>
+                <tspan x="0" y="72" fill="#333333">}</tspan>
+            </text>
+        </g>
+    </g>
+
+    <!-- 2. Call Sites (Source Bottom) -->
+    <g transform="translate(80, 270)">
+        <rect width="260" height="135" rx="10" fill="#ffffff" stroke="#2196f3" stroke-width="2" filter="url(#shadow)"/>
+        <rect width="260" height="30" rx="10" fill="#e3f2fd"/>
+        <text x="130" y="21" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="14" font-weight="bold" fill="#2196f3">调用方 (Instantiations)</text>
+        <g transform="translate(20, 60)">
+            <text font-family="JetBrains Mono, monospace" font-size="13">
+                <tspan x="0" y="0" fill="#78909c">// T = i32</tspan>
+                <tspan x="0" y="20" fill="#333333">print_it(</tspan><tspan fill="#ff9800">42</tspan><tspan fill="#333333">);</tspan>
+                <tspan x="0" y="44" fill="#78909c">// T = String</tspan>
+                <tspan x="0" y="64" fill="#333333">print_it(</tspan><tspan fill="#4caf50">"hi".to_string()</tspan><tspan fill="#333333">);</tspan>
+            </text>
+        </g>
+    </g>
+
+    <!-- 3. Monomorphization Engine (Center) -->
+    <g transform="translate(400, 210)">
+        <!-- Input Arrows -->
+        <path d="M -60 -45 L 0 20" stroke="#2196f3" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+        <path d="M -60 125 L 0 60" stroke="#2196f3" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+        
+        <!-- Engine Box -->
+        <rect width="140" height="80" rx="40" fill="url(#engine-grad)" stroke="#9c27b0" stroke-width="2" filter="url(#shadow)"/>
+        <text x="70" y="36" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="14" font-weight="bold" fill="#9c27b0">单态化引擎</text>
+        <text x="70" y="56" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="11" fill="#9c27b0">类型替换 &amp; 代码生成</text>
+    </g>
+
+    <!-- 4. Concrete Implementations (Right) -->
+    <g transform="translate(660, 95)">
+        <!-- Output Arrows -->
+        <path d="M -120 155 C -60 155 -60 65 0 65" stroke="#9c27b0" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+        <path d="M -120 155 C -60 155 -60 245 0 245" stroke="#9c27b0" stroke-width="2" fill="none" marker-end="url(#arrow-purple)"/>
+
+        <!-- i32 Implementation -->
+        <g transform="translate(0, 0)">
+            <rect width="240" height="135" rx="10" fill="#ffffff" stroke="#4caf50" stroke-width="2" filter="url(#shadow)"/>
+            <rect width="240" height="30" rx="10" fill="#e8f5e9"/>
+            <text x="120" y="21" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="13" font-weight="bold" fill="#2e7d32">具体实现 (i32)</text>
+            <g transform="translate(15, 65)">
+                <text font-family="JetBrains Mono, monospace" font-size="12">
+                    <tspan x="0" y="0" fill="#d32f2f">fn</tspan> <tspan fill="#333333">print_it_i32(x: </tspan><tspan fill="#2196f3">i32</tspan><tspan fill="#333333">)</tspan>
+                    <tspan x="0" y="30" fill="#78909c">/* 针对 i32 优化的机器码 */</tspan>
+                </text>
+            </g>
+        </g>
+
+        <!-- String Implementation -->
+        <g transform="translate(0, 175)">
+            <rect width="240" height="135" rx="10" fill="#ffffff" stroke="#4caf50" stroke-width="2" filter="url(#shadow)"/>
+            <rect width="240" height="30" rx="10" fill="#e8f5e9"/>
+            <text x="120" y="21" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="13" font-weight="bold" fill="#2e7d32">具体实现 (String)</text>
+            <g transform="translate(15, 65)">
+                <text font-family="JetBrains Mono, monospace" font-size="12">
+                    <tspan x="0" y="0" fill="#d32f2f">fn</tspan> <tspan fill="#333333">print_it_string(x: </tspan><tspan fill="#2196f3">String</tspan><tspan fill="#333333">)</tspan>
+                    <tspan x="0" y="30" fill="#78909c">/* 针对 String 优化的机器码 */</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+
+    <!-- 5. Final Binary (Far Right) -->
+    <g transform="translate(930, 95)">
+        <path d="M -30 65 L 0 65" stroke="#4caf50" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-green)"/>
+        <path d="M -30 245 L 0 245" stroke="#4caf50" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-green)"/>
+        
+        <rect width="35" height="310" rx="6" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+        <text x="17.5" y="-15" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="12" font-weight="bold" fill="#2e7d32">二进制</text>
+        <g transform="translate(4, 30)" font-family="JetBrains Mono, monospace" font-size="8" fill="#2e7d32" opacity="0.6">
+            <text x="0" y="0">010110</text>
+            <text x="0" y="12">110010</text>
+            <text x="0" y="24">001101</text>
+            <text x="0" y="36">......</text>
+            <text x="0" y="48">111010</text>
+            <text x="0" y="60">010101</text>
+            <text x="0" y="72">000111</text>
+            <text x="0" y="84">......</text>
+            <text x="0" y="96">010110</text>
+            <text x="0" y="108">110010</text>
+            <text x="0" y="120">001101</text>
+            <text x="0" y="132">......</text>
+            <text x="0" y="144">111010</text>
+            <text x="0" y="156">010101</text>
+            <text x="0" y="168">000111</text>
+            <text x="0" y="180">......</text>
+            <text x="0" y="192">010110</text>
+            <text x="0" y="204">110010</text>
+            <text x="0" y="216">001101</text>
+            <text x="0" y="228">......</text>
+            <text x="0" y="240">111010</text>
+            <text x="0" y="252">010101</text>
+            <text x="0" y="264">000111</text>
+            <text x="0" y="276">......</text>
+        </g>
+    </g>
+
+    <!-- 6. Key Takeaway (Bottom Center) -->
+    <g transform="translate(300, 445)">
+        <rect width="400" height="40" rx="20" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5"/>
+        <circle cx="30" cy="20" r="12" fill="#ff9800"/>
+        <text x="30" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ffffff">!</text>
+        <text x="220" y="25" text-anchor="middle" font-family="PingFang SC, sans-serif" font-size="14" font-weight="bold" fill="#f57c00">零成本抽象：性能等价于手动编写的特定类型代码</text>
+    </g>
+</svg>

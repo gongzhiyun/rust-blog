@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <defs>
+    <style>
+      .title { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: bold; fill: #333333; }
+      .label { font-family: 'JetBrains Mono', monospace; font-size: 14px; fill: #333333; }
+      .addr { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #78909c; }
+      .code { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: bold; fill: #333333; }
+      .byte-box { stroke-width: 1.5; }
+      .u8-box { fill: #e3f2fd; stroke: #2196f3; }
+      .u64-box { fill: #e8f5e9; stroke: #4caf50; }
+      .pad-box { fill: #ffebee; stroke: #ef5350; stroke-dasharray: 4; }
+      .container { fill: #ffffff; stroke: #e0e0e0; stroke-width: 1; rx: 12; ry: 12; }
+      .container-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #9e9e9e; font-weight: bold; }
+      .highlight { fill: #fff8e1; stroke: #ff9800; rx: 12; ry: 12; }
+      .opt-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #ef5350; font-weight: bold; }
+      .marker-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #9c27b0; font-weight: bold; }
+    </style>
+  </defs>
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" class="title">泛型结构体：内存布局与编译器优化</text>
+
+  <!-- 1. Basic Layouts (Row 1) -->
+  <g transform="translate(40, 70)">
+    <rect width="320" height="140" class="container"/>
+    <text x="15" y="25" class="container-title">布局 A: Point&lt;u8&gt;</text>
+    <g transform="translate(20, 45)">
+      <rect x="0" y="0" width="60" height="40" rx="4" class="byte-box u8-box"/>
+      <text x="30" y="25" text-anchor="middle" class="label">x (u8)</text>
+      <rect x="60" y="0" width="60" height="40" rx="4" class="byte-box u8-box"/>
+      <text x="90" y="25" text-anchor="middle" class="label">y (u8)</text>
+      <text x="0" y="75" class="label" style="font-size: 12px; fill: #666;">大小: 2B | 对齐: 1</text>
+    </g>
+  </g>
+
+  <g transform="translate(380, 70)">
+    <rect width="380" height="140" class="container"/>
+    <text x="15" y="25" class="container-title">布局 B: Point&lt;u64&gt;</text>
+    <g transform="translate(20, 45)">
+      <rect x="0" y="0" width="160" height="40" rx="4" class="byte-box u64-box"/>
+      <text x="80" y="25" text-anchor="middle" class="label">x (u64)</text>
+      <rect x="160" y="0" width="160" height="40" rx="4" class="byte-box u64-box"/>
+      <text x="240" y="25" text-anchor="middle" class="label">y (u64)</text>
+      <text x="0" y="75" class="label" style="font-size: 12px; fill: #666;">大小: 16B | 对齐: 8</text>
+    </g>
+  </g>
+
+  <!-- 2. Optimization: Field Reordering (Row 2) -->
+  <g transform="translate(40, 230)">
+    <rect width="720" height="200" class="container" style="stroke: #9c27b0; stroke-width: 2;"/>
+    <text x="15" y="25" class="container-title" style="fill: #9c27b0;">编译器优化：字段重排 (Field Reordering)</text>
+    
+    <text x="20" y="50" class="code">struct Mixed&lt;u8, u64, u8&gt; { a: u8, b: u64, c: u8 }</text>
+    
+    <!-- Before Optimization -->
+    <g transform="translate(20, 70)">
+      <text x="0" y="-5" class="label" style="font-size: 12px; fill: #78909c;">优化前 (顺序排列)</text>
+      <rect x="0" y="0" width="40" height="30" rx="2" class="byte-box u8-box"/>
+      <text x="20" y="20" text-anchor="middle" class="label" style="font-size: 12px;">a</text>
+      
+      <rect x="40" y="0" width="120" height="30" rx="2" class="byte-box pad-box"/>
+      <text x="100" y="20" text-anchor="middle" class="opt-label">Padding (7B)</text>
+      
+      <rect x="160" y="0" width="160" height="30" rx="2" class="byte-box u64-box"/>
+      <text x="240" y="20" text-anchor="middle" class="label" style="font-size: 12px;">b (u64)</text>
+      
+      <rect x="320" y="0" width="40" height="30" rx="2" class="byte-box u8-box"/>
+      <text x="340" y="20" text-anchor="middle" class="label" style="font-size: 12px;">c</text>
+      
+      <rect x="360" y="0" width="120" height="30" rx="2" class="byte-box pad-box"/>
+      <text x="420" y="20" text-anchor="middle" class="opt-label">Padding (7B)</text>
+      
+      <text x="490" y="20" class="label" style="font-weight: bold; fill: #ef5350;">总计: 24 字节</text>
+      
+      <!-- Boundary line for 24B -->
+      <path d="M 480 0 L 480 100" stroke="#9c27b0" stroke-width="1" stroke-dasharray="4" fill="none" opacity="0.5"/>
+    </g>
+
+    <!-- After Optimization -->
+    <g transform="translate(20, 140)">
+      <text x="0" y="-5" class="label" style="font-size: 12px; fill: #4caf50;">优化后 (字段重排)</text>
+      <rect x="0" y="0" width="160" height="30" rx="2" class="byte-box u64-box"/>
+      <text x="80" y="20" text-anchor="middle" class="label" style="font-size: 12px;">b (u64)</text>
+      
+      <rect x="160" y="0" width="40" height="30" rx="2" class="byte-box u8-box"/>
+      <text x="180" y="20" text-anchor="middle" class="label" style="font-size: 12px;">a</text>
+      
+      <rect x="200" y="0" width="40" height="30" rx="2" class="byte-box u8-box"/>
+      <text x="220" y="20" text-anchor="middle" class="label" style="font-size: 12px;">c</text>
+      
+      <rect x="240" y="0" width="80" height="30" rx="2" class="byte-box pad-box"/>
+      <text x="280" y="20" text-anchor="middle" class="opt-label">Padding (6B)</text>
+      
+      <!-- The Purple Dashed Line: Size Comparison Marker (Fixed Overlap) -->
+      <path d="M 320 -70 L 320 30" stroke="#9c27b0" stroke-width="2" stroke-dasharray="4" fill="none"/>
+      <path d="M 320 -35 L 480 -35" stroke="#9c27b0" stroke-width="1" marker-end="url(#arrowhead)" fill="none"/>
+      <text x="400" y="-25" text-anchor="middle" class="marker-label" style="font-size: 10px;">节省了 8 字节空间</text>
+      
+      <text x="490" y="20" class="label" style="font-weight: bold; fill: #4caf50;">总计: 16 字节</text>
+      
+      <text x="0" y="50" class="label" style="font-size: 11px; fill: #9c27b0;">* 编译器将 u64 移至首位，合并小字段以减少填充空隙</text>
+    </g>
+  </g>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9c27b0" />
+    </marker>
+  </defs>
+</svg>

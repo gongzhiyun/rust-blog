@@ -12,33 +12,33 @@
 <rect x="30" y="60" width="240" height="120" rx="6" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
 <text x="45" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#0d47a1">变量 b: Box&lt;T&gt;</text>
 <line x1="30" y1="95" x2="270" y2="95" stroke="#e0e0e0" stroke-width="1"/>
-<rect x="40" y="110" width="220" height="50" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
-<text x="50" y="130" font-family="JetBrains Mono, monospace" font-size="12" fill="#e65100" font-weight="bold">ptr (指针)</text>
-<text x="50" y="150" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">地址: 0x55aa0010</text>
-<text x="150" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">大小: 8 字节 (64位)</text>
-</g>
-<!-- Heap Area -->
-<g transform="translate(440, 85)">
-<rect x="0" y="0" width="300" height="260" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
-<text x="150" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#1b5e20">Heap (堆)</text>
-<!-- Allocated Data -->
-<rect x="30" y="60" width="240" height="140" rx="6" fill="#ffffff" stroke="#2e7d32" stroke-width="1.5"/>
-<text x="45" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1b5e20">数据实体: T</text>
-<line x1="30" y1="95" x2="270" y2="95" stroke="#e0e0e0" stroke-width="1"/>
-<text x="120" y="145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="32" font-weight="bold" fill="#333333">Data</text>
-<text x="45" y="185" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">起始地址: 0x55aa0010</text>
-<text x="150" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">生命周期随 Box 销毁</text>
-</g>
-<!-- Pointer Line -->
-<path d="M 330 215 L 470 215" stroke="#ff9800" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
-<defs>
-<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-<polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
-</marker>
-</defs>
-<!-- Pointer Label -->
-<rect x="355" y="195" width="90" height="20" rx="10" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
-<text x="400" y="210" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#e65100" font-weight="bold">指向/拥有</text>
+      <rect x="40" y="110" width="220" height="50" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
+      <text x="50" y="130" font-family="JetBrains Mono, monospace" font-size="12" fill="#e65100" font-weight="bold">ptr (指针)</text>
+      <text x="50" y="150" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">地址: 0x55aa0010</text>
+      <text x="150" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">大小: 8 字节 (64位)</text>
+    </g>
+    <!-- Heap Area -->
+    <g transform="translate(440, 85)">
+      <rect x="0" y="0" width="300" height="260" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+      <text x="150" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#1b5e20">Heap (堆)</text>
+      <!-- Allocated Data -->
+      <rect x="30" y="60" width="240" height="140" rx="6" fill="#ffffff" stroke="#2e7d32" stroke-width="1.5"/>
+      <text x="45" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1b5e20">数据实体: T</text>
+      <line x1="30" y1="95" x2="270" y2="95" stroke="#e0e0e0" stroke-width="1"/>
+      <text x="120" y="145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="32" font-weight="bold" fill="#333333">Data</text>
+      <text x="45" y="185" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">起始地址: 0x55aa0010</text>
+      <text x="150" y="240" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">生命周期随 Box 销毁</text>
+    </g>
+    <!-- Pointer Line -->
+    <path d="M 330 215 L 470 215" stroke="#ff9800" stroke-width="4" fill="none" marker-end="url(#arrowhead)"/>
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
+      </marker>
+    </defs>
+    <!-- Pointer Label -->
+    <rect x="350" y="195" width="100" height="25" rx="10" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
+    <text x="400" y="213" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#e65100" font-weight="bold">指向/拥有</text>
 <!-- Bottom Annotation -->
 <text x="400" y="380" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c">Box&lt;T&gt; 实现了 RAII：Drop 时自动释放堆内存</text>
 </svg>

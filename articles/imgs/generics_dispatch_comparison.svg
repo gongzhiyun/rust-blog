@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="360" viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect width="800" height="360" fill="#f8f9fa" rx="12"/>
+    
+    <defs>
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.05"/>
+        </filter>
+        <marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#78909c" />
+        </marker>
+        <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#2196f3" />
+        </marker>
+        <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#4caf50" />
+        </marker>
+        <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#9c27b0" />
+        </marker>
+    </defs>
+
+    <!-- Title -->
+    <text x="400" y="45" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" fill="#333333">分发机制：静态展开 vs 动态遮蔽</text>
+
+    <!-- Left: Static Dispatch -->
+    <g transform="translate(60, 100)">
+        <text x="155" y="-15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#4caf50">静态分发 (Monomorphization)</text>
+        <rect width="310" height="230" rx="8" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" filter="url(#shadow)"/>
+        
+        <!-- Step 1: Call Sites -->
+        <g transform="translate(15, 35)">
+            <rect width="90" height="40" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+            <text x="45" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#4caf50">show(42u32)</text>
+            <path d="M 90 20 L 165 20" stroke="#4caf50" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+            
+            <rect x="170" y="-10" width="110" height="60" rx="4" fill="#ffffff" stroke="#4caf50" stroke-dasharray="4" stroke-width="1"/>
+            <text x="225" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">机器码副本 A</text>
+            <text x="225" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#333333">show_u32</text>
+        </g>
+
+        <!-- Step 2: Call Sites -->
+        <g transform="translate(15, 115)">
+            <rect width="90" height="40" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
+            <text x="45" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#4caf50">show("hi")</text>
+            <path d="M 90 20 L 165 20" stroke="#4caf50" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+            
+            <rect x="170" y="-10" width="110" height="60" rx="4" fill="#ffffff" stroke="#4caf50" stroke-dasharray="4" stroke-width="1"/>
+            <text x="225" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333">机器码副本 B</text>
+            <text x="225" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#333333">show_str</text>
+        </g>
+    </g>
+
+    <!-- Right: Dynamic Dispatch -->
+    <g transform="translate(430, 100)">
+        <text x="155" y="-15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#2196f3">动态分发 (dyn Trait)</text>
+        <rect width="310" height="230" rx="8" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" filter="url(#shadow)"/>
+
+        <!-- Fat Pointer -->
+        <g transform="translate(35, 45)">
+            <text x="0" y="-10" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2196f3">胖指针 (16B)</text>
+            <rect width="100" height="50" rx="4" fill="#e3f2fd" stroke="#2196f3" stroke-width="1.5"/>
+            <line x1="0" y1="25" x2="100" y2="25" stroke="#2196f3" stroke-width="1"/>
+            <text x="50" y="17" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333">data_ptr</text>
+            <text x="50" y="42" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333">vtable_ptr</text>
+        </g>
+
+        <!-- Original Data -->
+        <rect x="170" y="45" width="105" height="35" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
+        <text x="222" y="67" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333">堆/栈 原始数据</text>
+
+        <!-- vtable -->
+        <g transform="translate(170, 100)">
+            <rect width="105" height="85" rx="4" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
+            <text x="52" y="18" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#9c27b0">vtable</text>
+            <line x1="5" y1="25" x2="100" y2="25" stroke="#9c27b0" stroke-width="1"/>
+            <text x="52" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#7b1fa2">size/align</text>
+            <text x="52" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#7b1fa2">drop_fn</text>
+            <text x="52" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#9c27b0">method addr</text>
+        </g>
+
+        <!-- Concrete Code (Moved under Fat Pointer) -->
+        <rect x="35" y="150" width="100" height="35" rx="4" fill="#f8f9fa" stroke="#9c27b0" stroke-dasharray="4" stroke-width="1"/>
+        <text x="85" y="172" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333">实现机器码</text>
+
+        <!-- Arrows -->
+        <!-- data_ptr -> Data -->
+        <path d="M 135 57.5 L 170 57.5" stroke="#78909c" stroke-width="1.5" fill="none" marker-end="url(#arrow-gray)"/>
+        <!-- vtable_ptr -> vtable -->
+        <path d="M 135 82.5 L 150 82.5 L 150 120 L 170 120" stroke="#2196f3" stroke-width="1.5" fill="none" marker-end="url(#arrow-blue)"/>
+        <!-- vtable method addr -> Code -->
+        <path d="M 170 175 L 135 175" stroke="#9c27b0" stroke-width="1.5" fill="none" marker-end="url(#arrow-purple)"/>
+    </g>
+</svg>
