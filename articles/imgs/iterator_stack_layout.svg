@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="720" viewBox="0 0 800 720" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="720" fill="#f8f9fa" />
+  
+  <!-- Title -->
+  <text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">迭代器适配器：物理内存布局 (无捕获)</text>
+
+  <!-- Main Container -->
+  <g transform="translate(40, 70)">
+    <rect x="-10" y="-5" width="730" height="620" rx="15" fill="#fff" stroke="#e0e0e0" stroke-width="1.5" />
+
+    <!-- Left Column: Stack -->
+    <g transform="translate(20, 20)">
+      <!-- Container for Stack -->
+      <rect width="340" height="580" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+      <rect width="340" height="35" rx="12" fill="#e3f2fd" />
+      <rect y="20" width="340" height="15" fill="#e3f2fd" />
+      <text x="170" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack (内存栈)</text>
+      
+      <!-- Filter Adapter Struct -->
+      <g transform="translate(20, 60)">
+        <rect width="300" height="500" rx="8" fill="#ffffff" stroke="#ef5350" stroke-width="2" stroke-dasharray="6 2"/>
+        <text x="10" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#c62828">Filter&lt;Map&lt;Iter&gt;&gt; 结构体</text>
+
+        <!-- .iter field for Filter -->
+        <g transform="translate(15, 20)">
+          <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#1565c0">.iter (内部迭代器: Map)</text>
+          <rect y="20" width="270" height="345" rx="4" fill="#fafafa" stroke="#bbdefb" stroke-width="1.5"/>
+
+          <!-- Map Adapter Struct (Nested) -->
+          <g transform="translate(10, 45)">
+            <rect width="250" height="295" rx="8" fill="#ffffff" stroke="#ab47bc" stroke-width="2" stroke-dasharray="4 2"/>
+            <text x="10" y="-8" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#6a1b9a">Map&lt;Iter&gt; 结构体</text>
+
+            <!-- .iter field for Map -->
+            <g transform="translate(15, 20)">
+              <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#1565c0">.iter (核心迭代器: Iter)</text>
+              <rect y="20" width="220" height="135" rx="4" fill="#fafafa" stroke="#bbdefb" stroke-width="1.5"/>
+
+              <!-- Core Iter Fields -->
+              <g transform="translate(10, 50)">
+                
+                <!-- ptr field -->
+                <g transform="translate(0, 0)">
+                  <rect width="200" height="35" fill="#fff8e1" stroke="#ff9800" rx="4"/>
+                  <text x="10" y="18" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">ptr</text>
+                  <text x="190" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#f57c00" text-anchor="end">0x500</text>
+                </g>
+                
+                <!-- end field -->
+                <g transform="translate(0, 40)">
+                  <rect width="200" height="35" fill="#f5f5f5" stroke="#cfd8dc" rx="4"/>
+                  <text x="10" y="18" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">end</text>
+                  <text x="190" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#78909c" text-anchor="end">0x50C</text>
+                </g>
+              </g>
+            </g>
+
+            <!-- .f field for Map -->
+            <g transform="translate(15, 205)">
+              <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#e65100">.f (闭包逻辑: Map)</text>
+              <rect x="5" y="20" width="210" height="55" rx="4" fill="#f3e5f5" fill-opacity="0.3" stroke="#9c27b0" stroke-width="1.5" stroke-dasharray="4 2"/>
+              <text x="110" y="45" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#6a1b9a" text-anchor="middle">静态绑定 (ZST)</text>
+              <text x="110" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#9c27b0" text-anchor="middle">0 Bytes</text>
+            </g>
+          </g>
+        </g>
+
+        <!-- .f field for Filter -->
+        <g transform="translate(15, 395)">
+          <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#e65100">.f (闭包逻辑: Filter)</text>
+          <rect x="5" y="20" width="260" height="55" rx="4" fill="#f3e5f5" fill-opacity="0.3" stroke="#9c27b0" stroke-width="2" stroke-dasharray="4 2"/>
+          <text x="135" y="45" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#6a1b9a" text-anchor="middle">静态绑定 (ZST)</text>
+          <text x="135" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#9c27b0" text-anchor="middle">0 Bytes</text>
+        </g>
+      </g>
+      
+      <!-- Size Bracket -->
+      <g transform="translate(325, 60)">
+        <path d="M 0,0 L 10,0 M 5,0 L 5,500 M 0,500 L 10,500" stroke="#90a4ae" stroke-width="1.5" fill="none" />
+        <text x="18" y="250" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#546e7a" transform="rotate(90, 18, 250)" text-anchor="middle">16 Bytes Total (ZST 优化)</text>
+      </g>
+    </g>
+
+    <!-- Right Column: Heap (Aligned with linkage diagram) -->
+    <g transform="translate(390, 20)">
+      <!-- Container for Heap -->
+      <rect width="300" height="210" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+      <rect width="300" height="35" rx="12" fill="#e8f5e9" />
+      <rect y="20" width="300" height="15" fill="#e8f5e9" />
+      <text x="150" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap (堆内存数据)</text>
+      
+      <g transform="translate(70, 50)">
+        <!-- Heap Elements -->
+        <rect width="160" height="40" fill="#fff" stroke="#4caf50" stroke-width="2" rx="4" />
+        <text x="80" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">1</text>
+        <text x="175" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#9e9e9e">0x500</text>
+        
+        <rect y="50" width="160" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" rx="4" />
+        <text x="80" y="75" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">2</text>
+        <text x="175" y="75" font-family="JetBrains Mono, monospace" font-size="10" fill="#bdbdbd">0x504</text>
+        
+        <rect y="100" width="160" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" rx="4" />
+        <text x="80" y="125" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">3</text>
+        <text x="175" y="125" font-family="JetBrains Mono, monospace" font-size="10" fill="#bdbdbd">0x508</text>
+      </g>
+    </g>
+
+    <!-- Code Segment (Now below Heap, Vertical internal layout) -->
+    <g transform="translate(390, 250)">
+      <rect width="320" height="350" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5" />
+      <text x="160" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">Code Segment (代码区)</text>
+      
+      <!-- Map Logic -->
+      <g transform="translate(15, 50)">
+        <rect width="290" height="135" rx="8" fill="#ffffff" stroke="#ab47bc" stroke-dasharray="4 2" />
+        <text x="10" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#6a1b9a">Map Closure (|x| x + 1)</text>
+        <text x="10" y="45" font-family="JetBrains Mono, monospace" font-size="10" fill="#7b1fa2" font-weight="bold">fn_map_closure:</text>
+        <text x="10" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  MOV EAX, [RDI]   ; 获取 x</text>
+        <text x="10" y="85" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  ADD EAX, 1       ; 硬编码常数</text>
+        <text x="10" y="105" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  RET              ; 静态绑定</text>
+      </g>
+
+      <!-- Filter Logic -->
+      <g transform="translate(15, 200)">
+        <rect width="290" height="135" rx="8" fill="#ffffff" stroke="#ef5350" stroke-dasharray="4 2" />
+        <text x="10" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#c62828">Filter Closure (|x| *x > 2)</text>
+        <text x="10" y="45" font-family="JetBrains Mono, monospace" font-size="10" fill="#d32f2f" font-weight="bold">fn_filter_closure:</text>
+        <text x="10" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  CMP [RDI], 2     ; 常数比较</text>
+        <text x="10" y="85" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  SETG AL          ; 布尔返回</text>
+        <text x="10" y="105" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  RET              ; 零成本抽象</text>
+      </g>
+    </g>
+
+    <!-- Pointers and Connections -->
+    <defs>
+      <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#ff9800" />
+      </marker>
+      <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#9c27b0" />
+      </marker>
+    </defs>
+    
+    <!-- Stack to Heap -->
+    <circle cx="290" cy="232.5" r="3" fill="#ff9800" />
+    <path d="M 290,232.5 C 350,232.5 370,90 460,90" fill="none" stroke="#ff9800" stroke-width="2.5" marker-end="url(#arrow-orange)" />
+
+    <!-- Static Binding Markers (Stack to Code) -->
+    <!-- From Map Adapter to Map Logic -->
+    <circle cx="295" cy="397.5" r="3" fill="#ab47bc" />
+    <path d="M 295,397.5 C 345,397.5 370,367.5 405,367.5" fill="none" stroke="#ab47bc" stroke-width="1.5" stroke-dasharray="2 2" marker-end="url(#arrow-purple)" />
+    <!-- From Filter Adapter to Filter Logic -->
+    <circle cx="320" cy="522.5" r="3" fill="#ef5350" />
+    <path d="M 320,522.5 C 360,522.5 380,517.5 405,517.5" fill="none" stroke="#ef5350" stroke-width="1.5" stroke-dasharray="2 2" marker-end="url(#arrow-purple)" />
+    
+    <!-- Static Binding Label with dashed box -->
+    <g transform="translate(325, 360)">
+      <rect width="50" height="16" rx="4" fill="#f3e5f5" fill-opacity="0.8" stroke="#9c27b0" stroke-width="1" stroke-dasharray="2 2" />
+      <text x="25" y="11" font-family="JetBrains Mono, monospace" font-size="8" font-weight="bold" fill="#6a1b9a" text-anchor="middle">静态绑定</text>
+    </g>
+  </g>
+</svg>

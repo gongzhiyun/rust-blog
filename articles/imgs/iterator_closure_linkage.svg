@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">迭代器适配器：物理内存布局 (有捕获)</text>
+
+  <!-- Static Linkage Beam (Background) -->
+  <path d="M 360 455 L 480 455" stroke="#f3e5f5" stroke-width="40" stroke-linecap="round" opacity="0.6" />
+  <path d="M 370 455 L 470 455" stroke="#9c27b0" stroke-width="1" stroke-dasharray="2 4" opacity="0.3" />
+
+  <!-- Heap Segment -->
+  <g transform="translate(480, 80)">
+    <rect width="300" height="210" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <rect width="300" height="35" rx="12" fill="#e8f5e9" />
+    <rect y="20" width="300" height="15" fill="#e8f5e9" />
+    <text x="150" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap (堆内存数据)</text>
+    
+    <g transform="translate(70, 50)">
+      <rect width="160" height="40" fill="#fff" stroke="#4caf50" stroke-width="2" rx="4" />
+      <text x="80" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">1</text>
+      <text x="175" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#9e9e9e">0x500</text>
+      
+      <rect y="50" width="160" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" rx="4" />
+      <text x="80" y="75" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">2</text>
+      <text x="175" y="75" font-family="JetBrains Mono, monospace" font-size="10" fill="#bdbdbd">0x504</text>
+      
+      <rect y="100" width="160" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" rx="4" />
+      <text x="80" y="125" font-family="JetBrains Mono, monospace" font-size="14" fill="#333" text-anchor="middle">3</text>
+      <text x="175" y="125" font-family="JetBrains Mono, monospace" font-size="10" fill="#bdbdbd">0x508</text>
+    </g>
+  </g>
+
+  <!-- Code Segment -->
+  <g transform="translate(480, 385)">
+    <rect width="300" height="180" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+    <text x="150" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">Code Segment (代码区)</text>
+    <line x1="0" y1="32" x2="300" y2="32" stroke="#9c27b0" stroke-opacity="0.2"/>
+    
+    <g transform="translate(15, 45)">
+      <rect width="270" height="115" rx="4" fill="#ffffff" stroke="#9c27b0" stroke-dasharray="2 2"/>
+      <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333333">闭包编译后的指令逻辑</text>
+      <text x="15" y="45" font-family="JetBrains Mono, monospace" font-size="10" fill="#7b1fa2" font-weight="bold">fn_closure_8723:</text>
+      <text x="15" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  MOV EAX, [RDI]   ; 1. 获取迭代项</text>
+      <text x="15" y="85" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  ADD EAX, [RSI]   ; 2. 累加环境变量</text>
+      <text x="15" y="105" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">  RET              ; 3. 返回结果</text>
+    </g>
+  </g>
+
+  <!-- Stack Segment -->
+  <g transform="translate(40, 80)">
+    <rect width="380" height="500" rx="12" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+    <text x="190" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack (内存栈)</text>
+    <line x1="0" y1="32" x2="380" y2="32" stroke="#2196f3" stroke-opacity="0.2"/>
+
+    <!-- Map Adapter Struct -->
+    <g transform="translate(20, 75)">
+      <rect width="340" height="410" rx="8" fill="#ffffff" stroke="#9c27b0" stroke-width="2" stroke-dasharray="6 2"/>
+      <text x="10" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#7b1fa2">Map&lt;IntoIter, Closure&gt; 结构体</text>
+      
+      <!-- Base Iterator (Fields) -->
+      <g transform="translate(15, 20)">
+        <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#1565c0">.iter (内部迭代器)</text>
+        <rect y="20" width="310" height="120" rx="4" fill="#fafafa" stroke="#bbdefb" stroke-width="1.5"/>
+        
+        <!-- ptr field -->
+        <g transform="translate(10, 30)">
+          <rect width="290" height="40" fill="#fff8e1" stroke="#ffb300" rx="4"/>
+          <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">ptr</text>
+          <text x="280" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#f57c00" text-anchor="end">0x500</text>
+        </g>
+        
+        <!-- end field -->
+        <g transform="translate(10, 75)">
+          <rect width="290" height="40" fill="#f5f5f5" stroke="#cfd8dc" rx="4"/>
+          <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">end</text>
+          <text x="280" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#78909c" text-anchor="end">0x50C</text>
+        </g>
+      </g>
+
+      <!-- Closure Environment (Fields) -->
+      <g transform="translate(15, 205)">
+        <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#e65100">.f (闭包环境/身躯)</text>
+        <rect y="20" width="310" height="120" rx="4" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
+        
+        <!-- factor field -->
+        <g transform="translate(10, 30)">
+          <rect width="290" height="40" fill="#fff9c4" stroke="#fbc02d" rx="4" />
+          <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#333333">factor:i32</text>
+          <text x="280" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#e65100" text-anchor="end">10</text>
+        </g>
+
+        <!-- ZST Logic Binding (Ghost Field) -->
+        <g transform="translate(10, 75)">
+          <rect width="290" height="40" rx="4" fill="#f3e5f5" fill-opacity="0.2" stroke="#9c27b0" stroke-width="1" stroke-dasharray="4 2"/>
+          <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#7b1fa2">静态绑定(ZST)</text>
+          <text x="280" y="25" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#9c27b0" text-anchor="end">0 Bytes</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Markers -->
+  <defs>
+    <marker id="link-arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+    </marker>
+    <marker id="ptr-arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4caf50" />
+    </marker>
+    <marker id="logic-arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9c27b0" />
+    </marker>
+  </defs>
+
+  <!-- Execution Flow Arrows -->
+  <path d="M 375 225 Q 440 225 550 150" stroke="#4caf50" stroke-width="2.5" stroke-dasharray="5 2" fill="none" marker-end="url(#ptr-arrow)" />
+  <text x="460" y="219" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2e7d32" text-anchor="middle">① 获取数据</text>
+
+  <path d="M 375 455 Q 430 455 495 480" stroke="#ff9800" stroke-width="2.5" fill="none" marker-end="url(#link-arrow)" />
+  <text x="432" y="473" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#e65100" text-anchor="middle">② 静态派发</text>
+
+  <path d="M 510 515 Q 420 515 375 410" stroke="#9c27b0" stroke-width="2" fill="none" stroke-dasharray="4 2" marker-end="url(#logic-arrow)" />
+  <text x="440" y="533" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#6a1b9a" text-anchor="middle">③ 访问环境</text>
+
+</svg>
