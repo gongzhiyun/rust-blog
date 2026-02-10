@@ -1,117 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="520" viewBox="0 0 800 520" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-    <rect width="800" height="520" fill="#f8f9fa"/>
-    <!-- 标题 -->
-    <text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">生命周期约束：Stack 与 Heap 的安全绑定</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="620" fill="#f8f9fa" />
+<text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">生命周期约束：Stack 与 Heap 的安全绑定</text>
 
-    <!-- Stack 区域 (左侧) -->
-    <g transform="translate(40, 70)">
-        <rect width="330" height="380" rx="12" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
-        <rect width="330" height="35" rx="12" fill="#e3f2fd" />
-        <rect y="20" width="330" height="15" fill="#e3f2fd" />
-        <text x="165" y="23" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2196f3" text-anchor="middle">Stack (栈内存)</text>
-        
-        <!-- Vec 变量 -->
-         <g transform="translate(100, 50)">
-             <rect width="220" height="120" rx="4" fill="white" stroke="#2196f3" stroke-width="1.5"/>
-             <rect width="220" height="120" rx="4" fill="#ef5350" fill-opacity="0.05" stroke="#ef5350" stroke-width="2" stroke-dasharray="4 2"/>
-             <text x="-10" y="20" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2196f3" text-anchor="end">v: Vec&lt;T&gt;</text>
-             
-             <rect width="220" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
-             <text x="110" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr (指针)</text>
-             
-             <rect y="40" width="220" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
-             <text x="110" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">len / cap</text>
+<!-- Main Container -->
+<g transform="translate(40, 70)">
+    <rect x="-10" y="-5" width="730" height="460" rx="15" fill="#fff" stroke="#e0e0e0" stroke-width="1.5" />
+    <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c">生命周期安全边界视图</text>
 
-             <g transform="translate(0, 85)">
-                 <rect width="220" height="35" rx="4" fill="#ffebee"/>
-                 <text x="110" y="22" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#ef5350" text-anchor="middle">❄️ 状态：已冻结 (Frozen)</text>
-             </g>
-             <!-- Lock Icon -->
-             <g transform="translate(205, 5)">
-                 <rect x="0" y="5" width="14" height="10" rx="2" fill="#ef5350"/>
-                 <path d="M3 5V3C3 1.3 4.3 0 6 0C7.7 0 9 1.3 9 3V5" stroke="#ef5350" stroke-width="1.5" fill="none"/>
-             </g>
-         </g>
-         
-         <!-- Iter 变量 -->
-         <g transform="translate(100, 250)">
-             <rect width="220" height="80" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5"/>
-             <text x="-10" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#ff9800" text-anchor="end">iter: Iter&lt;'a, T&gt;</text>
-             
-             <rect width="220" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
-             <text x="110" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr (当前指针)</text>
-             
-             <rect y="40" width="220" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
-             <text x="110" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">end (哨兵指针)</text>
-             
-             <text x="110" y="105" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#ff9800" text-anchor="middle">持有不可变借用 &amp;v</text>
-         </g>
-    </g>
+    <!-- Left Column: Stack Structures -->
+    <g transform="translate(10, 45)">
+        <!-- Vec<T> Stack (Frozen) -->
+        <g>
+            <rect width="240" height="150" rx="8" fill="#fff" stroke="#ef5350" stroke-width="2" stroke-dasharray="4" />
+            <rect width="240" height="30" rx="8" fill="#ffebee" />
+            <rect y="15" width="240" height="15" fill="#ffebee" />
+            <text x="120" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#ef5350" text-anchor="middle">Stack (Vec&lt;T&gt; - Frozen)</text>
+            
+            <g transform="translate(10, 40)">
+                <rect width="220" height="30" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+                <text x="110" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr (堆指针)</text>
+                <rect y="35" width="220" height="30" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+                <text x="110" y="55" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdbdbd" text-anchor="middle">cap (容量)</text>
+                <rect y="70" width="220" height="30" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+                <text x="110" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdbdbd" text-anchor="middle">len (长度)</text>
+            </g>
+            
+            <!-- Lock Icon -->
+            <g transform="translate(215, 7)">
+                <rect width="14" height="10" rx="2" fill="#ef5350"/>
+                <path d="M3 0 V-3 A3 3 0 0 1 11 -3 V0" transform="translate(0, 3)" stroke="#ef5350" stroke-width="1.5" fill="none"/>
+            </g>
+        </g>
 
-    <!-- Heap 区域 (右侧) -->
-    <g transform="translate(430, 70)">
-        <rect width="330" height="280" rx="12" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
-        <rect width="330" height="35" rx="12" fill="#e8f5e9" />
-        <rect y="20" width="330" height="15" fill="#e8f5e9" />
-        <text x="165" y="23" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#4caf50" text-anchor="middle">Heap (堆内存数据区)</text>
-        
-        <!-- Heap Blocks (统一 40px 高度) -->
-        <g transform="translate(105, 60)">
-            <rect width="120" height="40" fill="#fff" stroke="#4caf50" stroke-width="1.5" />
-            <text x="60" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[0]</text>
+        <!-- Lifetime Binding 'a -->
+        <g transform="translate(120, 155)">
+            <path d="M 0,0 L 0,45" fill="none" stroke="#ff9800" stroke-width="2" stroke-dasharray="4 4" />
+            <circle cx="0" cy="22.5" r="14" fill="#fff" stroke="#ff9800" stroke-width="1.5" />
+            <text x="0" y="27.5" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ff9800" text-anchor="middle">'a</text>
+        </g>
+
+        <!-- Iter<T> Stack -->
+        <g transform="translate(0, 205)">
+            <rect width="240" height="150" rx="8" fill="#fff" stroke="#ff9800" stroke-width="1.5" />
+            <rect width="240" height="30" rx="8" fill="#fff8e1" />
+            <rect y="15" width="240" height="15" fill="#fff8e1" />
+            <text x="120" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#ff9800" text-anchor="middle">Stack (Iter&lt;'a, T&gt;)</text>
             
-            <rect y="40" width="120" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5" />
-            <text x="60" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[1]</text>
-            
-            <rect y="80" width="120" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
-            <text x="60" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#bdbdbd" text-anchor="middle">T[2]</text>
-            
-            <rect y="120" width="120" height="20" fill="#f5f5f5" stroke="#bdbdbd" stroke-dasharray="3" />
-            <text x="60" y="133" font-family="JetBrains Mono, monospace" font-size="9" fill="#9e9e9e" text-anchor="middle">(Sentinel Boundary)</text>
+            <g transform="translate(10, 45)">
+                <rect width="220" height="40" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
+                <text x="110" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr (当前指针)</text>
+                <rect y="45" width="220" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+                <text x="110" y="70" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">end (哨兵指针)</text>
+            </g>
         </g>
     </g>
 
-    <!-- 编译器拦截 (右下) -->
-    <g transform="translate(430, 365)">
-        <rect width="330" height="85" rx="12" fill="#ffebee" stroke="#ef5350" stroke-width="1" stroke-dasharray="5 5"/>
-        <text x="165" y="30" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ef5350" text-anchor="middle">❌ 编译器拦截: v.push(..)</text>
-        <text x="165" y="55" font-family="JetBrains Mono, monospace" font-size="11" fill="#333333" text-anchor="middle">借用规则保护：迭代期间禁止修改容器</text>
-        <text x="165" y="72" font-family="JetBrains Mono, monospace" font-size="10" fill="#ef5350" text-anchor="middle">(防止堆内存重分配导致指针失效)</text>
-    </g>
-
-    <!-- 指针连线 -->
-    <g>
-        <!-- v.ptr -> T[0] top -->
-        <circle cx="360" cy="140" r="3" fill="#ff9800" />
-        <path d="M 360,140 Q 450,140 535,130" fill="none" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrow-orange)" />
+    <!-- Right Column: Shared Heap -->
+    <g transform="translate(450, 80)">
+        <rect width="200" height="300" rx="8" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+        <rect width="200" height="30" rx="8" fill="#e8f5e9" />
+        <rect y="15" width="200" height="15" fill="#e8f5e9" />
+        <text x="100" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#4caf50" text-anchor="middle">Heap (被生命周期保护)</text>
         
-        <!-- iter.ptr -> T[1] top -->
-        <circle cx="360" cy="340" r="3" fill="#ff9800" />
-        <path d="M 360,340 Q 450,340 535,170" fill="none" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)" />
-        
-        <!-- iter.end -> Sentinel bottom -->
-        <circle cx="360" cy="380" r="3" fill="#78909c" />
-        <path d="M 360,380 Q 450,380 535,250" fill="none" stroke="#78909c" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#arrow-gray)" />
+        <g transform="translate(40, 60)">
+            <rect width="120" height="40" fill="#fff" stroke="#4caf50" stroke-width="1.5" />
+            <text x="60" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[0]</text>
+            <rect y="40" width="120" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="60" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[1]</text>
+            <rect y="80" width="120" height="40" fill="#fff" stroke="#e0e0e0" stroke-width="1" />
+            <text x="60" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">T[2]</text>
+            <rect y="120" width="120" height="40" fill="#f8f9fa" stroke="#78909c" stroke-dasharray="2" />
+            <text x="60" y="145" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">Boundary</text>
+        </g>
     </g>
 
-    <!-- 生命周期逻辑绑定 -->
-    <g transform="translate(190, 240)">
-        <path d="M 0,0 L 0,80" stroke="#ff9800" stroke-width="2" stroke-dasharray="4 4"/>
-        <circle cx="0" cy="40" r="12" fill="white" stroke="#ff9800"/>
-        <text y="45" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ff9800" text-anchor="middle">'a</text>
-    </g>
+    <!-- Pointers -->
+    <!-- Vec::ptr (Stack Y: 45+40+15 = 100) -> Heap::T[0] (Heap Y: 80+60+20 = 160) -->
+    <circle cx="250" cy="100" r="3" fill="#ef5350" />
+    <path d="M 250,100 C 350,100 400,160 490,160" fill="none" stroke="#ef5350" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow-red)" />
 
-    <!-- 箭头定义 -->
-    <defs>
-        <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-            <path d="M0,0 L10,5 L0,10 Z" fill="#ff9800" />
-        </marker>
-        <marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
-            <path d="M0,0 L10,5 L0,10 Z" fill="#78909c" />
-        </marker>
-    </defs>
+    <!-- Iter::ptr (Stack Y: 45+205+45+20 = 315) -> Heap::T[0] (Heap Y: 160) -->
+    <circle cx="250" cy="315" r="3" fill="#ff9800" />
+    <path d="M 250,315 C 350,315 400,160 490,160" fill="none" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)" />
 
-    <!-- 说明文字 -->
-    <text x="400" y="495" font-family="JetBrains Mono, monospace" font-size="13" fill="#78909c" text-anchor="middle">生命周期 'a 将 v 冻结，确保其堆地址在迭代期间不可变更</text>
+    <!-- Iter::end (Stack Y: 45+205+45+45+20 = 360) -> Heap::Boundary (Heap Y: 80+60+140 = 280) -->
+    <circle cx="250" cy="360" r="3" fill="#78909c" />
+    <path d="M 250,360 C 350,360 400,280 490,280" fill="none" stroke="#78909c" stroke-width="1.5" stroke-dasharray="4" marker-end="url(#arrow-gray)" />
+</g>
+
+<!-- Bottom Explanation -->
+<g transform="translate(40, 545)">
+    <rect width="720" height="55" rx="8" fill="#fffde7" stroke="#fbc02d" stroke-width="1" />
+    <text x="360" y="25" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" text-anchor="middle">生命周期 <tspan font-weight="bold" fill="#ff9800">'a</tspan> 将 <tspan font-weight="bold" fill="#ef5350">Vec</tspan> 冻结：只要 <tspan font-weight="bold" fill="#ff9800">Iter</tspan> 存活，<tspan font-weight="bold" fill="#ef5350">Vec</tspan> 及其堆内存就不可变更。</text>
+    <text x="360" y="45" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="middle">这保证了指针在迭代过程中始终有效，彻底杜绝了迭代器失效（Iterator Invalidation）问题。</text>
+</g>
+
+<!-- Definitions -->
+<defs>
+<marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#ff9800" />
+</marker>
+<marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#78909c" />
+</marker>
+<marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#ef5350" />
+</marker>
+</defs>
 </svg>
