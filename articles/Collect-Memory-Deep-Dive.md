@@ -23,7 +23,7 @@ let v: Vec<_> = (0..10).map(|x| x + 1).collect();
 当你将一个 `Vec` 消耗掉（通过 `into_iter`）并转换成另一个 `Vec` 时，如果转换前后的类型（源类型 `T` 和目标类型 `U`）具有**相同的尺寸 (Size) 和对齐量 (Alignment)**，Rust 会开启极致优化。
 
 ```rust
-let v1 = vec![1, 2, 3, 4];
+let v1: Vec<i32> = (0..10).collect();
 let v2: Vec<i32> = v1.into_iter().map(|x| x + 1).collect();
 ```
 
@@ -39,7 +39,7 @@ let v2: Vec<i32> = v1.into_iter().map(|x| x + 1).collect();
 如果数据源是借用的（通过 `iter`），情况则完全不同。
 
 ```rust
-let v1 = vec![1, 2, 3, 4];
+let v1: Vec<i32> = (0..10).collect();
 let v2: Vec<i32> = v1.iter().map(|x| x + 1).collect();
 ```
 
