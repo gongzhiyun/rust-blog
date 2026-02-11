@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="900" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="900" fill="#f8f9fa" />
+  <!-- Title -->
+  <text x="400" y="35" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">collect 内存分配：迭代器结构与结果</text>
+  <!-- Main Container -->
+  <g transform="translate(40, 70)">
+    <rect x="-10" y="-5" width="730" height="800" rx="15" fill="#fff" stroke="#e0e0e0" stroke-width="1.5" />
+    <!-- Left Column: Stack (Memory Layout) -->
+    <g transform="translate(20, 20)">
+      <rect width="340" height="760" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+      <rect width="340" height="35" rx="12" fill="#e3f2fd" />
+      <rect y="20" width="340" height="15" fill="#e3f2fd" />
+      <text x="170" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack (内存栈数据)</text>
+      <!-- 1. Iterator Struct View -->
+      <g transform="translate(20, 60)">
+        <rect width="300" height="280" rx="8" fill="#ffffff" stroke="#ab47bc" stroke-width="2" stroke-dasharray="6 2"/>
+        <text x="10" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#6a1b9a">Map&lt;Range&lt;i32&gt;, [closure]&gt; 结构体</text>
+        <!-- .iter field -->
+        <g transform="translate(15, 20)">
+          <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#1565c0">.iter (内部迭代器: Range)</text>
+          <rect y="20" width="270" height="130" rx="4" fill="#fafafa" stroke="#bbdefb" stroke-width="1.5"/>
+          <!-- Range fields -->
+          <g transform="translate(10, 40)">
+            <rect width="250" height="35" fill="#f5f5f5" stroke="#cfd8dc" rx="4"/>
+            <text x="10" y="22" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">start</text>
+            <text x="240" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333" text-anchor="end">0</text>
+            <rect y="45" width="250" height="35" fill="#f5f5f5" stroke="#cfd8dc" rx="4"/>
+            <text x="10" y="67" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">end</text>
+            <text x="240" y="67" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333" text-anchor="end">10</text>
+          </g>
+        </g>
+        <!-- .f field -->
+        <g transform="translate(15, 190)">
+          <text x="0" y="12" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#e65100">.f (闭包逻辑)</text>
+          <rect y="20" width="270" height="50" rx="4" fill="#f3e5f5" fill-opacity="0.3" stroke="#9c27b0" stroke-width="1.5" stroke-dasharray="4 2"/>
+          <text x="135" y="45" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#6a1b9a" text-anchor="middle">静态绑定 (ZST)</text>
+          <text x="135" y="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#9c27b0" text-anchor="middle">0 Bytes</text>
+        </g>
+      </g>
+      <!-- 2. Result Vec Struct -->
+      <g transform="translate(20, 380)">
+        <rect width="300" height="180" rx="8" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
+        <text x="10" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2e7d32">Vec&lt;i32&gt; (collect 结果)</text>
+        <g transform="translate(15, 20)">
+          <!-- ptr field -->
+          <g transform="translate(0, 0)">
+            <rect width="270" height="40" fill="#fff8e1" stroke="#ff9800" rx="4"/>
+            <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">ptr (堆指针)</text>
+            <text x="260" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#f57c00" text-anchor="end">0x500</text>
+          </g>
+          <!-- cap field -->
+          <g transform="translate(0, 50)">
+            <rect width="270" height="40" fill="#f5f5f5" stroke="#cfd8dc" rx="4"/>
+            <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">cap (容量)</text>
+            <text x="260" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333" text-anchor="end">10</text>
+          </g>
+          <!-- len field -->
+          <g transform="translate(0, 100)">
+            <rect width="270" height="40" fill="#e8f5e9" stroke="#4caf50" rx="4"/>
+            <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a">len (长度)</text>
+            <text x="260" y="25" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2e7d32" text-anchor="end">10</text>
+          </g>
+        </g>
+      </g>
+      <!-- Stack Memory Size Bracket -->
+      <g transform="translate(325, 60)">
+        <path d="M 0,0 L 10,0 M 5,0 L 5,500 M 0,500 L 10,500" stroke="#90a4ae" stroke-width="1.5" fill="none" />
+        <text x="18" y="250" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#546e7a" transform="rotate(90, 18, 250)" text-anchor="middle">Stack Allocation (约 32 Bytes)</text>
+      </g>
+    </g>
+    <!-- Right Column: Heap (Top) & Code (Bottom) -->
+    <g transform="translate(390, 20)">
+      <!-- Heap Container -->
+      <rect width="320" height="380" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+      <rect width="320" height="35" rx="12" fill="#e8f5e9" />
+      <rect y="20" width="320" height="15" fill="#e8f5e9" />
+      <text x="160" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap (堆内存数据)</text>
+      <!-- Vertical Heap Elements -->
+      <g transform="translate(60, 60)">
+        <rect width="200" height="300" fill="#fff" stroke="#4caf50" stroke-width="2" rx="4" />
+        <g transform="translate(0, 0)">
+          <rect width="200" height="40" fill="#e8f5e9" fill-opacity="0.5" stroke="#e0e0e0" />
+          <text x="100" y="25" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" text-anchor="middle">1</text>
+          <text x="210" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">0x500</text>
+        </g>
+        <g transform="translate(0, 40)">
+          <rect width="200" height="40" fill="#fff" stroke="#e0e0e0" />
+          <text x="100" y="25" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" text-anchor="middle">2</text>
+          <text x="210" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#bdbdbd">0x504</text>
+        </g>
+        <line x1="100" y1="100" x2="100" y2="240" stroke="#bdbdbd" stroke-dasharray="4 4" />
+        <g transform="translate(0, 260)">
+          <rect width="200" height="40" fill="#fff" stroke="#e0e0e0" />
+          <text x="100" y="25" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" text-anchor="middle">10</text>
+          <text x="210" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#bdbdbd">0x524</text>
+        </g>
+      </g>
+      <!-- Code Segment Container -->
+      <g transform="translate(0, 400)">
+        <rect width="320" height="360" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5" />
+        <text x="160" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">Code Segment (代码逻辑)</text>
+        <!-- size_hint() logic -->
+        <g transform="translate(15, 45)">
+          <rect width="290" height="60" rx="8" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2"/>
+          <text x="10" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#e65100">fn size_hint(&amp;self)</text>
+          <text x="15" y="45" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2e7d32">return (10, Some(10));</text>
+        </g>
+        <!-- collect() logic -->
+        <g transform="translate(15, 120)">
+          <rect width="290" height="220" rx="8" fill="#ffffff" stroke="#ab47bc" stroke-dasharray="4 2" />
+          <text x="10" y="22" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#6a1b9a">fn collect&lt;B&gt;(self)</text>
+          <g transform="translate(10, 40)">
+            <text x="5" y="15" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">1. 根据 size_hint 预分配堆内存</text>
+            <text x="20" y="35" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">(RawVec::with_capacity(10))</text>
+            <text x="5" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">2. 循环迭代 next() 并填充数据</text>
+            <text x="5" y="95" font-family="JetBrains Mono, monospace" font-size="10" fill="#455a64">3. 构造并返回结果 Vec</text>
+            <text x="20" y="115" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">{ ptr, cap: 10, len: 10 }</text>
+          </g>
+          <text x="145" y="195" font-family="JetBrains Mono, monospace" font-size="11" fill="#9c27b0" font-weight="bold" text-anchor="middle">实现: 零成本抽象预分配</text>
+        </g>
+      </g>
+    </g>
+    <!-- Markers & Definitions -->
+    <defs>
+      <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#ff9800" />
+      </marker>
+      <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#4caf50" />
+      </marker>
+      <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 Z" fill="#9c27b0" />
+      </marker>
+    </defs>
+    <!-- Connections -->
+    <!-- Iterator to size_hint logic -->
+    <circle cx="285" cy="150" r="3" fill="#bbdefb" />
+    <path d="M 285,150 C 350,150 370,450 405,450" fill="none" stroke="#bbdefb" stroke-width="1.5" stroke-dasharray="2 2" marker-end="url(#arrow-purple)" />
+    <!-- Vec ptr to Heap -->
+    <circle cx="285" cy="420" r="3" fill="#ff9800" />
+    <path d="M 285,420 C 350,420 380,120 450,120" fill="none" stroke="#ff9800" stroke-width="2.5" marker-end="url(#arrow-orange)" />
+    <!-- Iterator closure to Code Logic -->
+    <circle cx="285" cy="305" r="3" fill="#ab47bc" />
+    <path d="M 285,305 C 340,305 370,550 405,550" fill="none" stroke="#ab47bc" stroke-width="1" stroke-dasharray="2 2" marker-end="url(#arrow-purple)" />
+  </g>
+</svg>
