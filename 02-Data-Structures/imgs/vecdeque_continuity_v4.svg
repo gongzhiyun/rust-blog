@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect width="800" height="500" rx="15" fill="#f8f9fa"/>
+
+    <!-- Title -->
+    <text x="30" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">VecDeque 连续性挑战：as_slices vs make_contiguous</text>
+
+    <!-- Case 1: as_slices (Wrapping) -->
+    <g transform="translate(30, 70)">
+        <rect width="740" height="180" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+        <text x="15" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">场景 1：逻辑连续但物理断裂 (as_slices)</text>
+        
+        <!-- Physical Memory Layout [C, D, _, _, _, _, A, B] -->
+        <g transform="translate(20, 45)">
+            <!-- Elements -->
+            <rect x="0" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+            <text x="22.5" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#2e7d32">C</text>
+            <text x="22.5" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[0]</text>
+
+            <rect x="50" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+            <text x="72.5" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#2e7d32">D</text>
+            <text x="72.5" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[1]</text>
+
+            <rect x="100" y="0" width="45" height="45" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+            <rect x="150" y="0" width="45" height="45" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+            <rect x="200" y="0" width="45" height="45" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+            <rect x="250" y="0" width="45" height="45" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+
+            <rect x="300" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+            <text x="322.5" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#2e7d32">A</text>
+            <text x="322.5" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[6]</text>
+
+            <rect x="350" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+            <text x="372.5" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#2e7d32">B</text>
+            <text x="372.5" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[7]</text>
+
+            <!-- Head pointer (Styled like expansion diagram) -->
+            <path d="M 322.5 110 V 70" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowhead-head)"/>
+            <text x="322.5" y="125" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#1565c0">head</text>
+        </g>
+
+        <!-- Slices indication -->
+        <g transform="translate(450, 45)">
+            <rect x="0" y="0" width="120" height="35" rx="6" fill="#fff3e0" stroke="#ffb74d" stroke-dasharray="4 2"/>
+            <text x="60" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#e65100">Slice 1: [A, B]</text>
+            
+            <rect x="130" y="0" width="120" height="35" rx="6" fill="#fff3e0" stroke="#ffb74d" stroke-dasharray="4 2"/>
+            <text x="190" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#e65100">Slice 2: [C, D]</text>
+            
+            <text x="0" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">as_slices() -&gt; (&amp;[T], &amp;[T])</text>
+            <text x="0" y="85" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">性能: O(1) 零拷贝</text>
+        </g>
+    </g>
+
+    <!-- Case 2: make_contiguous (Aligned) -->
+    <g transform="translate(30, 280)">
+        <rect width="740" height="180" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+        <text x="15" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">场景 2：物理纠偏后的连续内存 (make_contiguous)</text>
+        
+        <!-- Physical Memory Layout [A, B, C, D, _, _, _, _] -->
+        <g transform="translate(20, 45)">
+            <rect x="0" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#2196f3"/>
+            <text x="22.5" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#1565c0">A</text>
+            <text x="22.5" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[0]</text>
+
+            <rect x="50" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#2196f3"/>
+            <text x="72.5" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#1565c0">B</text>
+            <text x="72.5" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[1]</text>
+
+            <rect x="100" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#2196f3"/>
+            <text x="122.5" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#1565c0">C</text>
+            <text x="122.5" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[2]</text>
+
+            <rect x="150" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#2196f3"/>
+            <text x="172.5" y="27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#1565c0">D</text>
+            <text x="172.5" y="60" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[3]</text>
+
+            <rect x="200" y="0" width="45" height="45" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+            <rect x="250" y="0" width="45" height="45" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+            <rect x="300" y="0" width="45" height="45" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+            <rect x="350" y="0" width="45" height="45" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+
+            <!-- Head pointer reset -->
+            <path d="M 22.5 110 V 70" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowhead-head)"/>
+            <text x="22.5" y="125" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#1565c0">head</text>
+        </g>
+
+        <!-- Continuous slice indication -->
+        <g transform="translate(450, 45)">
+            <rect x="0" y="0" width="250" height="35" rx="6" fill="#e8f5e9" stroke="#4caf50"/>
+            <text x="125" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#2e7d32">Single Slice: [A, B, C, D]</text>
+            
+            <text x="0" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">make_contiguous() -&gt; &amp;mut [T]</text>
+            <text x="0" y="85" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">性能: O(n) 内存搬运</text>
+        </g>
+    </g>
+
+    <!-- Arrow Markers -->
+    <defs>
+        <marker id="arrowhead-head" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#1565c0" />
+        </marker>
+    </defs>
+</svg>

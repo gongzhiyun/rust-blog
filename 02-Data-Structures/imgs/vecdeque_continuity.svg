@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="650" viewBox="0 0 800 650" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="650" rx="15" fill="#f8f9fa"/>
+<defs>
+<style>
+.label { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #546e7a; }
+.value { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold; fill: #333; }
+.header { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: bold; fill: #1565c0; }
+.heap-header { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: bold; fill: #2e7d32; }
+.index { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #78909c; }
+.code-box-text { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: #6a1b9a; font-weight: bold; }
+.step-title { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: bold; fill: #333; }
+.sub-header { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: bold; fill: #7b1fa2; }
+</style>
+<marker id="arrowhead-ptr" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+</marker>
+<marker id="arrowhead-purple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#9c27b0" />
+</marker>
+</defs>
+<text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">VecDeque 连续性挑战：as_slices vs make_contiguous</text>
+<!-- 1. Wrapped State -->
+<g transform="translate(30, 70)">
+<text x="0" y="-10" class="step-title">1. 回绕状态 (Wrapped) - as_slices()</text>
+<rect width="740" height="230" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+<!-- Stack -->
+<g transform="translate(20, 30)">
+<rect width="180" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="180" height="25" rx="8" fill="#e3f2fd"/>
+<text x="90" y="17" text-anchor="middle" class="header">Stack (VecDeque)</text>
+<g transform="translate(10, 35)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">head</text>
+<text x="152" y="15" class="value" text-anchor="end">6</text>
+<g transform="translate(0, 27)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">len</text>
+<text x="152" y="15" class="value" text-anchor="end">5</text>
+</g>
+<g transform="translate(0, 55)">
+<rect width="160" height="80" rx="6" fill="#f8f0fb" stroke="#9c27b0" stroke-dasharray="2 2"/>
+<text x="8" y="14" class="sub-header">buf: RawVec</text>
+<g transform="translate(5, 20)">
+<rect width="150" height="22" rx="4" fill="#fff8e1" stroke="#ff9800"/>
+<text x="8" y="15" class="label">ptr</text>
+<text x="142" y="15" class="value" text-anchor="end" fill="#f57c00">0x55aa</text>
+</g>
+<g transform="translate(5, 47)">
+<rect width="150" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">cap</text>
+<text x="142" y="15" class="value" text-anchor="end">8</text>
+</g>
+</g>
+</g>
+</g>
+<!-- Heap -->
+<g transform="translate(240, 30)">
+<rect width="480" height="140" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="480" height="25" rx="8" fill="#e8f5e9"/>
+<text x="240" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer: 0x55aa)</text>
+<g transform="translate(20, 45)">
+<rect x="0" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/><text x="22.5" y="27" text-anchor="middle" class="value" fill="#1565c0">C</text><text x="22.5" y="60" text-anchor="middle" class="index">[0]</text>
+<rect x="55" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/><text x="77.5" y="27" text-anchor="middle" class="value" fill="#1565c0">D</text><text x="77.5" y="60" text-anchor="middle" class="index">[1]</text>
+<rect x="110" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/><text x="132.5" y="27" text-anchor="middle" class="value" fill="#1565c0">E</text><text x="132.5" y="60" text-anchor="middle" class="index">[2]</text>
+<rect x="165" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="187.5" y="60" text-anchor="middle" class="index">[3]</text>
+<rect x="220" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="242.5" y="60" text-anchor="middle" class="index">[4]</text>
+<rect x="275" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="297.5" y="60" text-anchor="middle" class="index">[5]</text>
+<rect x="330" y="0" width="45" height="45" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/><text x="352.5" y="27" text-anchor="middle" class="value" fill="#f57c00">A</text><text x="352.5" y="60" text-anchor="middle" class="index">[6] head</text>
+<rect x="385" y="0" width="45" height="45" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/><text x="407.5" y="27" text-anchor="middle" class="value" fill="#f57c00">B</text><text x="407.5" y="60" text-anchor="middle" class="index">[7]</text>
+</g>
+</g>
+<!-- as_slices result box -->
+<g transform="translate(240, 180)">
+<rect width="480" height="35" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-dasharray="4 2"/>
+<text x="240" y="22" text-anchor="middle" class="code-box-text">as_slices() -> (&amp;[A, B], &amp;[C, D, E])</text>
+<path d="M 352.5 0 L 352.5 -25" fill="none" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="2 2" />
+<path x="407.5" y="0" d="M 407.5 0 L 407.5 -25" fill="none" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="2 2" />
+<path d="M 22.5 0 L 22.5 -25" fill="none" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="2 2" />
+<path d="M 132.5 0 L 132.5 -25" fill="none" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="2 2" />
+</g>
+</g>
+<!-- Arrow -->
+<g transform="translate(400, 315)">
+<text x="0" y="0" class="sub-header" text-anchor="middle">调用 make_contiguous()</text>
+<path d="M 0 5 L 0 35" fill="none" stroke="#9c27b0" stroke-width="2" marker-end="url(#arrowhead-purple)" />
+<text x="0" y="50" class="label" text-anchor="middle">物理搬运与原点对齐 (O(n))</text>
+</g>
+<!-- 2. Contiguous State -->
+<g transform="translate(30, 380)">
+<text x="0" y="-10" class="step-title">2. 连续状态 (Contiguous) - as_slices()</text>
+<rect width="740" height="230" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+<!-- Stack -->
+<g transform="translate(20, 30)">
+<rect width="180" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="180" height="25" rx="8" fill="#e3f2fd"/>
+<text x="90" y="17" text-anchor="middle" class="header">Stack (VecDeque)</text>
+<g transform="translate(10, 35)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
+<text x="8" y="15" class="label">head</text>
+<text x="152" y="15" class="value" text-anchor="end">0</text>
+<g transform="translate(0, 27)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">len</text>
+<text x="152" y="15" class="value" text-anchor="end">5</text>
+</g>
+<g transform="translate(0, 55)">
+<rect width="160" height="80" rx="6" fill="#f8f0fb" stroke="#9c27b0" stroke-dasharray="2 2"/>
+<text x="8" y="14" class="sub-header">buf: RawVec</text>
+<g transform="translate(5, 20)">
+<rect width="150" height="22" rx="4" fill="#fff8e1" stroke="#ff9800"/>
+<text x="8" y="15" class="label">ptr</text>
+<text x="142" y="15" class="value" text-anchor="end" fill="#f57c00">0x55aa</text>
+</g>
+<g transform="translate(5, 47)">
+<rect width="150" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">cap</text>
+<text x="142" y="15" class="value" text-anchor="end">8</text>
+</g>
+</g>
+</g>
+</g>
+<!-- Heap -->
+<g transform="translate(240, 30)">
+<rect width="480" height="140" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="480" height="25" rx="8" fill="#e8f5e9"/>
+<text x="240" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer: 0x55aa)</text>
+<g transform="translate(20, 45)">
+<rect x="0" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/><text x="22.5" y="27" text-anchor="middle" class="value" fill="#1565c0">A</text><text x="22.5" y="60" text-anchor="middle" class="index">[0] head</text>
+<rect x="55" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/><text x="77.5" y="27" text-anchor="middle" class="value" fill="#1565c0">B</text><text x="77.5" y="60" text-anchor="middle" class="index">[1]</text>
+<rect x="110" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/><text x="132.5" y="27" text-anchor="middle" class="value" fill="#1565c0">C</text><text x="132.5" y="60" text-anchor="middle" class="index">[2]</text>
+<rect x="165" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/><text x="187.5" y="27" text-anchor="middle" class="value" fill="#1565c0">D</text><text x="187.5" y="60" text-anchor="middle" class="index">[3]</text>
+<rect x="220" y="0" width="45" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/><text x="242.5" y="27" text-anchor="middle" class="value" fill="#1565c0">E</text><text x="242.5" y="60" text-anchor="middle" class="index">[4]</text>
+<rect x="275" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="297.5" y="60" text-anchor="middle" class="index">[5]</text>
+<rect x="330" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="352.5" y="60" text-anchor="middle" class="index">[6]</text>
+<rect x="385" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="407.5" y="60" text-anchor="middle" class="index">[7]</text>
+</g>
+</g>
+<!-- as_slices result box -->
+<g transform="translate(240, 180)">
+<rect width="480" height="35" rx="8" fill="#e3f2fd" stroke="#1565c0"/>
+<text x="240" y="22" text-anchor="middle" class="code-box-text" fill="#1565c0">as_slices() -> (&amp;[A, B, C, D, E], &amp;[])</text>
+<path d="M 22.5 0 L 22.5 -25" fill="none" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="2 2" />
+<path d="M 242.5 0 L 242.5 -25" fill="none" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="2 2" />
+</g>
+</g>
+</svg>

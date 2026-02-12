@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="1100" viewBox="0 0 800 1100" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="1100" rx="15" fill="#f8f9fa"/>
+<defs>
+<style>
+.label { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #546e7a; }
+.value { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold; fill: #333; }
+.header { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: bold; fill: #1565c0; }
+.heap-header { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: bold; fill: #2e7d32; }
+.ptr-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: bold; fill: #f57c00; }
+.head-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: bold; fill: #1565c0; }
+.index { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #78909c; }
+.code-box { font-family: 'JetBrains Mono', monospace; font-size: 13px; fill: #6a1b9a; font-weight: bold; }
+.sub-header { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: bold; fill: #7b1fa2; }
+</style>
+<marker id="arrowhead-ptr" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+</marker>
+<marker id="arrowhead-head" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#1565c0" />
+</marker>
+<marker id="arrowhead-back" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#f57c00" />
+</marker>
+</defs>
+<!-- Step 1: Initialization -->
+<g transform="translate(30, 40)">
+<rect width="740" height="240" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="250" height="30" x="10" y="10" rx="6" fill="#f3e5f5" stroke="#9c27b0"/>
+<text x="25" y="30" class="code-box">1. with_capacity(8)</text>
+<g transform="translate(20, 50)">
+<rect width="180" height="170" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="180" height="25" rx="8" fill="#e3f2fd"/>
+<text x="90" y="17" text-anchor="middle" class="header">Stack (VecDeque)</text>
+<g transform="translate(10, 35)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
+          <text x="8" y="15" class="label">head</text>
+          <text x="152" y="15" class="value" text-anchor="end">0</text>
+<g transform="translate(0, 27)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">len</text>
+<text x="152" y="15" class="value" text-anchor="end">0</text>
+</g>
+<g transform="translate(0, 55)">
+<rect width="160" height="75" rx="6" fill="#f8f0fb" stroke="#9c27b0" stroke-dasharray="2 2"/>
+<text x="8" y="14" class="sub-header">buf: RawVec</text>
+<g transform="translate(5, 20)">
+<rect width="150" height="22" rx="4" fill="#fff8e1" stroke="#ff9800"/>
+<text x="8" y="15" class="label">ptr</text>
+<text x="142" y="15" class="value" text-anchor="end" fill="#f57c00">0x55aa</text>
+</g>
+<g transform="translate(5, 47)">
+<rect width="150" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">cap</text>
+<text x="142" y="15" class="value" text-anchor="end">8</text>
+</g>
+</g>
+</g>
+</g>
+<g transform="translate(240, 50)">
+<rect width="480" height="170" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="480" height="25" rx="8" fill="#e8f5e9"/>
+<text x="240" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+<g transform="translate(20, 60)">
+<rect x="0" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="22.5" y="60" text-anchor="middle" class="index">[0]</text>
+<rect x="55" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="77.5" y="60" text-anchor="middle" class="index">[1]</text>
+<rect x="110" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="132.5" y="60" text-anchor="middle" class="index">[2]</text>
+<rect x="165" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="187.5" y="60" text-anchor="middle" class="index">[3]</text>
+<rect x="220" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="242.5" y="60" text-anchor="middle" class="index">[4]</text>
+<rect x="275" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="297.5" y="60" text-anchor="middle" class="index">[5]</text>
+<rect x="330" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="352.5" y="60" text-anchor="middle" class="index">[6]</text>
+<rect x="385" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="407.5" y="60" text-anchor="middle" class="index">[7]</text>
+<path d="M22.5 95 V65" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowhead-head)"/>
+<text x="22.5" y="105" text-anchor="middle" class="head-label">head</text>
+</g>
+</g>
+<circle cx="185" cy="171" r="3" fill="#ff9800"/>
+<path d="M185 171 C220 171 225 132.5 260 132.5" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2" fill="none" marker-end="url(#arrowhead-ptr)"/>
+</g>
+<!-- Step 2: push_back('C'), push_back('D') -->
+<g transform="translate(30, 300)">
+<rect width="740" height="240" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="250" height="30" x="10" y="10" rx="6" fill="#f3e5f5" stroke="#9c27b0"/>
+<text x="25" y="30" class="code-box">2. push_back 'C', 'D'</text>
+<g transform="translate(20, 50)">
+<rect width="180" height="170" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="180" height="25" rx="8" fill="#e3f2fd"/>
+<text x="90" y="17" text-anchor="middle" class="header">Stack (VecDeque)</text>
+<g transform="translate(10, 35)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
+          <text x="8" y="15" class="label">head</text>
+          <text x="152" y="15" class="value" text-anchor="end">0</text>
+<g transform="translate(0, 27)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">len</text>
+<text x="152" y="15" class="value" text-anchor="end">2</text>
+</g>
+<g transform="translate(0, 55)">
+<rect width="160" height="75" rx="6" fill="#f8f0fb" stroke="#9c27b0" stroke-dasharray="2 2"/>
+<text x="8" y="14" class="sub-header">buf: RawVec</text>
+<g transform="translate(5, 20)">
+<rect width="150" height="22" rx="4" fill="#fff8e1" stroke="#ff9800"/>
+<text x="8" y="15" class="label">ptr</text>
+<text x="142" y="15" class="value" text-anchor="end" fill="#f57c00">0x55aa</text>
+</g>
+<g transform="translate(5, 47)">
+<rect width="150" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">cap</text>
+<text x="142" y="15" class="value" text-anchor="end">8</text>
+</g>
+</g>
+</g>
+</g>
+<g transform="translate(240, 50)">
+<rect width="480" height="170" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="480" height="25" rx="8" fill="#e8f5e9"/>
+<text x="240" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+<g transform="translate(20, 60)">
+<rect x="0" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#1565c0" stroke-width="2"/><text x="22.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">C</text><text x="22.5" y="60" text-anchor="middle" class="index">[0]</text>
+<rect x="55" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="77.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">D</text><text x="77.5" y="60" text-anchor="middle" class="index">[1]</text>
+<rect x="110" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="132.5" y="60" text-anchor="middle" class="index">[2]</text>
+<rect x="165" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="187.5" y="60" text-anchor="middle" class="index">[3]</text>
+<rect x="220" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="242.5" y="60" text-anchor="middle" class="index">[4]</text>
+<rect x="275" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="297.5" y="60" text-anchor="middle" class="index">[5]</text>
+<rect x="330" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="352.5" y="60" text-anchor="middle" class="index">[6]</text>
+<rect x="385" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="407.5" y="60" text-anchor="middle" class="index">[7]</text>
+<path d="M22.5 95 V65" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowhead-head)"/>
+<text x="22.5" y="105" text-anchor="middle" class="head-label">head</text>
+</g>
+</g>
+<circle cx="185" cy="171" r="3" fill="#ff9800"/>
+<path d="M185 171 C220 171 225 132.5 260 132.5" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2" fill="none" marker-end="url(#arrowhead-ptr)"/>
+</g>
+<!-- Step 3: push_front('B') -->
+<g transform="translate(30, 560)">
+<rect width="740" height="240" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="250" height="30" x="10" y="10" rx="6" fill="#f3e5f5" stroke="#9c27b0"/>
+<text x="25" y="30" class="code-box">3. push_front 'B'</text>
+<g transform="translate(20, 50)">
+<rect width="180" height="170" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="180" height="25" rx="8" fill="#e3f2fd"/>
+<text x="90" y="17" text-anchor="middle" class="header">Stack (VecDeque)</text>
+<g transform="translate(10, 35)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
+          <text x="8" y="15" class="label">head</text>
+          <text x="152" y="15" class="value" text-anchor="end">7</text>
+<g transform="translate(0, 27)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">len</text>
+<text x="152" y="15" class="value" text-anchor="end">3</text>
+</g>
+<g transform="translate(0, 55)">
+<rect width="160" height="75" rx="6" fill="#f8f0fb" stroke="#9c27b0" stroke-dasharray="2 2"/>
+<text x="8" y="14" class="sub-header">buf: RawVec</text>
+<g transform="translate(5, 20)">
+<rect width="150" height="22" rx="4" fill="#fff8e1" stroke="#ff9800"/>
+<text x="8" y="15" class="label">ptr</text>
+<text x="142" y="15" class="value" text-anchor="end" fill="#f57c00">0x55aa</text>
+</g>
+<g transform="translate(5, 47)">
+<rect width="150" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">cap</text>
+<text x="142" y="15" class="value" text-anchor="end">8</text>
+</g>
+</g>
+</g>
+</g>
+<g transform="translate(240, 50)">
+<rect width="480" height="170" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="480" height="25" rx="8" fill="#e8f5e9"/>
+<text x="240" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+<g transform="translate(20, 60)">
+<rect x="0" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="22.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">C</text><text x="22.5" y="60" text-anchor="middle" class="index">[0]</text>
+<rect x="55" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="77.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">D</text><text x="77.5" y="60" text-anchor="middle" class="index">[1]</text>
+<rect x="110" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="132.5" y="60" text-anchor="middle" class="index">[2]</text>
+<rect x="165" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="187.5" y="60" text-anchor="middle" class="index">[3]</text>
+<rect x="220" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="242.5" y="60" text-anchor="middle" class="index">[4]</text>
+<rect x="275" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="297.5" y="60" text-anchor="middle" class="index">[5]</text>
+<rect x="330" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="352.5" y="60" text-anchor="middle" class="index">[6]</text>
+<rect x="385" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#1565c0" stroke-width="2"/><text x="407.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">B</text><text x="407.5" y="60" text-anchor="middle" class="index">[7]</text>
+<path d="M407.5 95 V65" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowhead-head)"/>
+<text x="407.5" y="105" text-anchor="middle" class="head-label">head</text>
+</g>
+</g>
+<circle cx="185" cy="171" r="3" fill="#ff9800"/>
+<path d="M185 171 C220 171 225 132.5 260 132.5" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2" fill="none" marker-end="url(#arrowhead-ptr)"/>
+</g>
+<!-- Step 4: push_front('A') -->
+<g transform="translate(30, 820)">
+<rect width="740" height="240" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="250" height="30" x="10" y="10" rx="6" fill="#f3e5f5" stroke="#9c27b0"/>
+<text x="25" y="30" class="code-box">4. push_front 'A' (Final)</text>
+<g transform="translate(20, 50)">
+<rect width="180" height="170" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="180" height="25" rx="8" fill="#e3f2fd"/>
+<text x="90" y="17" text-anchor="middle" class="header">Stack (VecDeque)</text>
+<g transform="translate(10, 35)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#1565c0" stroke-width="1.5"/>
+          <text x="8" y="15" class="label">head</text>
+          <text x="152" y="15" class="value" text-anchor="end">6</text>
+<g transform="translate(0, 27)">
+<rect width="160" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">len</text>
+<text x="152" y="15" class="value" text-anchor="end">4</text>
+</g>
+<g transform="translate(0, 55)">
+<rect width="160" height="75" rx="6" fill="#f8f0fb" stroke="#9c27b0" stroke-dasharray="2 2"/>
+<text x="8" y="14" class="sub-header">buf: RawVec</text>
+<g transform="translate(5, 20)">
+<rect width="150" height="22" rx="4" fill="#fff8e1" stroke="#ff9800"/>
+<text x="8" y="15" class="label">ptr</text>
+<text x="142" y="15" class="value" text-anchor="end" fill="#f57c00">0x55aa</text>
+</g>
+<g transform="translate(5, 47)">
+<rect width="150" height="22" rx="4" fill="#ffffff" stroke="#e0e0e0"/>
+<text x="8" y="15" class="label">cap</text>
+<text x="142" y="15" class="value" text-anchor="end">8</text>
+</g>
+</g>
+</g>
+</g>
+<g transform="translate(240, 50)">
+<rect width="480" height="170" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+<rect width="480" height="25" rx="8" fill="#e8f5e9"/>
+<text x="240" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+<g transform="translate(20, 60)">
+<rect x="0" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="22.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">C</text><text x="22.5" y="60" text-anchor="middle" class="index">[0]</text>
+<rect x="55" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="77.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">D</text><text x="77.5" y="60" text-anchor="middle" class="index">[1]</text>
+<rect x="110" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="132.5" y="60" text-anchor="middle" class="index">[2]</text>
+<rect x="165" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="187.5" y="60" text-anchor="middle" class="index">[3]</text>
+<rect x="220" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="242.5" y="60" text-anchor="middle" class="index">[4]</text>
+<rect x="275" y="0" width="45" height="45" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="297.5" y="60" text-anchor="middle" class="index">[5]</text>
+<rect x="330" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#1565c0" stroke-width="2"/><text x="352.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">A</text><text x="352.5" y="60" text-anchor="middle" class="index">[6]</text>
+<rect x="385" y="0" width="45" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="407.5" y="27" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="bold" fill="#2e7d32">B</text><text x="407.5" y="60" text-anchor="middle" class="index">[7]</text>
+<path d="M352.5 95 V65" stroke="#1565c0" stroke-width="1.5" marker-end="url(#arrowhead-head)"/>
+<text x="352.5" y="105" text-anchor="middle" class="head-label">head</text>
+<path d="M132.5 95 V65" stroke="#f57c00" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#arrowhead-back)"/>
+<text x="132.5" y="105" text-anchor="middle" class="ptr-label">logical back</text>
+</g>
+</g>
+<circle cx="185" cy="171" r="3" fill="#ff9800"/>
+<path d="M185 171 C220 171 225 132.5 260 132.5" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2" fill="none" marker-end="url(#arrowhead-ptr)"/>
+</g>
+</svg>

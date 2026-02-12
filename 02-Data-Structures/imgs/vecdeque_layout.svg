@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="1130" viewBox="0 0 800 1130" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="1130" rx="15" fill="#f8f9fa"/>
+<defs>
+<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+</marker>
+</defs>
+
+<style>
+.label { font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: #546e7a; }
+.value { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: bold; fill: #333; }
+.header { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold; fill: #1565c0; }
+.heap-header { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: bold; fill: #2e7d32; }
+.ptr-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: bold; fill: #ff9800; }
+.index { font-family: 'JetBrains Mono', monospace; font-size: 8px; fill: #78909c; }
+.code { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: #d32f2f; font-weight: bold; }
+</style>
+
+<!-- 抽取的通用 Slot 宏定义逻辑 -->
+<!-- 参数说明: x, y, content, index, is_filled, show_ptr_head, show_ptr_tail -->
+
+<!-- 1. 初始化 -->
+<g transform="translate(30, 40)">
+<text x="10" y="0" class="code">1. let mut dq = VecDeque::with_capacity(8);</text>
+<g transform="translate(0, 15)">
+    <rect width="160" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+    <rect width="160" height="25" rx="8 8 0 0" fill="#e3f2fd"/><text x="80" y="17" text-anchor="middle" class="header">Stack</text>
+    <g transform="translate(10, 35)">
+        <rect width="140" height="135" rx="4" fill="#ffffff" stroke="#ef5350" stroke-width="1"/>
+        <g transform="translate(5, 10)"><rect width="130" height="25" rx="3" fill="#fff8e1" stroke="#ff9800"/><text x="5" y="16" class="label">buf</text><text x="125" y="16" class="value" text-anchor="end" fill="#f57c00">0x55aa</text></g>
+        <g transform="translate(5, 40)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">cap</text><text x="125" y="16" class="value" text-anchor="end">8</text></g>
+        <g transform="translate(5, 70)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">tail</text><text x="125" y="16" class="value" text-anchor="end">0</text></g>
+        <g transform="translate(5, 100)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">head</text><text x="125" y="16" class="value" text-anchor="end">0</text></g>
+    </g>
+    <g transform="translate(170, 0)">
+        <rect width="570" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+        <rect width="570" height="25" rx="8 8 0 0" fill="#e8f5e9"/><text x="285" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+        <g transform="translate(15, 50)">
+            <!-- 补全 8 个槽位 -->
+            <rect x="0" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="30" y="72" text-anchor="middle" class="index">[0]</text>
+            <rect x="68" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="98" y="72" text-anchor="middle" class="index">[1]</text>
+            <rect x="136" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="166" y="72" text-anchor="middle" class="index">[2]</text>
+            <rect x="204" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="234" y="72" text-anchor="middle" class="index">[3]</text>
+            <rect x="272" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="302" y="72" text-anchor="middle" class="index">[4]</text>
+            <rect x="340" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="370" y="72" text-anchor="middle" class="index">[5]</text>
+            <rect x="408" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="438" y="72" text-anchor="middle" class="index">[6]</text>
+            <rect x="476" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="506" y="72" text-anchor="middle" class="index">[7]</text>
+            <path d="M30 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="30" y="118" text-anchor="middle" class="ptr-label">head/tail</text>
+        </g>
+    </g>
+</g>
+</g>
+
+<!-- 2. push_back('C') -->
+<g transform="translate(30, 260)">
+<text x="10" y="0" class="code">2. dq.push_back('C');</text>
+<g transform="translate(0, 15)">
+    <rect width="160" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+    <rect width="160" height="25" rx="8 8 0 0" fill="#e3f2fd"/><text x="80" y="17" text-anchor="middle" class="header">Stack</text>
+    <g transform="translate(10, 35)">
+        <rect width="140" height="135" rx="4" fill="#ffffff" stroke="#ef5350" stroke-width="1"/>
+        <g transform="translate(5, 10)"><rect width="130" height="25" rx="3" fill="#fff8e1" stroke="#ff9800"/><text x="5" y="16" class="label">buf</text><text x="125" y="16" class="value" text-anchor="end" fill="#f57c00">0x55aa</text></g>
+        <g transform="translate(5, 40)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">cap</text><text x="125" y="16" class="value" text-anchor="end">8</text></g>
+        <g transform="translate(5, 70)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">tail</text><text x="125" y="16" class="value" text-anchor="end">0</text></g>
+        <g transform="translate(5, 100)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">head</text><text x="125" y="16" class="value" text-anchor="end">1</text></g>
+    </g>
+    <g transform="translate(170, 0)">
+        <rect width="570" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+        <rect width="570" height="25" rx="8 8 0 0" fill="#e8f5e9"/><text x="285" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+        <g transform="translate(15, 50)">
+            <rect x="0" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="30" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">C</text><text x="30" y="72" text-anchor="middle" class="index">[0]</text>
+            <rect x="68" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="98" y="72" text-anchor="middle" class="index">[1]</text>
+            <rect x="136" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="166" y="72" text-anchor="middle" class="index">[2]</text>
+            <rect x="204" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="234" y="72" text-anchor="middle" class="index">[3]</text>
+            <rect x="272" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="302" y="72" text-anchor="middle" class="index">[4]</text>
+            <rect x="340" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="370" y="72" text-anchor="middle" class="index">[5]</text>
+            <rect x="408" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="438" y="72" text-anchor="middle" class="index">[6]</text>
+            <rect x="476" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="506" y="72" text-anchor="middle" class="index">[7]</text>
+            <path d="M30 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="30" y="118" text-anchor="middle" class="ptr-label">tail</text>
+            <path d="M98 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="98" y="118" text-anchor="middle" class="ptr-label">head</text>
+        </g>
+    </g>
+</g>
+</g>
+
+<!-- 3. push_back('D') -->
+<g transform="translate(30, 480)">
+<text x="10" y="0" class="code">3. dq.push_back('D');</text>
+<g transform="translate(0, 15)">
+    <rect width="160" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+    <rect width="160" height="25" rx="8 8 0 0" fill="#e3f2fd"/><text x="80" y="17" text-anchor="middle" class="header">Stack</text>
+    <g transform="translate(10, 35)">
+        <rect width="140" height="135" rx="4" fill="#ffffff" stroke="#ef5350" stroke-width="1"/>
+        <g transform="translate(5, 10)"><rect width="130" height="25" rx="3" fill="#fff8e1" stroke="#ff9800"/><text x="5" y="16" class="label">buf</text><text x="125" y="16" class="value" text-anchor="end" fill="#f57c00">0x55aa</text></g>
+        <g transform="translate(5, 40)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">cap</text><text x="125" y="16" class="value" text-anchor="end">8</text></g>
+        <g transform="translate(5, 70)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">tail</text><text x="125" y="16" class="value" text-anchor="end">0</text></g>
+        <g transform="translate(5, 100)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">head</text><text x="125" y="16" class="value" text-anchor="end">2</text></g>
+    </g>
+    <g transform="translate(170, 0)">
+        <rect width="570" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+        <rect width="570" height="25" rx="8 8 0 0" fill="#e8f5e9"/><text x="285" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+        <g transform="translate(15, 50)">
+            <rect x="0" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="30" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">C</text><text x="30" y="72" text-anchor="middle" class="index">[0]</text>
+            <rect x="68" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="98" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">D</text><text x="98" y="72" text-anchor="middle" class="index">[1]</text>
+            <rect x="136" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="166" y="72" text-anchor="middle" class="index">[2]</text>
+            <rect x="204" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="234" y="72" text-anchor="middle" class="index">[3]</text>
+            <rect x="272" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="302" y="72" text-anchor="middle" class="index">[4]</text>
+            <rect x="340" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="370" y="72" text-anchor="middle" class="index">[5]</text>
+            <rect x="408" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="438" y="72" text-anchor="middle" class="index">[6]</text>
+            <rect x="476" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="506" y="72" text-anchor="middle" class="index">[7]</text>
+            <path d="M30 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="30" y="118" text-anchor="middle" class="ptr-label">tail</text>
+            <path d="M166 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="166" y="118" text-anchor="middle" class="ptr-label">head</text>
+        </g>
+    </g>
+</g>
+</g>
+
+<!-- 4. push_front('B') -->
+<g transform="translate(30, 700)">
+<text x="10" y="0" class="code">4. dq.push_front('B');</text>
+<g transform="translate(0, 15)">
+    <rect width="160" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+    <rect width="160" height="25" rx="8 8 0 0" fill="#e3f2fd"/><text x="80" y="17" text-anchor="middle" class="header">Stack</text>
+    <g transform="translate(10, 35)">
+        <rect width="140" height="135" rx="4" fill="#ffffff" stroke="#ef5350" stroke-width="1"/>
+        <g transform="translate(5, 10)"><rect width="130" height="25" rx="3" fill="#fff8e1" stroke="#ff9800"/><text x="5" y="16" class="label">buf</text><text x="125" y="16" class="value" text-anchor="end" fill="#f57c00">0x55aa</text></g>
+        <g transform="translate(5, 40)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">cap</text><text x="125" y="16" class="value" text-anchor="end">8</text></g>
+        <g transform="translate(5, 70)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">tail</text><text x="125" y="16" class="value" text-anchor="end">7</text></g>
+        <g transform="translate(5, 100)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">head</text><text x="125" y="16" class="value" text-anchor="end">2</text></g>
+    </g>
+    <g transform="translate(170, 0)">
+        <rect width="570" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+        <rect width="570" height="25" rx="8 8 0 0" fill="#e8f5e9"/><text x="285" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+        <g transform="translate(15, 50)">
+            <rect x="0" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="30" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">C</text><text x="30" y="72" text-anchor="middle" class="index">[0]</text>
+            <rect x="68" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="98" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">D</text><text x="98" y="72" text-anchor="middle" class="index">[1]</text>
+            <rect x="136" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="166" y="72" text-anchor="middle" class="index">[2]</text>
+            <rect x="204" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="234" y="72" text-anchor="middle" class="index">[3]</text>
+            <rect x="272" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="302" y="72" text-anchor="middle" class="index">[4]</text>
+            <rect x="340" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="370" y="72" text-anchor="middle" class="index">[5]</text>
+            <rect x="408" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="438" y="72" text-anchor="middle" class="index">[6]</text>
+            <rect x="476" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="506" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">B</text><text x="506" y="72" text-anchor="middle" class="index">[7]</text>
+            <path d="M506 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="506" y="118" text-anchor="middle" class="ptr-label">tail</text>
+            <path d="M166 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="166" y="118" text-anchor="middle" class="ptr-label">head</text>
+        </g>
+    </g>
+</g>
+</g>
+
+<!-- 5. push_front('A') -->
+<g transform="translate(30, 920)">
+<text x="10" y="0" class="code">5. dq.push_front('A');</text>
+<g transform="translate(0, 15)">
+    <rect width="160" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+    <rect width="160" height="25" rx="8 8 0 0" fill="#e3f2fd"/><text x="80" y="17" text-anchor="middle" class="header">Stack</text>
+    <g transform="translate(10, 35)">
+        <rect width="140" height="135" rx="4" fill="#ffffff" stroke="#ef5350" stroke-width="1"/>
+        <g transform="translate(5, 10)"><rect width="130" height="25" rx="3" fill="#fff8e1" stroke="#ff9800"/><text x="5" y="16" class="label">buf</text><text x="125" y="16" class="value" text-anchor="end" fill="#f57c00">0x55aa</text></g>
+        <g transform="translate(5, 40)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">cap</text><text x="125" y="16" class="value" text-anchor="end">8</text></g>
+        <g transform="translate(5, 70)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">tail</text><text x="125" y="16" class="value" text-anchor="end">6</text></g>
+        <g transform="translate(5, 100)"><rect width="130" height="25" rx="3" fill="#ffffff" stroke="#e0e0e0"/><text x="5" y="16" class="label">head</text><text x="125" y="16" class="value" text-anchor="end">2</text></g>
+    </g>
+    <g transform="translate(170, 0)">
+        <rect width="570" height="180" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
+        <rect width="570" height="25" rx="8 8 0 0" fill="#e8f5e9"/><text x="285" y="17" text-anchor="middle" class="heap-header">Heap (Ring Buffer)</text>
+        <g transform="translate(15, 50)">
+            <rect x="0" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="30" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">C</text><text x="30" y="72" text-anchor="middle" class="index">[0]</text>
+            <rect x="68" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="98" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">D</text><text x="98" y="72" text-anchor="middle" class="index">[1]</text>
+            <rect x="136" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="166" y="72" text-anchor="middle" class="index">[2]</text>
+            <rect x="204" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="234" y="72" text-anchor="middle" class="index">[3]</text>
+            <rect x="272" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="302" y="72" text-anchor="middle" class="index">[4]</text>
+            <rect x="340" y="0" width="60" height="60" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 2"/><text x="370" y="72" text-anchor="middle" class="index">[5]</text>
+            <rect x="408" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="438" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">A</text><text x="438" y="72" text-anchor="middle" class="index">[6]</text>
+            <rect x="476" y="0" width="60" height="60" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/><text x="506" y="35" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="bold" fill="#2e7d32">B</text><text x="506" y="72" text-anchor="middle" class="index">[7]</text>
+            <path d="M438 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="438" y="118" text-anchor="middle" class="ptr-label">tail</text>
+            <path d="M166 80 V105" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/><text x="166" y="118" text-anchor="middle" class="ptr-label">head</text>
+        </g>
+    </g>
+</g>
+</g>
+
+</svg>

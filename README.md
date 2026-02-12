@@ -20,9 +20,10 @@
 - **[结构体 (Struct)](./02-Data-Structures/Struct.md)** - 内存布局与对齐
 - **[字符串 (String)](./02-Data-Structures/String.md)** - 彻底搞懂 String 与 &str
 - **[向量 (Vec)](./02-Data-Structures/Vec.md)** - 动态数组的扩容机制
+- **[双端队列 (VecDeque)](./02-Data-Structures/VecDeque.md)** - 跨越物理边界的环形缓冲区
 
 ### 03 智能指针 (Smart Pointers)
-- **[智能指针 Box](./03-Smart-Pointers/Box.md)** - 堆内存分配与尺寸适配的艺术
+- **[智能指针 Box](./03-Smart-Pointers/Box.md)** - 堆内存分配与尺寸适配机制
 - **[引用计数 Rc](./03-Smart-Pointers/Rc.md)** - 单线程共享所有权
 - **[原子引用计数 Arc](./03-Smart-Pointers/Arc.md)** - 多线程共享所有权
 
@@ -31,7 +32,7 @@
 - **[泛型 (Generics)](./04-Generics-Traits/Generics.md)** - 单态化与代码膨胀
 
 ### 05 迭代器 (Iterators)
-- **[迭代器 (Iterator)](./05-Iterators/Iterator.md)** - 零成本抽象的艺术
+- **[迭代器 (Iterator)](./05-Iterators/Iterator.md)** - 零成本抽象的实现原理
 - **[Vec 迭代 (Iter)](./05-Iterators/Iter.md)** - 内存布局与转换机制
 
 ---

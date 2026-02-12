@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="450" viewBox="0 0 600 450" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <rect width="600" height="450" rx="15" fill="#f8f9fa"/>
+  <!-- Title -->
+  <text x="300" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">VecDeque 逻辑环视图</text>
+  
+  <g transform="translate(300, 230)">
+    <!-- Circular Segments (Capacity 8) -->
+    <!-- Define a ring -->
+    <circle cx="0" cy="0" r="140" stroke="#e0e0e0" stroke-width="40" fill="none" />
+    
+    <!-- Draw segments -->
+    <!-- Segment 6 (A) -->
+    <path d="M-98.9 -98.9 A 140 140 0 0 1 0 -140" stroke="#4caf50" stroke-width="40" fill="none" />
+    <text x="-60" y="-105" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#ffffff">A</text>
+    <text x="-85" y="-145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[6]</text>
+    
+    <!-- Segment 7 (B) -->
+    <path d="M0 -140 A 140 140 0 0 1 98.9 -98.9" stroke="#4caf50" stroke-width="40" fill="none" />
+    <text x="60" y="-105" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#ffffff">B</text>
+    <text x="85" y="-145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[7]</text>
+
+    <!-- Segment 0 (C) -->
+    <path d="M98.9 -98.9 A 140 140 0 0 1 140 0" stroke="#81c784" stroke-width="40" fill="none" />
+    <text x="105" y="10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#ffffff">C</text>
+    <text x="145" y="-25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[0]</text>
+
+    <!-- Segment 1 (D) -->
+    <path d="M140 0 A 140 140 0 0 1 98.9 98.9" stroke="#81c784" stroke-width="40" fill="none" />
+    <text x="105" y="65" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#ffffff">D</text>
+    <text x="145" y="115" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[1]</text>
+
+    <!-- Empty segments -->
+    <text x="0" y="115" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#e0e0e0" font-style="italic">Empty</text>
+    <text x="60" y="145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[2]</text>
+    <text x="-60" y="145" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">[3-5]</text>
+
+    <!-- Pointers -->
+    <!-- Tail pointer -->
+    <line x1="-120" y1="-120" x2="-180" y2="-180" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="-190" y="-190" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#ff9800">tail (头部插入/删除)</text>
+    
+    <!-- Head pointer -->
+    <line x1="120" y1="120" x2="180" y2="180" stroke="#ff9800" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="190" y="195" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#ff9800">head (尾部插入/删除)</text>
+
+    <!-- Center Info -->
+    <circle r="80" fill="#ffffff" />
+    <text x="0" y="-10" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333333">环形缓冲区</text>
+    <text x="0" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">容量: 8 | 长度: 4</text>
+  </g>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="10 3.5, 0 0, 0 7" fill="#ff9800" />
+    </marker>
+  </defs>
+</svg>
