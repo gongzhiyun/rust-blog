@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect width="800" height="450" rx="15" fill="#f8f9fa"/>
+    
+    <!-- Title -->
+    <text x="400" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">漏斗模型：多输入引用的生命周期收敛</text>
+
+    <!-- Function Box -->
+    <rect x="250" y="150" width="300" height="150" rx="15" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+    <text x="400" y="180" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#6a1b9a">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str</text>
+
+    <!-- Inputs -->
+    <!-- Input X -->
+    <g transform="translate(50, 100)">
+        <rect width="150" height="40" rx="4" fill="#e3f2fd" stroke="#1565c0"/>
+        <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">x: &amp;str (生命周期 'x)</text>
+        <path d="M150 20 L 250 170" stroke="#1565c0" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    </g>
+
+    <!-- Input Y -->
+    <g transform="translate(50, 310)">
+        <rect width="150" height="40" rx="4" fill="#fff8e1" stroke="#ff9800"/>
+        <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">y: &amp;str (生命周期 'y)</text>
+        <path d="M150 20 L 250 -40" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)" transform="translate(0, 0)"/>
+        <!-- Correcting the path for Y -->
+        <path d="M150 330 L 250 280" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)" transform="translate(0, -310)"/>
+    </g>
+
+    <!-- The Funnel ('a) -->
+    <path d="M280 200 L 520 200 L 450 280 L 350 280 Z" fill="#ffffff" stroke="#9c27b0" stroke-dasharray="4 2"/>
+    <text x="400" y="245" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">'a = min('x, 'y)</text>
+
+    <!-- Output -->
+    <g transform="translate(600, 205)">
+        <rect width="150" height="40" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+        <text x="10" y="25" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">返回值: &amp;'a str</text>
+        <path d="M-50 20 L 0 20" stroke="#4caf50" stroke-width="2" marker-end="url(#arrow-green)"/>
+    </g>
+
+    <!-- Explanation -->
+    <text x="400" y="380" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#666666">
+        标注 &lt;'a&gt; 告诉编译器：返回值的有效时间不会超过 <tspan fill="#d32f2f" font-weight="bold">最快失效</tspan> 的那个输入。
+    </text>
+
+    <!-- Arrow Definitions -->
+    <defs>
+        <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#1565c0" />
+        </marker>
+        <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+        </marker>
+        <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#4caf50" />
+        </marker>
+    </defs>
+</svg>
