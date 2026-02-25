@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="360" viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- 背景 -->
+    <rect width="800" height="360" fill="#f8f9fa"/>
+    
+    <!-- 标题 -->
+    <text x="400" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">编译器的困惑：返回值来自谁？</text>
+
+    <!-- 1. 输入区域 -->
+    <g transform="translate(50, 80)">
+        <rect x="0" y="0" width="160" height="200" rx="10" fill="#e3f2fd" stroke="#bbdefb" stroke-width="2"/>
+        <rect x="0" y="0" width="160" height="35" rx="10" fill="#bbdefb"/>
+        <text x="80" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">输入参数 (Inputs)</text>
+        
+        <!-- x -->
+        <rect x="30" y="60" width="100" height="40" rx="4" fill="#ffffff" stroke="#1976d2" stroke-width="1"/>
+        <text x="80" y="85" font-family="monospace" font-size="14" text-anchor="middle" fill="#333">x: &amp;str</text>
+        
+        <!-- y -->
+        <rect x="30" y="130" width="100" height="40" rx="4" fill="#ffffff" stroke="#1976d2" stroke-width="1"/>
+        <text x="80" y="155" font-family="monospace" font-size="14" text-anchor="middle" fill="#333">y: &amp;str</text>
+    </g>
+
+    <!-- 2. 函数体逻辑 -->
+    <g transform="translate(300, 80)">
+        <rect x="0" y="0" width="200" height="200" rx="10" fill="#f3e5f5" stroke="#e1bee7" stroke-width="2"/>
+        <rect x="0" y="0" width="200" height="35" rx="10" fill="#e1bee7"/>
+        <text x="100" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#6a1b9a">函数逻辑 (Body)</text>
+        
+        <!-- 条件判断 -->
+        <path d="M100 60 L140 90 L100 120 L60 90 Z" fill="#ffffff" stroke="#ab47bc" stroke-width="1"/>
+        <text x="100" y="94" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">if ...</text>
+
+        <!-- 分支 -->
+        <path d="M60 90 L 40 150" stroke="#ab47bc" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
+        <path d="M140 90 L 160 150" stroke="#ab47bc" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
+
+        <text x="40" y="170" font-family="monospace" font-size="12" text-anchor="middle" fill="#333">return x</text>
+        <text x="160" y="170" font-family="monospace" font-size="12" text-anchor="middle" fill="#333">return y</text>
+    </g>
+
+    <!-- 3. 输出区域 -->
+    <g transform="translate(590, 80)">
+        <rect x="0" y="0" width="160" height="200" rx="10" fill="#e8f5e9" stroke="#c8e6c9" stroke-width="2"/>
+        <rect x="0" y="0" width="160" height="35" rx="10" fill="#c8e6c9"/>
+        <text x="80" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">返回值 (Return)</text>
+        
+        <!-- 结果 -->
+        <rect x="30" y="95" width="100" height="40" rx="4" fill="#ffffff" stroke="#388e3c" stroke-width="1"/>
+        <text x="80" y="120" font-family="monospace" font-size="14" text-anchor="middle" fill="#333">&amp;str</text>
+    </g>
+
+    <!-- 连线：输入 -> 函数 -->
+    <path d="M210 80 C 250 80, 250 100, 300 100" stroke="#90caf9" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+    <path d="M210 150 C 250 150, 250 100, 300 100" stroke="#90caf9" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+
+    <!-- 连线：函数 -> 输出 -->
+    <path d="M500 120 L 590 120" stroke="#a5d6a7" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- 借用检查器的困惑（红色问号） -->
+    <circle cx="545" cy="120" r="22" fill="#ffebee" stroke="#e53935" stroke-width="2"/>
+    <text x="545" y="128" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#c62828">?</text>
+    
+    <!-- 红色虚线回溯 -->
+    <path d="M523 120 C 480 120, 480 80, 450 80" stroke="#e53935" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#arrow-red)"/>
+    <path d="M523 120 C 480 120, 480 150, 450 150" stroke="#e53935" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#arrow-red)"/>
+
+    <!-- 底部说明 -->
+    <text x="400" y="320" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#555">如果不加标注，编译器无法推断返回的引用是绑定到 x 还是 y</text>
+
+    <!-- Definitions -->
+    <defs>
+        <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#90caf9" />
+        </marker>
+        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#a5d6a7" />
+        </marker>
+        <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#e53935" />
+        </marker>
+    </defs>
+</svg>
