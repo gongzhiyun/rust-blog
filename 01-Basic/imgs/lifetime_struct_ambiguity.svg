@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect x="0" y="0" width="800" height="500" fill="#f8f9fa" />
+    <!-- Title Area -->
+    <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">结构体生命周期：单一标签的“对齐效应”</text>
+    <text x="400" y="75" font-family="JetBrains Mono, monospace" font-size="14" fill="#546e7a" text-anchor="middle">多个字段共享同一个 'a 时，编译器会强制将它们对齐到最短的寿命边界</text>
+    <!-- 1. Code Section (Left) -->
+    <g transform="translate(40, 110)">
+        <rect x="0" y="0" width="340" height="340" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+        <path d="M 0 15 A 15 15 0 0 1 15 0 H 325 A 15 15 0 0 1 340 15 V 35 H 0 Z" fill="#f3e5f5" />
+        <text x="170" y="23" font-family="JetBrains Mono, monospace" font-size="14" fill="#6a1b9a" font-weight="bold" text-anchor="middle">Code: 结构体定义</text>
+        <!-- Code Block -->
+        <g transform="translate(40, 60)">
+            <text x="0" y="0" font-family="JetBrains Mono, monospace" font-size="15" fill="#333333" xml:space="preserve">
+                <tspan x="0" dy="1.5em">struct Mixer&lt;<tspan fill="#ef5350" font-weight="bold">'a</tspan>&gt; {</tspan>
+                <tspan x="0" dy="2.0em">    part1: &amp;<tspan fill="#ef5350" font-weight="bold">'a</tspan> str,</tspan>
+                <tspan x="0" dy="2.0em">    part2: &amp;<tspan fill="#ef5350" font-weight="bold">'a</tspan> str,</tspan>
+                <tspan x="0" dy="1.5em">}</tspan>
+            </text>
+            <!-- Highlight Box for shared lifetime (matching memory colors) -->
+            <rect x="220" y="32" width="65" height="24" rx="4" fill="#c8e6c9" opacity="0.4" />
+            <rect x="220" y="62" width="65" height="24" rx="4" fill="#ffe0b2" opacity="0.4" />
+        </g>
+        <!-- Annotation -->
+        <rect x="30" y="240" width="280" height="70" rx="8" fill="#fdf7ff" stroke="#e1bee7" stroke-width="1" stroke-dasharray="4 2" />
+        <text x="170" y="270" font-family="JetBrains Mono, monospace" font-size="12" fill="#7b1fa2" text-anchor="middle">
+            <tspan x="170" dy="0">共享同一标签 'a 意味着</tspan>
+            <tspan x="170" dy="1.5em">它们的逻辑寿命必须完全对齐</tspan>
+        </text>
+    </g>
+    <!-- 2. Visualization Section (Right) -->
+    <g transform="translate(420, 110)">
+        <rect x="0" y="0" width="340" height="340" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+        <path d="M 0 15 A 15 15 0 0 1 15 0 H 325 A 15 15 0 0 1 340 15 V 35 H 0 Z" fill="#e3f2fd" />
+        <text x="170" y="23" font-family="JetBrains Mono, monospace" font-size="14" fill="#1565c0" font-weight="bold" text-anchor="middle">Memory: 寿命对齐可视化</text>
+        <!-- Time Axis -->
+        <g transform="translate(60, 70)">
+            <line x1="0" y1="0" x2="0" y2="230" stroke="#cfd8dc" stroke-width="2" marker-end="url(#arrow-head)" />
+            <text x="-10" y="5" font-family="JetBrains Mono, monospace" font-size="10" fill="#90a4ae" text-anchor="end">Start</text>
+            <text x="-10" y="235" font-family="JetBrains Mono, monospace" font-size="10" fill="#90a4ae" text-anchor="end">Time</text>
+            <!-- Life Bar 1 (Long) -->
+            <g transform="translate(60, 0)">
+                <rect x="-12" y="0" width="24" height="210" rx="12" fill="#e8f5e9" stroke="#4caf50" stroke-width="1" />
+                <text x="0" y="-12" font-family="JetBrains Mono, monospace" font-size="11" fill="#2e7d32" text-anchor="middle">part1 (s1)</text>
+            </g>
+            <!-- Life Bar 2 (Short) -->
+            <g transform="translate(160, 0)">
+                <rect x="-12" y="0" width="24" height="90" rx="12" fill="#fff3e0" stroke="#ff9800" stroke-width="1" />
+                <text x="0" y="-12" font-family="JetBrains Mono, monospace" font-size="11" fill="#e65100" text-anchor="middle">part2 (s2)</text>
+            </g>
+            <!-- The 'a' Constraint Box -->
+            <rect x="35" y="0" width="150" height="90" rx="8" fill="none" stroke="#ef5350" stroke-width="2" stroke-dasharray="4 2" />
+            <rect x="170" y="75" width="30" height="20" rx="4" fill="#ef5350" />
+            <text x="185" y="89" font-family="JetBrains Mono, monospace" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="bold">'a</text>
+            <!-- Result: Forced Alignment -->
+            <line x1="35" y1="90" x2="185" y2="90" stroke="#ef5350" stroke-width="2" />
+            <text x="85" y="115" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef5350" font-weight="bold">共同边界 (s2 结束点)</text>
+            <!-- The Gap (Forbidden Zone) -->
+            <rect x="48" y="95" width="24" height="115" fill="#ffebee" opacity="0.6" />
+            <text x="125" y="160" font-family="JetBrains Mono, monospace" font-size="10" fill="#d32f2f">
+                <tspan x="125" dy="1.2em">虽然 part1 物理上活着</tspan>
+                <tspan x="125" dy="1.2em">但由于 'a 已结束</tspan>
+                <tspan x="125" dy="1.2em">此区域逻辑上不可用</tspan>
+            </text>
+        </g>
+    </g>
+    <!-- 3. Connection Lines (Visual Bridge) -->
+    <!-- Definitions -->
+    <defs>
+        <marker id="arrow-head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+            <path d="M0,0 L10,5 L0,10 Z" fill="#cfd8dc" />
+        </marker>
+    </defs>
+</svg>
