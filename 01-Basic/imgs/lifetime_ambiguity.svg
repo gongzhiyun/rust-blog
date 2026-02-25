@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="840" height="620" viewBox="0 0 840 620" xmlns:xlink="http://www.w3.org/1999/xlink" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" style="background-color: #f8f9fa; font-family: 'JetBrains Mono', monospace, sans-serif;">
+  <!-- Background -->
+  <rect width="840" height="620" fill="#f8f9fa"/>
   <!-- Definitions -->
   <defs>
     <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
