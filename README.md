@@ -14,7 +14,7 @@
 
 ### 01 基础核心 (Basic Core)
 - **[所有权 (Ownership)](./01-Basic/Ownership.md)** - 极简内存安全指南
-- **[生命周期 (Lifetime)](./01-Basic/Lifetime.md)** - 引用安全的时空边界
+- **[生命周期 (Lifetime)](./01-Basic/Lifetime.md)** - 引用能活多久的检查
 
 ### 02 数据结构 (Data Structures)
 - **[结构体 (Struct)](./02-Data-Structures/Struct.md)** - 内存布局与对齐
