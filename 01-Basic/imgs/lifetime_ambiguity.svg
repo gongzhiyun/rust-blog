@@ -1,83 +1,190 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="360" viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-    <!-- 背景 -->
-    <rect width="800" height="360" fill="#f8f9fa"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="620" viewBox="0 0 840 620" xmlns:xlink="http://www.w3.org/1999/xlink" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" style="background-color: #f8f9fa; font-family: 'JetBrains Mono', monospace, sans-serif;">
+  <!-- Definitions -->
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1565c0" />
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2e7d32" />
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ef6c00" />
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#c62828" />
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="1" dy="1" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.15"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Title -->
+  <text x="420" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#333333">生命周期歧义：悬垂引用风险</text>
+
+  <!-- Stack Region -->
+  <g transform="translate(40, 70)">
+    <!-- Header -->
+    <rect x="0" y="0" width="300" height="35" rx="12" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.5"/>
+    <text x="150" y="23" text-anchor="middle" font-size="14" font-weight="bold" fill="#1565c0">Stack (主栈帧)</text>
+
+    <!-- Main Scope Container -->
+    <rect x="0" y="45" width="300" height="500" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" filter="url(#shadow)"/>
     
-    <!-- 标题 -->
-    <text x="400" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333">编译器的困惑：返回值来自谁？</text>
-
-    <!-- 1. 输入区域 -->
-    <g transform="translate(50, 80)">
-        <rect x="0" y="0" width="160" height="200" rx="10" fill="#e3f2fd" stroke="#bbdefb" stroke-width="2"/>
-        <rect x="0" y="0" width="160" height="35" rx="10" fill="#bbdefb"/>
-        <text x="80" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">输入参数 (Inputs)</text>
-        
-        <!-- x -->
-        <rect x="30" y="60" width="100" height="40" rx="4" fill="#ffffff" stroke="#1976d2" stroke-width="1"/>
-        <text x="80" y="85" font-family="monospace" font-size="14" text-anchor="middle" fill="#333">x: &amp;str</text>
-        
-        <!-- y -->
-        <rect x="30" y="130" width="100" height="40" rx="4" fill="#ffffff" stroke="#1976d2" stroke-width="1"/>
-        <text x="80" y="155" font-family="monospace" font-size="14" text-anchor="middle" fill="#333">y: &amp;str</text>
+    <!-- string1 -->
+    <g transform="translate(10, 75)">
+      <text x="5" y="-10" font-size="11" font-weight="bold" fill="#555555">string1 (所有者)</text>
+      <rect x="0" y="0" width="280" height="125" rx="8" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+      <!-- ptr -->
+      <g transform="translate(10, 12)">
+        <rect width="260" height="32" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1.2"/>
+        <text x="12" y="21" font-size="11" fill="#1565c0" font-weight="bold">ptr</text>
+        <text x="248" y="21" text-anchor="end" font-size="10" fill="#78909c">0x1000</text>
+        <circle cx="254" cy="16" r="3.5" fill="#f57c00"/>
+      </g>
+      <!-- len -->
+      <g transform="translate(10, 48)">
+        <rect width="260" height="32" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="12" y="21" font-size="11" fill="#555555">len</text>
+        <text x="248" y="21" text-anchor="end" font-size="10" fill="#78909c">19</text>
+      </g>
+      <!-- cap -->
+      <g transform="translate(10, 84)">
+        <rect width="260" height="32" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="12" y="21" font-size="11" fill="#555555">cap</text>
+        <text x="248" y="21" text-anchor="end" font-size="10" fill="#78909c">19</text>
+      </g>
     </g>
 
-    <!-- 2. 函数体逻辑 -->
-    <g transform="translate(300, 80)">
-        <rect x="0" y="0" width="200" height="200" rx="10" fill="#f3e5f5" stroke="#e1bee7" stroke-width="2"/>
-        <rect x="0" y="0" width="200" height="35" rx="10" fill="#e1bee7"/>
-        <text x="100" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#6a1b9a">函数逻辑 (Body)</text>
-        
-        <!-- 条件判断 -->
-        <path d="M100 60 L140 90 L100 120 L60 90 Z" fill="#ffffff" stroke="#ab47bc" stroke-width="1"/>
-        <text x="100" y="94" font-family="monospace" font-size="11" text-anchor="middle" fill="#333">if ...</text>
-
-        <!-- 分支 -->
-        <path d="M60 90 L 40 150" stroke="#ab47bc" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
-        <path d="M140 90 L 160 150" stroke="#ab47bc" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
-
-        <text x="40" y="170" font-family="monospace" font-size="12" text-anchor="middle" fill="#333">return x</text>
-        <text x="160" y="170" font-family="monospace" font-size="12" text-anchor="middle" fill="#333">return y</text>
+    <!-- result -->
+    <g transform="translate(10, 235)">
+      <text x="5" y="-10" font-size="11" font-weight="bold" fill="#c62828">result (引用?)</text>
+      <rect x="0" y="0" width="280" height="55" rx="8" fill="#ffebee" stroke="#ef9a9a" stroke-width="2"/>
+      <g transform="translate(10, 11)">
+        <rect width="260" height="32" rx="4" fill="#ffffff" stroke="#ffcdd2" stroke-width="1.2"/>
+        <text x="12" y="21" font-size="11" fill="#c62828" font-weight="bold">ptr</text>
+        <text x="248" y="21" text-anchor="end" font-size="11" fill="#c62828" font-weight="bold">???</text>
+        <circle cx="254" cy="16" r="4.5" fill="#c62828"/>
+      </g>
     </g>
 
-    <!-- 3. 输出区域 -->
-    <g transform="translate(590, 80)">
-        <rect x="0" y="0" width="160" height="200" rx="10" fill="#e8f5e9" stroke="#c8e6c9" stroke-width="2"/>
-        <rect x="0" y="0" width="160" height="35" rx="10" fill="#c8e6c9"/>
-        <text x="80" y="24" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">返回值 (Return)</text>
-        
-        <!-- 结果 -->
-        <rect x="30" y="95" width="100" height="40" rx="4" fill="#ffffff" stroke="#388e3c" stroke-width="1"/>
-        <text x="80" y="120" font-family="monospace" font-size="14" text-anchor="middle" fill="#333">&amp;str</text>
+    <!-- Inner Scope (Visual Box) -->
+    <g transform="translate(10, 325)">
+      <rect x="0" y="0" width="280" height="205" rx="10" fill="#fff3e0" stroke="#ffb74d" stroke-dasharray="6,3" opacity="0.6"/>
+      <text x="140" y="22" text-anchor="middle" font-size="12" font-weight="bold" fill="#ef6c00">Inner Scope (即将销毁)</text>
+      
+      <!-- string2 -->
+      <g transform="translate(10, 45)">
+        <text x="5" y="-10" font-size="11" font-weight="bold" fill="#555555">string2 (所有者)</text>
+        <rect x="0" y="0" width="260" height="125" rx="8" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <!-- ptr -->
+        <g transform="translate(10, 12)">
+          <rect width="240" height="32" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1.2"/>
+          <text x="12" y="21" font-size="11" fill="#ef6c00" font-weight="bold">ptr</text>
+          <text x="228" y="21" text-anchor="end" font-size="10" fill="#78909c">0x2000</text>
+          <circle cx="234" cy="16" r="3.5" fill="#f57c00"/>
+        </g>
+        <!-- len -->
+        <g transform="translate(10, 48)">
+          <rect width="240" height="32" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+          <text x="12" y="21" font-size="11" fill="#555555">len</text>
+          <text x="228" y="21" text-anchor="end" font-size="10" fill="#78909c">3</text>
+        </g>
+        <!-- cap -->
+        <g transform="translate(10, 84)">
+          <rect width="240" height="32" rx="4" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+          <text x="12" y="21" font-size="11" fill="#555555">cap</text>
+          <text x="228" y="21" text-anchor="end" font-size="10" fill="#78909c">3</text>
+        </g>
+      </g>
+      
+      <!-- Label for cleanup -->
+      <text x="140" y="188" text-anchor="middle" font-size="11" fill="#ef6c00" font-style="italic">作用域结束 → 内存释放</text>
+    </g>
+  </g>
+
+  <!-- Heap Region -->
+  <g transform="translate(500, 70)">
+    <!-- Header -->
+    <rect x="0" y="0" width="300" height="35" rx="12" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1.5"/>
+    <text x="150" y="23" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e7d32">Heap (堆内存)</text>
+
+    <!-- Heap Content Container -->
+    <rect x="0" y="45" width="300" height="500" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" filter="url(#shadow)"/>
+
+    <!-- Data 1 (Wrapped, 5 per row) -->
+    <g transform="translate(15, 85)">
+      <text x="0" y="-8" font-size="10" fill="#78909c" font-weight="bold">0x1000</text>
+      <g transform="translate(0, 0)">
+        <!-- Row 1 -->
+        <g transform="translate(0, 0)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">l</text></g>
+        <g transform="translate(55, 0)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">o</text></g>
+        <g transform="translate(110, 0)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">n</text></g>
+        <g transform="translate(165, 0)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">g</text></g>
+        <g transform="translate(220, 0)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20"> </text></g>
+        <!-- Row 2 -->
+        <g transform="translate(0, 60)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">s</text></g>
+        <g transform="translate(55, 60)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">t</text></g>
+        <g transform="translate(110, 60)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">r</text></g>
+        <g transform="translate(165, 60)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">i</text></g>
+        <g transform="translate(220, 60)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">n</text></g>
+        <!-- Row 3 -->
+        <g transform="translate(0, 120)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">g</text></g>
+        <g transform="translate(55, 120)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20"> </text></g>
+        <g transform="translate(110, 120)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">i</text></g>
+        <g transform="translate(165, 120)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">s</text></g>
+        <g transform="translate(220, 120)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20"> </text></g>
+        <!-- Row 4 -->
+        <g transform="translate(0, 180)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">l</text></g>
+        <g transform="translate(55, 180)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">o</text></g>
+        <g transform="translate(110, 180)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">n</text></g>
+        <g transform="translate(165, 180)"><rect width="50" height="55" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/><text x="25" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#1b5e20">g</text></g>
+      </g>
     </g>
 
-    <!-- 连线：输入 -> 函数 -->
-    <path d="M210 80 C 250 80, 250 100, 300 100" stroke="#90caf9" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
-    <path d="M210 150 C 250 150, 250 100, 300 100" stroke="#90caf9" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+    <!-- Data 2 (xyz) -->
+    <g transform="translate(15, 380)">
+      <text x="0" y="-8" font-size="10" fill="#f57c00" font-weight="bold">0x2000 (即将失效)</text>
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="50" height="55" rx="6" fill="#fff3e0" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="25" y="35" text-anchor="middle" font-size="18" fill="#e65100" font-weight="bold">x</text>
+        <rect x="55" y="0" width="50" height="55" rx="6" fill="#fff3e0" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="80" y="35" text-anchor="middle" font-size="18" fill="#e65100" font-weight="bold">y</text>
+        <rect x="110" y="0" width="50" height="55" rx="6" fill="#fff3e0" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="135" y="35" text-anchor="middle" font-size="18" fill="#e65100" font-weight="bold">z</text>
+      </g>
+      <!-- Death Cross -->
+      <line x1="5" y1="10" x2="155" y2="45" stroke="#ff9800" stroke-width="2" opacity="0.4"/>
+      <line x1="155" y1="10" x2="5" y2="45" stroke="#ff9800" stroke-width="2" opacity="0.4"/>
+    </g>
+  </g>
 
-    <!-- 连线：函数 -> 输出 -->
-    <path d="M500 120 L 590 120" stroke="#a5d6a7" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+  <!-- Connections -->
+  <!-- string1 -> Heap1 -->
+  <path d="M 314 173 C 390 173, 440 182, 500 182" fill="none" stroke="#1565c0" stroke-width="2.5" marker-end="url(#arrow-blue)"/>
+  
+  <!-- string2 -> Heap2 -->
+  <path d="M 304 468 C 380 468, 440 477, 500 477" fill="none" stroke="#ef6c00" stroke-width="2.5" marker-end="url(#arrow-orange)" stroke-dasharray="4,2"/>
 
-    <!-- 借用检查器的困惑（红色问号） -->
-    <circle cx="545" cy="120" r="22" fill="#ffebee" stroke="#e53935" stroke-width="2"/>
-    <text x="545" y="128" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#c62828">?</text>
-    
-    <!-- 红色虚线回溯 -->
-    <path d="M523 120 C 480 120, 480 80, 450 80" stroke="#e53935" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#arrow-red)"/>
-    <path d="M523 120 C 480 120, 480 150, 450 150" stroke="#e53935" stroke-width="2" stroke-dasharray="5 3" fill="none" marker-end="url(#arrow-red)"/>
+  <!-- result Ambiguity Paths -->
+  <!-- To Valid Data -->
+  <path d="M 314 332 C 400 332, 440 182, 500 182" fill="none" stroke="#1565c0" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arrow-blue)" opacity="0.3"/>
+  
+  <!-- To Invalid Data (The Risk) -->
+  <path d="M 314 332 C 400 332, 440 477, 500 477" fill="none" stroke="#c62828" stroke-width="3" stroke-dasharray="8,4" marker-end="url(#arrow-red)"/>
 
-    <!-- 底部说明 -->
-    <text x="400" y="320" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#555">如果不加标注，编译器无法推断返回的引用是绑定到 x 还是 y</text>
+  <!-- Warning Box -->
+  <g transform="translate(360, 340)">
+    <rect x="0" y="0" width="120" height="48" rx="10" fill="#c62828" filter="url(#shadow)"/>
+    <text x="60" y="22" text-anchor="middle" font-size="11" fill="#ffffff" font-weight="bold">歧义不可见!</text>
+    <text x="60" y="38" text-anchor="middle" font-size="10" fill="#ffffff">编译器选择拦截</text>
+  </g>
 
-    <!-- Definitions -->
-    <defs>
-        <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#90caf9" />
-        </marker>
-        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#a5d6a7" />
-        </marker>
-        <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#e53935" />
-        </marker>
-    </defs>
 </svg>
