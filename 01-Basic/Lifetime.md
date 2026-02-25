@@ -184,49 +184,46 @@ fn main() {
 
 ![结构体引用生命周期](./imgs/lifetime_struct_stack.svg)
 
-**引用的“传染性”与约束**
+**生命周期的核心约束**
 
-一旦你在结构体上标注了 `'a`，这个约束就会像病毒一样“传染”给所有使用该结构体的地方。任何试图让结构体活得比引用更久的代码，都会被编译器无情拦截。
+结构体中的生命周期标注 `'a` 定义了一种严格的**依赖关系**：结构体实例（引用的持有者）不能比它引用的数据（所有者）活得更久。
 
-**正确的使用姿势：**
+编译器强制执行：**结构体实例生命周期 $\le$ 引用数据生命周期**。
+
+**✅ 正确示例：数据源存活时间覆盖引用**
 
 ```rust
 fn main() {
-    let novel = String::from("Call me Ishmael. Some years ago...");
-    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+    let novel = String::from("Call me Ishmael...");
+    let first_sentence = novel.split('.').next().unwrap();
     
-    // 'i 的生命周期被 'novel 限制
-    let i = ImportantExcerpt {
-        part: first_sentence, // first_sentence 借用自 novel
-    }; 
+    // i 持有 novel 的引用，必须在 novel 销毁前销毁
+    let i = ImportantExcerpt { part: first_sentence }; 
     
-    // 只要 novel 还在，i 就安全
     println!("Excerpt: {}", i.part);
-}
+} // i 和 novel 在同一作用域结束时销毁，安全
 ```
 
-**错误的使用姿势（试图逃逸）：**
+**❌ 错误示例：引用试图比数据源活得更久**
 
 ```rust
 fn main() {
     let i;
     {
         let novel = String::from("Call me Ishmael...");
-        let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+        let first_sentence = novel.split('.').next().unwrap();
         
-        // 试图建立引用
-        i = ImportantExcerpt {
-            part: first_sentence,
-        };
-    } // 💀 novel 在这里被销毁，生命周期 'a 结束
+        // 试图将内部数据的引用“偷渡”到外部变量 i
+        i = ImportantExcerpt { part: first_sentence };
+    } // novel 在此处销毁，内存被释放
     
-    // ❌ 错误：i 依然存在，但它内部的引用 'a 已经死了
+    // ❌ 错误：i 依然存活，但它指向的内存已释放（悬垂引用）
     // 编译器报错：`novel` does not live long enough
     println!("Excerpt: {}", i.part); 
 }
 ```
 
-这种机制确保了结构体永远不会变成“非法容器”，只要你手里握着一个合法的结构体实例，它里面的引用就一定是安全的。
+这一机制在编译期根除了**悬垂引用**的风险，确保只要结构体实例存在，其内部引用的数据必然有效。
 
 ---
 
