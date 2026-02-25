@@ -140,31 +140,57 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 
 ---
 
-## 4. 结构体绑定：引用的“传染性”
+## 4. 结构体中的生命周期：结构体不能比数据活得长
 
-当结构体持有引用时，它必须显式标注生命周期。这是一种**强绑定声明**。
+平时写结构体，字段一般都是自己持有的（比如 `i32`、`String`）。但有时候，我们只想在结构体里存个**引用**，借用一下别人的数据。
 
-![结构体生命周期布局](./imgs/lifetime_struct_layout.svg)
+这时候编译器就会很紧张：**“你借的这个数据，能活多久？”**
+
+万一结构体还在，数据先没了，那结构体手里拿的就是个空号。为了堵死这种 bug，Rust 强制规定：**只要结构体里包含引用，就必须显式标注生命周期。**
 
 ```rust
+// ❌ 编译错误：missing lifetime specifier
+struct ImportantExcerpt {
+    part: &str, 
+}
+```
+
+上面的代码会报错，因为编译器不知道 `part` 这个引用什么时候会失效。我们需要改成这样：
+
+```rust
+// ✅ 正确：显式标注 'a
 struct ImportantExcerpt<'a> {
     part: &'a str,
 }
+```
 
+这段代码的潜台词是：
+> **“`ImportantExcerpt` 的实例，其寿命绝对不能超过 `'a`（即它所引用的 `part` 的寿命）。”**
+
+![结构体引用生命周期](./imgs/lifetime_struct_stack.svg)
+
+**引用的“传染性”与约束**
+
+一旦你在结构体上标注了 `'a`，这个约束就会像病毒一样“传染”给所有使用该结构体的地方。任何试图让结构体活得比引用更久的代码，都会被编译器无情拦截。
+
+**正确的使用姿势：**
+
+```rust
 fn main() {
     let novel = String::from("Call me Ishmael. Some years ago...");
     let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+    
+    // 'i 的生命周期被 'novel 限制
     let i = ImportantExcerpt {
-        part: first_sentence,
-    };
+        part: first_sentence, // first_sentence 借用自 novel
+    }; 
+    
+    // 只要 novel 还在，i 就安全
     println!("Excerpt: {}", i.part);
 }
 ```
 
-- **意义**：这行代码告诉编译器：`ImportantExcerpt` 实例的寿命不能超过它内部 `part` 引用的那个字符串。
-- **连锁反应**：这种约束具有“传染性”。任何持有该结构体的代码，都必须遵守这个生命周期约束。
-
-**内存隐患演示：**
+**错误的使用姿势（试图逃逸）：**
 
 ```rust
 fn main() {
@@ -173,15 +199,19 @@ fn main() {
         let novel = String::from("Call me Ishmael...");
         let first_sentence = novel.split('.').next().expect("Could not find a '.'");
         
-        // ❌ 借用检查器会报错
+        // 试图建立引用
         i = ImportantExcerpt {
             part: first_sentence,
         };
-    } // novel 在这里被销毁，i 内部的引用失效了
+    } // 💀 novel 在这里被销毁，生命周期 'a 结束
     
-    println!("Excerpt: {}", i.part); // 🚨 访问悬垂引用！
+    // ❌ 错误：i 依然存在，但它内部的引用 'a 已经死了
+    // 编译器报错：`novel` does not live long enough
+    println!("Excerpt: {}", i.part); 
 }
 ```
+
+这种机制确保了结构体永远不会变成“非法容器”，只要你手里握着一个合法的结构体实例，它里面的引用就一定是安全的。
 
 ---
 

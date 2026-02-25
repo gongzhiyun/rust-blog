@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <!-- Background -->
+  <rect width="800" height="450" fill="#f8f9fa"/>
+  
+  <!-- Definitions for markers -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ef5350" />
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1565c0" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#333">结构体引用：生命周期的包含关系</text>
+
+  <!-- Scope 'a (Outer) -->
+  <rect x="50" y="60" width="700" height="360" rx="10" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="70" y="85" font-family="monospace" font-size="14" fill="#2e7d32" font-weight="bold">Scope 'a (novel 的生命周期)</text>
+
+  <!-- Scope 'b (Inner) -->
+  <rect x="100" y="180" width="300" height="200" rx="10" fill="none" stroke="#1565c0" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="120" y="205" font-family="monospace" font-size="14" fill="#1565c0" font-weight="bold">Scope 'b (struct 实例的生命周期)</text>
+
+  <!-- Stack Memory -->
+  <g transform="translate(140, 100)">
+    <!-- Variable novel -->
+    <rect x="0" y="0" width="180" height="50" rx="5" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+    <text x="10" y="20" font-family="monospace" font-size="12" fill="#2e7d32">novel: String</text>
+    <text x="10" y="38" font-family="monospace" font-size="10" fill="#555">ptr | len | cap</text>
+    
+    <!-- Pointer from novel to Heap -->
+    <circle cx="160" cy="25" r="4" fill="#2e7d32"/>
+    <path d="M160,25 C250,25 350,50 420,80" fill="none" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- Struct Instance i -->
+  <g transform="translate(140, 240)">
+    <rect x="0" y="0" width="220" height="80" rx="5" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <text x="10" y="20" font-family="monospace" font-size="12" fill="#1565c0">i: ImportantExcerpt&lt;'a&gt;</text>
+    
+    <!-- Field part -->
+    <rect x="10" y="30" width="200" height="40" rx="3" fill="#ffffff" stroke="#90caf9"/>
+    <text x="20" y="55" font-family="monospace" font-size="12" fill="#333">part: &amp;'a str (slice)</text>
+    
+    <!-- Pointer from part to Heap -->
+    <circle cx="190" cy="50" r="4" fill="#1565c0"/>
+    <path d="M190,50 C280,50 350,50 420,-40" fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  </g>
+
+  <!-- Heap Memory -->
+  <g transform="translate(580, 150)">
+    <rect x="0" y="0" width="160" height="80" rx="5" fill="#fff3e0" stroke="#ef6c00" stroke-width="2"/>
+    <text x="80" y="20" font-family="sans-serif" font-size="12" font-weight="bold" fill="#ef6c00" text-anchor="middle">Heap Data</text>
+    <rect x="10" y="30" width="140" height="40" fill="#ffffff" stroke="#ffe0b2"/>
+    <text x="80" y="55" font-family="monospace" font-size="12" fill="#333" text-anchor="middle">"Call me Ishmael..."</text>
+  </g>
+
+  <!-- Logical Constraint -->
+  <g transform="translate(450, 320)">
+    <text x="0" y="0" font-family="sans-serif" font-size="14" fill="#d32f2f" font-weight="bold">借用规则检查：</text>
+    <text x="0" y="25" font-family="sans-serif" font-size="12" fill="#333">Struct Life ('b) ≤ Data Life ('a)</text>
+    <path d="M0,35 L200,35" stroke="#d32f2f" stroke-width="2" stroke-dasharray="4,4"/>
+    <text x="0" y="55" font-family="sans-serif" font-size="12" fill="#333">若 'b 超出 'a，编译失败</text>
+  </g>
+
+</svg>
