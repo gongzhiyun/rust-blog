@@ -1,84 +1,92 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="460" viewBox="0 0 750 460" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
     <!-- Background -->
-    <rect x="0" y="0" width="800" height="400" fill="#f8f9fa" />
+    <rect x="0" y="0" width="750" height="460" fill="#f8f9fa" />
     
-    <!-- Title -->
-    <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" fill="#333" text-anchor="middle">生命周期标注：描述事实，而非改变事实</text>
+    <!-- Title Area -->
+    <text x="375" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333" text-anchor="middle">生命周期标注：描述事实，而非改变事实</text>
     
-    <!-- Code Area (Left) -->
-    <g transform="translate(50, 80)">
-        <rect x="0" y="0" width="300" height="280" rx="10" fill="#ffffff" stroke="#e0e0e0" />
-        <rect x="0" y="0" width="300" height="35" rx="10" fill="#e3f2fd" /> <!-- Header matches Stack style -->
-        <text x="20" y="24" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">Code: The Illusion</text>
+    <!-- Main Container -->
+    <g transform="translate(40, 80)">
+        <!-- Outer Frame -->
+        <rect x="0" y="0" width="670" height="340" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
         
-        <!-- Code Lines -->
-        <text x="20" y="70" font-family="JetBrains Mono, monospace" font-size="13" fill="#6a1b9a" font-weight="bold">fn pass&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32</text>
-        <line x1="20" y1="80" x2="280" y2="80" stroke="#e0e0e0" stroke-dasharray="4 2" />
-        
-        <text x="20" y="110" font-family="JetBrains Mono, monospace" font-size="14" fill="#333">let r;</text>
-        <text x="20" y="140" font-family="JetBrains Mono, monospace" font-size="14" fill="#333">{</text>
-        <text x="40" y="170" font-family="JetBrains Mono, monospace" font-size="14" fill="#333">let x = 42;</text>
-        
-        <!-- Highlighted Error Line -->
-        <rect x="35" y="185" width="250" height="30" rx="4" fill="#ffebee" stroke="#ef5350" stroke-dasharray="4 2" />
-        <text x="40" y="205" font-family="JetBrains Mono, monospace" font-size="14" fill="#d32f2f">r = pass(&amp;x);  // Error!</text>
-        
-        <text x="20" y="240" font-family="JetBrains Mono, monospace" font-size="14" fill="#333">}                  // x drop</text>
-        <text x="20" y="270" font-family="JetBrains Mono, monospace" font-size="14" fill="#333">println!("{}", r); // use r</text>
-        
-        <!-- Annotations in code -->
-        <text x="200" y="205" font-family="JetBrains Mono, monospace" font-size="11" fill="#999">expects 'a</text>
-    </g>
-    
-    <!-- Visual Area (Right) -->
-    <g transform="translate(400, 80)">
-        <rect x="0" y="0" width="350" height="280" rx="10" fill="#ffffff" stroke="#e0e0e0" />
-        <rect x="0" y="0" width="350" height="35" rx="10" fill="#e8f5e9" /> <!-- Header matches Heap style -->
-        <text x="20" y="24" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">Reality: The Physical Wall</text>
-        
+        <!-- Header Section -->
+        <rect x="0" y="0" width="670" height="40" rx="15" fill="#e8f5e9" />
+        <rect x="0" y="25" width="670" height="15" fill="#e8f5e9" /> <!-- Square bottom for header -->
+        <text x="20" y="26" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">物理限制 vs 标注期望 (Reality vs Expectation)</text>
+        <line x1="0" y1="40" x2="670" y2="40" stroke="#c8e6c9" stroke-width="1" />
+
         <!-- Timeline Axis -->
-        <line x1="40" y1="50" x2="40" y2="260" stroke="#bdbdbd" stroke-width="2" marker-end="url(#arrow)" />
-        
-        <!-- Scope 'a (Desired) -->
-        <text x="60" y="65" font-family="JetBrains Mono, monospace" font-size="12" fill="#666" font-weight="bold">Scope 'a (r)</text>
-        <rect x="60" y="75" width="20" height="170" rx="4" fill="#e3f2fd" stroke="#2196f3" stroke-dasharray="4 2" />
-        <text x="90" y="240" font-family="JetBrains Mono, monospace" font-size="12" fill="#1565c0">Desired Life</text>
+        <g transform="translate(40, 80)">
+            <line x1="0" y1="0" x2="0" y2="210" stroke="#90a4ae" stroke-width="2" marker-end="url(#arrow-gray)" />
+            <text x="0" y="225" font-family="JetBrains Mono, monospace" font-size="10" fill="#90a4ae" text-anchor="middle">时间线 (Time)</text>
+        </g>
 
-        <!-- Scope 'b (Actual) -->
-        <text x="180" y="105" font-family="JetBrains Mono, monospace" font-size="12" fill="#666" font-weight="bold">Scope 'b (x)</text>
-        <rect x="180" y="115" width="20" height="80" rx="4" fill="#c8e6c9" stroke="#4caf50" />
-        <text x="210" y="155" font-family="JetBrains Mono, monospace" font-size="12" fill="#2e7d32">Actual Life</text>
-        
-        <!-- The Wall (Drop) -->
-        <line x1="30" y1="195" x2="320" y2="195" stroke="#ef5350" stroke-width="3" />
-        <text x="210" y="190" font-family="JetBrains Mono, monospace" font-size="12" fill="#d32f2f" font-weight="bold">DROP (x dies here)</text>
-        
-        <!-- Connection/Conflict -->
-        <path d="M 80 165 C 130 165, 130 165, 180 165" stroke="#ff9800" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#arrow-orange)" />
-        <text x="90" y="160" font-family="JetBrains Mono, monospace" font-size="10" fill="#f57c00">Borrow &amp;x</text>
-        
-        <!-- Dangling Danger Zone -->
-        <rect x="55" y="200" width="30" height="40" fill="#ffebee" opacity="0.5" />
-        <text x="90" y="215" font-family="JetBrains Mono, monospace" font-size="11" fill="#d32f2f" font-weight="bold">DANGLING POINTER!</text>
-        <path d="M 80 220 L 150 220" stroke="#d32f2f" stroke-width="1.5" marker-end="url(#arrow-red)" />
-        
-        <!-- Constraint Logic -->
-        <rect x="220" y="215" width="110" height="40" rx="4" fill="#fff3e0" stroke="#ff9800" />
-        <text x="228" y="232" font-family="JetBrains Mono, monospace" font-size="10" fill="#ef6c00">Check: 'b &lt; 'a</text>
-        <text x="228" y="247" font-family="JetBrains Mono, monospace" font-size="10" fill="#d32f2f" font-weight="bold">REJECTED</text>
+        <!-- Column 1: Physical Reference r -->
+        <g transform="translate(100, 80)">
+            <text x="15" y="-15" font-family="JetBrains Mono, monospace" font-size="12" fill="#546e7a" font-weight="bold" text-anchor="middle">引用变量 r</text>
+            <rect x="0" y="0" width="30" height="190" rx="6" fill="#eceff1" stroke="#b0bec5" stroke-width="1.5" />
+            <text x="15" y="95" font-family="JetBrains Mono, monospace" font-size="10" fill="#546e7a" text-anchor="middle" transform="rotate(-90 15 95)">物理存在</text>
+        </g>
 
+        <!-- Column 2: Desired Lifetime 'a (The Requirement) -->
+        <g transform="translate(280, 80)">
+            <text x="15" y="-15" font-family="JetBrains Mono, monospace" font-size="12" fill="#1565c0" font-weight="bold" text-anchor="middle">标注期望 'a</text>
+            <rect x="0" y="0" width="30" height="190" rx="6" fill="#e3f2fd" stroke="#2196f3" stroke-width="1.5" stroke-dasharray="6 3" />
+            <text x="40" y="100" font-family="JetBrains Mono, monospace" font-size="11" fill="#1565c0" font-weight="bold">逻辑期望</text>
+        </g>
+
+        <!-- Column 3: Physical Data x -->
+        <g transform="translate(460, 120)">
+            <text x="15" y="-15" font-family="JetBrains Mono, monospace" font-size="12" fill="#2e7d32" font-weight="bold" text-anchor="middle">实际数据 x</text>
+            <rect x="0" y="0" width="30" height="80" rx="6" fill="#c8e6c9" stroke="#4caf50" stroke-width="1.5" />
+            <text x="40" y="45" font-family="JetBrains Mono, monospace" font-size="11" fill="#2e7d32" font-weight="bold">真实寿命</text>
+        </g>
+
+        <!-- Connection: r -> 'a (Demand) -->
+        <path d="M 135 160 L 275 160" stroke="#b0bec5" stroke-width="1.5" fill="none" stroke-dasharray="4 2" marker-end="url(#arrow-gray-small)" />
+        <text x="205" y="155" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">要求活多久</text>
+
+        <!-- Connection: 'a -> x (The Match Attempt) -->
+        <path d="M 315 160 L 455 160" stroke="#ff9800" stroke-width="2" fill="none" stroke-dasharray="4 2" marker-end="url(#arrow-orange)" />
+        <text x="385" y="155" font-family="JetBrains Mono, monospace" font-size="11" fill="#f57c00" text-anchor="middle">检查是否匹配</text>
+        
+        <!-- DROP Line (The Wall) -->
+        <g transform="translate(20, 200)">
+            <line x1="0" y1="0" x2="630" y2="0" stroke="#ef5350" stroke-width="2" stroke-dasharray="4 2" />
+            <rect x="510" y="-12" width="120" height="24" rx="12" fill="#ffebee" stroke="#ef5350" stroke-width="1" />
+            <text x="570" y="5" font-family="JetBrains Mono, monospace" font-size="11" fill="#d32f2f" font-weight="bold" text-anchor="middle">DROP (数据销毁)</text>
+        </g>
+        
+        <!-- Conflict Area (Dangling Zone) -->
+        <g transform="translate(280, 200)">
+            <rect x="0" y="0" width="30" height="70" fill="#ffebee" opacity="0.6" />
+            <text x="40" y="35" font-family="JetBrains Mono, monospace" font-size="12" fill="#d32f2f" font-weight="bold">期望落空区!</text>
+            <path d="M 15 45 L 80 45" stroke="#d32f2f" stroke-width="1.5" fill="none" marker-end="url(#arrow-red)" />
+        </g>
+        
+        <!-- Decision Box -->
+        <g transform="translate(480, 260)">
+            <rect x="0" y="0" width="160" height="55" rx="8" fill="#fff8e1" stroke="#ff9800" stroke-width="1" />
+            <text x="80" y="22" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef6c00" text-anchor="middle" font-weight="bold">借用检查器判定:</text>
+            <text x="80" y="42" font-family="JetBrains Mono, monospace" font-size="13" fill="#d32f2f" text-anchor="middle" font-weight="bold">真实寿命太短 (REJECT)</text>
+        </g>
     </g>
 
     <!-- Definitions -->
     <defs>
-        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#bdbdbd" />
+        <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#90a4ae" />
         </marker>
-        <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#ff9800" />
+        <marker id="arrow-gray-small" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#b0bec5" />
         </marker>
-        <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#d32f2f" />
+        <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#ff9800" />
+        </marker>
+        <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#d32f2f" />
         </marker>
     </defs>
 </svg>
