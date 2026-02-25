@@ -149,23 +149,38 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 万一结构体还在，数据先没了，那结构体手里拿的就是个空号。为了堵死这种 bug，Rust 强制规定：**只要结构体里包含引用，就必须显式标注生命周期。**
 
 ```rust
-// ❌ 编译错误：missing lifetime specifier
+// ❌ 编译错误：编译器不知道引用能活多久
 struct ImportantExcerpt {
     part: &str, 
 }
-```
 
-上面的代码会报错，因为编译器不知道 `part` 这个引用什么时候会失效。我们需要改成这样：
-
-```rust
 // ✅ 正确：显式标注 'a
+// 含义：ImportantExcerpt 实例的寿命 'a，被强制绑定到 part 引用的数据寿命上
 struct ImportantExcerpt<'a> {
     part: &'a str,
 }
 ```
 
-这段代码的潜台词是：
-> **“`ImportantExcerpt` 的实例，其寿命绝对不能超过 `'a`（即它所引用的 `part` 的寿命）。”**
+通过显式标注 `<'a>`，我们建立了一个**契约**：结构体实例 `i` 的寿命，绝对不能超过它内部引用的 `novel` 数据。
+
+```rust
+fn main() {
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    
+    // first_sentence 是 novel 的切片，它借用了 novel 的数据
+    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+    
+    // 显式标注 'a 的必要性：
+    // 编译器必须知道 i (结构体) 的寿命受限于 novel (数据源)。
+    // 这里 'a 建立了一条硬性规则：只要 i 还在用，novel 就不能被销毁。
+    let i = ImportantExcerpt {
+        part: first_sentence, 
+    }; 
+    
+    // ✅ i 的有效性完全依赖于 novel
+    println!("Excerpt: {}", i.part);
+}
+```
 
 ![结构体引用生命周期](./imgs/lifetime_struct_stack.svg)
 
