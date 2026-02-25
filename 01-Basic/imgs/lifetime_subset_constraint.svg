@@ -1,30 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="400" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <style>
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .title { font-size: 22px; font-weight: bold; fill: #333333; }
+        .header { font-size: 14px; font-weight: bold; }
+        .code { font-size: 13px; fill: #333333; }
+        .label { font-size: 12px; fill: #666666; }
+        .addr { font-size: 10px; fill: #78909c; }
+        .lt-text { font-size: 12px; font-weight: bold; }
+    </style>
+    
     <!-- Background -->
-    <rect width="800" height="400" rx="15" fill="#f8f9fa"/>
+    <rect width="800" height="450" fill="#f8f9fa" rx="15" />
+    <rect x="20" y="20" width="760" height="410" fill="#ffffff" stroke="#e0e0e0" rx="12" />
     
     <!-- Title -->
-    <text x="400" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333333">借用检查金律：引用的生命周期必须是数据的子集</text>
-
-    <!-- Venn Diagram / Scope Logic -->
-    <g transform="translate(100, 80)">
-        <!-- Outer Scope 'a (Data) -->
-        <rect x="0" y="0" width="600" height="240" rx="15" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
-        <text x="20" y="25" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#2e7d32">'a (被引用数据的实际存活周期)</text>
+    <text x="40" y="55" class="font-mono title">生命周期子集约束：'b ⊆ 'a (堆栈视图)</text>
+    
+    <!-- Stack Section (Left) -->
+    <g transform="translate(50, 90)">
+        <rect x="0" y="0" width="220" height="300" fill="#ffffff" stroke="#e0e0e0" rx="12" />
+        <!-- Stack Header -->
+        <path d="M 0 12 Q 0 0 12 0 L 208 0 Q 220 0 220 12 L 220 35 L 0 35 Z" fill="#e3f2fd" />
+        <text x="110" y="23" class="font-mono header" fill="#1565c0" text-anchor="middle">Stack (栈内存)</text>
         
-        <!-- Inner Scope 'b (Reference) -->
-        <rect x="150" y="60" width="300" height="120" rx="12" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
-        <text x="170" y="85" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">'b (引用本身的存活周期)</text>
-
-        <!-- Constraint Logic -->
-        <text x="300" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="20" font-weight="bold" fill="#333333">'b ⊆ 'a</text>
+        <!-- Stack Slot: r (Reference) -->
+        <g transform="translate(20, 60)">
+            <text x="0" y="-8" class="font-mono label">let r: &amp;i32</text>
+            <rect width="180" height="40" fill="#fff8e1" stroke="#ff9800" rx="4" />
+            <text x="10" y="25" class="font-mono code">ptr: 0x...100</text>
+            <text x="175" y="25" class="font-mono addr" text-anchor="end">0x...108</text>
+            <!-- Lifetime 'b indicator -->
+            <line x1="195" y1="0" x2="195" y2="40" stroke="#1565c0" stroke-width="4" stroke-linecap="round" />
+            <text x="205" y="25" class="font-mono lt-text" fill="#1565c0">'b</text>
+        </g>
+        
+        <!-- Stack Slot: x (Owner) -->
+        <g transform="translate(20, 140)">
+            <text x="0" y="-8" class="font-mono label">let x: i32</text>
+            <rect width="180" height="40" fill="#ffffff" stroke="#4caf50" rx="4" />
+            <text x="10" y="25" class="font-mono code">value: 42</text>
+            <text x="175" y="25" class="font-mono addr" text-anchor="end" id="addr-x">0x...100</text>
+            <!-- Lifetime 'a indicator -->
+            <line x1="195" y1="-80" x2="195" y2="40" stroke="#4caf50" stroke-width="4" stroke-linecap="round" />
+            <text x="205" y="-15" class="font-mono lt-text" fill="#2e7d32">'a</text>
+        </g>
+        
+        <!-- Pointer Arrow -->
+        <path d="M 30 80 C 10 100, 10 140, 30 160" fill="none" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-ptr)" />
+        <circle cx="30" cy="80" r="3" fill="#ff9800" />
+        
+        <!-- Bottom Annotation -->
+        <text x="110" y="280" class="font-mono label" text-anchor="middle" fill="#78909c">数据在栈上的物理分布</text>
+    </g>
+    
+    <!-- Code & Logic Section (Right) -->
+    <g transform="translate(320, 90)">
+        <rect x="0" y="0" width="430" height="300" fill="#f3e5f5" stroke="#9c27b0" stroke-dasharray="4 2" rx="12" opacity="0.4" />
+        <!-- Code Header -->
+        <path d="M 0 12 Q 0 0 12 0 L 418 0 Q 430 0 430 12 L 430 35 L 0 35 Z" fill="#f3e5f5" opacity="1" />
+        <text x="215" y="23" class="font-mono header" fill="#6a1b9a" text-anchor="middle">Code (生命周期范围)</text>
+        
+        <!-- Code Text -->
+        <g transform="translate(30, 70)">
+            <text x="0" y="0" class="font-mono code">{</text>
+            <text x="20" y="30" class="font-mono code">let x = 42;</text>
+            <text x="20" y="60" class="font-mono code">{</text>
+            <text x="40" y="90" class="font-mono code" font-weight="bold" fill="#e65100">let r = &amp;x;</text>
+            <text x="40" y="120" class="font-mono code">println!(r);</text>
+            <text x="20" y="150" class="font-mono code">}</text>
+            <text x="0" y="180" class="font-mono code">}</text>
+            
+            <!-- Lifetime Brackets -->
+            <!-- 'a: x's lifetime -->
+            <path d="M 130 30 L 140 30 L 140 180 L 130 180" fill="none" stroke="#4caf50" stroke-width="2" />
+            <text x="150" y="110" class="font-mono lt-text" fill="#2e7d32">'a (数据寿命)</text>
+            
+            <!-- 'b: r's lifetime -->
+            <path d="M 130 90 L 140 90 L 140 120 L 130 120" fill="none" stroke="#1565c0" stroke-width="2" />
+            <text x="150" y="140" class="font-mono lt-text" fill="#1565c0">'b (引用寿命)</text>
+        </g>
+        
+        <!-- Logic Check Box -->
+        <g transform="translate(50, 240)">
+            <rect width="330" height="40" fill="#e8f5e9" stroke="#2e7d32" rx="20" />
+            <text x="165" y="25" class="font-mono header" fill="#2e7d32" text-anchor="middle">借用检查器：'b ⊆ 'a (成立 ✔)</text>
+        </g>
     </g>
 
-    <!-- Legend & Explanation -->
-    <g transform="translate(100, 340)">
-        <rect width="600" height="40" rx="8" fill="#ffffff" stroke="#e0e0e0"/>
-        <text x="300" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#666666">
-            只要 <tspan fill="#1565c0" font-weight="bold">引用 'b</tspan> 的作用域不超出 <tspan fill="#2e7d32" font-weight="bold">数据 'a</tspan> 的作用域，借用就是安全的。
-        </text>
-    </g>
+    <!-- Definitions -->
+    <defs>
+        <marker id="arrow-ptr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#ff9800" />
+        </marker>
+    </defs>
 </svg>
