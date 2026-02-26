@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="950" viewBox="0 0 800 950" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="950" fill="#f8f9fa" rx="15"/>
+  <!-- Title -->
+  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">HashMap 物理布局演进</text>
+  <!-- Code Section -->
+  <g transform="translate(50, 80)">
+    <rect width="700" height="120" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#f3e5f5"/>
+    <text x="350" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">演示代码</text>
+    <g transform="translate(30, 60)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#6a1b9a">mut</tspan> map = <tspan fill="#1565c0">HashMap</tspan>::<tspan fill="#2e7d32">new</tspan>(); <tspan fill="#78909c">// Step 1</tspan></tspan>
+        <tspan x="0" dy="1.5em">map.<tspan fill="#2e7d32">insert</tspan>(<tspan fill="#f57c00">"Rust"</tspan>, <tspan fill="#f57c00">2026</tspan>); <tspan fill="#78909c">// Step 2</tspan></tspan>
+      </text>
+    </g>
+  </g>
+  <!-- Step 1 Layout -->
+  <g transform="translate(50, 240)">
+    <rect x="-10" y="-15" width="290" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
+    <text x="0" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">Step 1: 惰性初始化</text>
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="250" height="260" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H238 Q250 0 250 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      <g transform="translate(15, 55)">
+        <rect width="220" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="21" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">base</text>
+        <rect y="42" width="220" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="63" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">mask</text>
+        <text x="210" y="63" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c" text-anchor="end">0</text>
+        <rect y="84" width="220" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+        <text x="10" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">ctrl</text>
+        <text x="210" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c" text-anchor="end">EMPTY</text>
+        <rect y="126" width="220" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="147" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">items</text>
+        <text x="210" y="147" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c" text-anchor="end">0</text>
+      </g>
+    </g>
+    <!-- Heap -->
+    <g transform="translate(280, 20)">
+      <rect width="420" height="260" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H408 Q420 0 420 12 V35 H0 Z" fill="#e8f5e9"/>
+      <text x="210" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
+      <g transform="translate(15, 55)">
+        <rect width="390" height="180" rx="10" fill="none" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="8 4"/>
+        <text x="195" y="90" font-family="JetBrains Mono, monospace" font-size="14" fill="#bdbdbd" text-anchor="middle">尚未分配堆内存</text>
+      </g>
+    </g>
+  </g>
+  <!-- Step 2 Layout -->
+  <g transform="translate(50, 560)">
+    <rect x="-10" y="-15" width="290" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
+    <text x="0" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">Step 2: 首次插入</text>
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="250" height="320" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H238 Q250 0 250 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      <g transform="translate(15, 55)">
+        <rect width="220" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="21" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">base</text>
+        <rect y="42" width="220" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="63" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">mask</text>
+        <text x="210" y="63" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">15</text>
+        <rect y="84" width="220" height="32" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5"/>
+        <text x="10" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">ctrl</text>
+        <text x="210" y="105" font-family="JetBrains Mono, monospace" font-size="11" fill="#f57c00" text-anchor="end">ptr</text>
+        <circle cx="220" cy="101" r="3" fill="#ff9800"/>
+        <rect y="126" width="220" height="32" rx="4" fill="#e1f5fe" stroke="#03a9f4" stroke-width="1.5"/>
+        <text x="10" y="147" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">items</text>
+        <text x="210" y="147" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#01579b" text-anchor="end">1</text>
+      </g>
+    </g>
+    <!-- Heap: Refined Contiguous Layout -->
+    <g transform="translate(280, 20)">
+      <rect width="420" height="320" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H408 Q420 0 420 12 V35 H0 Z" fill="#e8f5e9"/>
+      <text x="210" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
+      <!-- Single Contiguous Block -->
+      <g transform="translate(15, 50)">
+        <rect width="390" height="250" rx="8" fill="#fafafa" stroke="#4caf50" stroke-width="1.5" stroke-dasharray="6 3"/>
+        <!-- Metadata: Control Bytes Strip -->
+        <g transform="translate(10, 15)">
+          <text x="0" y="-5" font-size="9" fill="#78909c">Control Bytes (1B per Slot)</text>
+          <g transform="translate(0, 5)">
+            <rect width="20" height="20" fill="#ffffff" stroke="#e0e0e0"/>
+            <text x="10" y="13" text-anchor="middle" font-size="7" fill="#bdbdbd">FF</text>
+            <rect x="20" width="20" height="20" fill="#c8e6c9" stroke="#2e7d32"/>
+            <text x="30" y="13" text-anchor="middle" font-size="7" fill="#1b5e20" font-weight="bold">4A</text>
+            <rect x="40" width="330" height="20" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="3 1"/>
+            <text x="205" y="13" text-anchor="middle" font-size="8" fill="#bdbdbd">... (14 more bytes) ...</text>
+          </g>
+        </g>
+        <!-- Data Slots: Contiguous Physical Strip -->
+        <g transform="translate(10, 65)">
+          <text x="0" y="5" font-size="9" fill="#78909c">Data Slots (Physical Byte Strip)</text>
+          <!-- Slot Detail Area -->
+          <g transform="translate(0, 15)">
+            <!-- Slot 0 Uninit -->
+            <rect width="370" height="25" fill="#eeeeee" stroke="#e0e0e0" stroke-dasharray="2 2"/>
+            <text x="185" y="16" text-anchor="middle" font-size="8" fill="#bdbdbd">Slot 0 (Uninitialized)</text>
+            <!-- Slot 1 (Optimized Clean Layout) -->
+            <g transform="translate(0, 25)">
+              <rect width="370" height="70" fill="#ffffff" stroke="#03a9f4" stroke-width="2"/>
+              <rect width="40" height="15" fill="#03a9f4"/>
+              <text x="20" y="11" text-anchor="middle" font-size="8" fill="#ffffff" font-weight="bold">Slot 1</text>
+              <!-- Memory Strip -->
+              <g transform="translate(15, 25)">
+                <!-- Key: &str (16B) -->
+                <g>
+                  <rect width="240" height="28" fill="#e1f5fe" stroke="#03a9f4" stroke-width="1"/>
+                  <text x="120" y="19" text-anchor="middle" font-size="12" fill="#f57c00" font-weight="bold">"Rust" (Key: &amp;str)</text>
+                  <g stroke="#03a9f4" stroke-width="0.3" opacity="0.3">
+                    <line x1="15" y1="0" x2="15" y2="28"/><line x1="30" y1="0" x2="30" y2="28"/><line x1="45" y1="0" x2="45" y2="28"/><line x1="60" y1="0" x2="60" y2="28"/>
+                    <line x1="75" y1="0" x2="75" y2="28"/><line x1="90" y1="0" x2="90" y2="28"/><line x1="105" y1="0" x2="105" y2="28"/><line x1="120" y1="0" x2="120" y2="28"/>
+                    <line x1="135" y1="0" x2="135" y2="28"/><line x1="150" y1="0" x2="150" y2="28"/><line x1="165" y1="0" x2="165" y2="28"/><line x1="180" y1="0" x2="180" y2="28"/>
+                    <line x1="195" y1="0" x2="195" y2="28"/><line x1="210" y1="0" x2="210" y2="28"/><line x1="225" y1="0" x2="225" y2="28"/>
+                  </g>
+                </g>
+                <!-- Value: i32 (4B) -->
+                <g transform="translate(240, 0)">
+                  <rect width="60" height="28" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1"/>
+                  <text x="30" y="19" text-anchor="middle" font-size="12" fill="#1565c0" font-weight="bold">2026</text>
+                  <g stroke="#2e7d32" stroke-width="0.3" opacity="0.3">
+                    <line x1="15" y1="0" x2="15" y2="28"/><line x1="30" y1="0" x2="30" y2="28"/><line x1="45" y1="0" x2="45" y2="28"/>
+                  </g>
+                </g>
+                <text x="270" y="42" text-anchor="middle" font-size="8" fill="#2e7d32">(Value: i32)</text>
+              </g>
+              <text x="185" y="65" text-anchor="middle" font-size="8" fill="#78909c" font-style="italic">物理内存连续分布 (Back-to-Back)</text>
+            </g>
+            <!-- Slot 2-15 Uninit -->
+            <rect y="95" width="370" height="40" fill="#eeeeee" stroke="#e0e0e0" stroke-dasharray="2 2"/>
+            <text x="185" y="118" text-anchor="middle" font-size="8" fill="#bdbdbd">Slot 2 - 15 (Remaining Capacity)</text>
+          </g>
+        </g>
+      </g>
+      <!-- Refined Pointer -->
+      <path d="M-45,101 C-10,101 20,75 35,75" stroke="#ff9800" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    </g>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orientation="auto">
+      <path d="M0,0 L0,10 L9,5 Z" fill="#ff9800" />
+    </marker>
+  </defs>
+</svg>

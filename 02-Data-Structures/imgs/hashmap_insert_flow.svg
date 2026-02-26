@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="550" viewBox="0 0 800 550" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect x="0" y="0" width="800" height="550" fill="#f8f9fa"/>
+
+    <!-- Code Area -->
+    <g transform="translate(20, 20)">
+        <rect x="0" y="0" width="760" height="130" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+        <path d="M 0 35 Q 0 0 12 0 L 748 0 Q 760 0 760 35 L 760 35 L 0 35 Z" fill="#e1bee7"/>
+        <text x="20" y="24" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
+        <text x="20" y="60" font-family="JetBrains Mono, monospace" font-size="13" fill="#333">
+            <tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() {
+        </text>
+        <text x="20" y="80" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" xml:space="preserve">    <tspan fill="#6a1b9a">let</tspan> map: <tspan fill="#1565c0">HashMap</tspan>&lt;&tspan fill="#1565c0">str</tspan>, <tspan fill="#1565c0">i32</tspan>&gt; = <tspan fill="#1565c0">HashMap</tspan>::<tspan fill="#2e7d32">new</tspan>();</text>
+        <text x="20" y="100" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" xml:space="preserve">    <tspan fill="#6a1b9a">if</tspan> <tspan fill="#6a1b9a">let</tspan> <tspan fill="#2e7d32">Some</tspan>(v) = map.<tspan fill="#2e7d32">get</tspan>(<tspan fill="#f57c00">"Rust"</tspan>) { ... }</text>
+        <text x="20" y="120" font-family="JetBrains Mono, monospace" font-size="13" fill="#333">
+            }
+        </text>
+    </g>
+
+    <!-- Flow Diagram -->
+    <g transform="translate(50, 180)">
+        <!-- Step 1: H1 Selects Group -->
+        <g transform="translate(0, 0)">
+            <text x="0" y="-10" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0">1. H1 Selects Group</text>
+            <rect x="0" y="0" width="140" height="250" rx="8" fill="#e3f2fd" stroke="#1e88e5" stroke-dasharray="4 2"/>
+            <text x="70" y="125" text-anchor="middle" fill="#1565c0">Group of 16</text>
+        </g>
+
+        <!-- Step 2: SIMD Match (Control Bytes) -->
+        <g transform="translate(200, 0)">
+            <text x="0" y="-10" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32">2. SIMD Match (H2)</text>
+            
+            <!-- The Control Group -->
+            <rect x="0" y="0" width="60" height="250" rx="4" fill="#f1f8e9" stroke="#4caf50"/>
+            
+            <!-- Bytes -->
+            <g transform="translate(10, 20)">
+                <rect x="0" y="0" width="40" height="30" fill="#fff" stroke="#ccc"/>
+                <text x="20" y="20" text-anchor="middle" font-size="10" fill="#ccc">E</text>
+
+                <rect x="0" y="35" width="40" height="30" fill="#fff" stroke="#ccc"/>
+                <text x="20" y="55" text-anchor="middle" font-size="10" fill="#ccc">F</text>
+
+                <!-- Match! -->
+                <rect x="0" y="70" width="40" height="30" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+                <text x="20" y="90" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e7d32">H2</text>
+                
+                <rect x="0" y="105" width="40" height="30" fill="#fff" stroke="#ccc"/>
+                
+                <text x="20" y="150" text-anchor="middle" font-size="10" fill="#ccc">...</text>
+            </g>
+        </g>
+
+        <!-- Step 3: Check Slot -->
+        <g transform="translate(400, 0)">
+            <text x="0" y="-10" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#f57c00">3. Check Key in Slot</text>
+            
+            <!-- Slots -->
+            <rect x="0" y="0" width="150" height="250" rx="4" fill="#fff" stroke="#ff9800"/>
+            
+            <!-- Slot Corresponding to Match -->
+            <g transform="translate(10, 70)">
+                <rect x="0" y="0" width="130" height="60" rx="4" fill="#fff8e1" stroke="#ffb74d" stroke-width="2"/>
+                <text x="65" y="25" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Key: "Rust"</text>
+                <text x="65" y="45" text-anchor="middle" font-size="10" fill="#f57c00">== "Rust"? YES</text>
+            </g>
+        </g>
+    </g>
+
+    <!-- Connecting Arrows -->
+    <!-- H1 -> Group -->
+    <path d="M 140 175 L 200 175" fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    
+    <!-- Match -> Slot -->
+    <path d="M 260 155 L 400 155" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#arrow-green)"/>
+
+    <defs>
+        <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#1565c0" />
+        </marker>
+        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#2e7d32" />
+        </marker>
+    </defs>
+</svg>

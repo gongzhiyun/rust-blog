@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <!-- Background -->
+    <rect x="0" y="0" width="800" height="450" fill="#f8f9fa"/>
+
+    <!-- Code Area -->
+    <g transform="translate(20, 20)">
+        <rect x="0" y="0" width="760" height="130" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+        <path d="M 0 35 Q 0 0 12 0 L 748 0 Q 760 0 760 35 L 760 35 L 0 35 Z" fill="#e1bee7"/>
+        <text x="20" y="24" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
+        <text x="20" y="60" font-family="JetBrains Mono, monospace" font-size="13" fill="#333">
+            <tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() {
+        </text>
+        <text x="20" y="80" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" xml:space="preserve">    <tspan fill="#6a1b9a">let</tspan> map: <tspan fill="#1565c0">HashMap</tspan>&lt;&tspan fill="#1565c0">str</tspan>, <tspan fill="#1565c0">i32</tspan>&gt; = <tspan fill="#1565c0">HashMap</tspan>::<tspan fill="#2e7d32">new</tspan>();</text>
+        <text x="20" y="100" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" xml:space="preserve">    <tspan fill="#6a1b9a">let</tspan> hash = map.<tspan fill="#2e7d32">hasher</tspan>().<tspan fill="#2e7d32">hash_one</tspan>(<tspan fill="#f57c00">"Rust"</tspan>); <tspan fill="#78909c">// u64</tspan></text>
+        <text x="20" y="120" font-family="JetBrains Mono, monospace" font-size="13" fill="#333">
+            }
+        </text>
+    </g>
+
+    <!-- Hash Logic -->
+    <g transform="translate(100, 190)">
+        <text x="300" y="-20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333">64-bit Hash Value</text>
+        
+        <!-- 64-bit Rect -->
+        <rect x="0" y="0" width="600" height="60" rx="4" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+        
+        <!-- H2 Section (Top 7 bits) -->
+        <rect x="0" y="0" width="100" height="60" rx="4" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+        <text x="50" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">H2</text>
+        <text x="50" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Top 7 bits</text>
+        
+        <!-- H1 Section (Rest) -->
+        <rect x="100" y="0" width="500" height="60" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+        <text x="350" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">H1</text>
+        <text x="350" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0">Index (57 bits)</text>
+
+        <!-- Arrows -->
+        <!-- H2 to Control Byte -->
+        <path d="M 50 60 L 50 150 L 150 150" fill="none" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow-green)"/>
+        
+        <!-- H1 to Index -->
+        <path d="M 350 60 L 350 150 L 450 150" fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrow-blue)"/>
+    </g>
+
+    <!-- Target Mapping -->
+    <g transform="translate(150, 310)">
+        <!-- Control Byte Matching -->
+        <g transform="translate(0, 0)">
+            <rect x="0" y="0" width="120" height="80" rx="8" fill="#f1f8e9" stroke="#4caf50"/>
+            <text x="60" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32">Control Tag</text>
+            <text x="60" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">Match 0x.. in Group</text>
+        </g>
+
+        <!-- Indexing -->
+        <g transform="translate(300, 0)">
+            <rect x="0" y="0" width="120" height="80" rx="8" fill="#e3f2fd" stroke="#1e88e5"/>
+            <text x="60" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0">Group Index</text>
+            <text x="60" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">Select Group</text>
+        </g>
+    </g>
+
+    <defs>
+        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#2e7d32" />
+        </marker>
+        <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#1565c0" />
+        </marker>
+    </defs>
+</svg>
