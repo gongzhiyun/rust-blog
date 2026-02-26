@@ -38,10 +38,10 @@
 
 ## 5. 设计哲学
 
-Rust 的 `BinaryHeap` 是 **Zero-Cost Abstractions** 的终极体现：
-- **物理上**：它就是 `Vec`，拥有极致的缓存局部性。
-- **逻辑上**：它是一棵树，提供高效的优先级排序。
-- **权衡**：它只允许访问最大元素（Max-Heap），若需 Min-Heap，需配合 `std::cmp::Reverse` 使用。
+`BinaryHeap` 完美诠释了 Rust 的 **Zero-Cost Abstractions**：
+- **物理上**：就是一个 `Vec`。利用连续内存获得极致的缓存局部性，消除了指针跳转开销。
+- **逻辑上**：是一棵完全二叉树。仅靠算术运算定位父子节点，零额外存储开销。
+- **操作上**：通过 `Sift Up` 和 `Sift Down` 维护堆序。默认是大顶堆，小顶堆需配合 `Reverse` 使用。
 
 ---
 

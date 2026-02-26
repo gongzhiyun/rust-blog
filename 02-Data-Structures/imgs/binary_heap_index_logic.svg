@@ -49,9 +49,9 @@
           <text x="10" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">cap</text>
           <text x="210" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">8</text>
           
-          <rect y="66" width="220" height="28" rx="4" fill="#fafafa" stroke="#ff9800" stroke-width="1.5"/>
+          <rect y="66" width="220" height="28" rx="4" fill="#e1f5fe" stroke="#03a9f4" stroke-width="1.5"/>
           <text x="10" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">len</text>
-          <text x="210" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">7</text>
+          <text x="210" y="84" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#01579b" text-anchor="end">7</text>
         </g>
       </g>
 
@@ -64,8 +64,8 @@
         <g transform="translate(12.5, 60)">
           <!-- Row 1 -->
           <g transform="translate(0, 0)">
-            <rect width="50" height="40" rx="4" fill="#ffffff" stroke="#4caf50" stroke-width="2.5"/>
-            <text x="25" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">100</text>
+            <rect width="50" height="40" rx="4" fill="#e1f5fe" stroke="#03a9f4" stroke-width="2.5"/>
+            <text x="25" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#01579b" text-anchor="middle">100</text>
             <text x="25" y="55" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">[0]</text>
           </g>
           <g transform="translate(55, 0)">

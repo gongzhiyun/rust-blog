@@ -135,9 +135,9 @@
           <rect y="33" width="190" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
           <text x="10" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">cap</text>
           <text x="180" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">4</text>
-          <rect y="66" width="190" height="28" rx="4" fill="#fff3e0" stroke="#ff9800" stroke-width="1.5"/>
+          <rect y="66" width="190" height="28" rx="4" fill="#e1f5fe" stroke="#03a9f4" stroke-width="1.5"/>
           <text x="10" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">len</text>
-          <text x="180" y="84" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#e65100" text-anchor="end">3</text>
+          <text x="180" y="84" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#01579b" text-anchor="end">3</text>
         </g>
       </g>
       <!-- Heap -->
@@ -146,8 +146,8 @@
         <path d="M0 8 Q0 0 8 0 H412 Q420 0 420 8 V30 H0 Z" fill="#e8f5e9"/>
         <text x="210" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
         <g transform="translate(15, 55)">
-          <rect width="80" height="55" rx="6" fill="#fff9c4" stroke="#ff9800" stroke-width="2.5"/>
-          <text x="40" y="32" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#e65100" text-anchor="middle">30</text>
+          <rect width="80" height="55" rx="6" fill="#e1f5fe" stroke="#03a9f4" stroke-width="2.5"/>
+          <text x="40" y="32" font-family="JetBrains Mono, monospace" font-size="18" font-weight="bold" fill="#01579b" text-anchor="middle">30</text>
           <text x="40" y="72" font-family="JetBrains Mono, monospace" font-size="10" fill="#999" text-anchor="middle">[0]</text>
           <rect x="95" width="80" height="55" rx="6" fill="#ffffff" stroke="#e0e0e0" stroke-width="1.5"/>
           <text x="135" y="32" font-family="JetBrains Mono, monospace" font-size="18" fill="#333" text-anchor="middle">15</text>
