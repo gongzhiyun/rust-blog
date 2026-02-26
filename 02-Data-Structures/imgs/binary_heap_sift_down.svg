@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="580" viewBox="0 0 800 580" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <rect width="800" height="580" fill="#f8f9fa" rx="15"/>
+  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">出堆演变：Sift Down (标准页眉版)</text>
+
+  <!-- 1. Code Section (Top - Full Width) -->
+  <g transform="translate(50, 70)">
+    <rect width="700" height="120" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#f3e5f5"/>
+    <text x="350" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">演示代码</text>
+    <g transform="translate(30, 50)">
+      <text font-family="JetBrains Mono, monospace" font-size="13">
+        <tspan x="0" dy="1.2em"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan><tspan fill="#333">() {</tspan></tspan>
+        <tspan x="20" dy="1.5em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#333">val = h.</tspan><tspan fill="#2e7d32">pop</tspan><tspan fill="#333">();</tspan></tspan>
+        <tspan x="20" dy="1.5em"><tspan fill="#78909c">// 弹出堆顶，末位补齐，触发 Sift Down</tspan></tspan>
+        <tspan x="0" dy="1.5em"><tspan fill="#333">}</tspan></tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- 2. Memory Evolution (Bottom) -->
+  <g transform="translate(50, 210)">
+    <rect width="700" height="330" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#e8f5e9"/>
+    <text x="350" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">Memory Evolution: Step-by-Step</text>
+    
+    <!-- Step 1 -->
+    <g transform="translate(40, 60)">
+      <text x="100" y="-10" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#e53935" text-anchor="middle">Step 1: 末位替补</text>
+      <g transform="translate(10, 20)">
+        <circle cx="90" cy="40" r="20" fill="#ffebee" stroke="#ef5350" stroke-width="2"/>
+        <text x="90" y="45" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#c62828" text-anchor="middle">10</text>
+        <circle cx="50" cy="100" r="20" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+        <text x="50" y="105" font-family="JetBrains Mono, monospace" font-size="12" fill="#333" text-anchor="middle">20</text>
+        <circle cx="130" cy="100" r="20" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+        <text x="130" y="105" font-family="JetBrains Mono, monospace" font-size="12" fill="#333" text-anchor="middle">15</text>
+        <path d="M90 60 L120 85" stroke="#e0e0e0" stroke-width="1"/>
+        <path d="M90 60 L60 85" stroke="#e0e0e0" stroke-width="1"/>
+      </g>
+      <rect x="10" y="150" width="180" height="30" rx="4" fill="#fafafa" stroke="#e0e0e0"/>
+      <text x="100" y="170" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">30 已弹出, 10 移至堆顶</text>
+    </g>
+
+    <!-- Flow Arrow -->
+    <path d="M260 150 L300 150" stroke="#bdbdbd" stroke-width="3" fill="none" marker-end="url(#arrow_gray)"/>
+
+    <!-- Step 2 -->
+    <g transform="translate(330, 60)">
+      <text x="100" y="-10" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Step 2: 向下下沉</text>
+      <g transform="translate(10, 20)">
+        <circle cx="90" cy="40" r="20" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+        <text x="90" y="45" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#333" text-anchor="middle">20</text>
+        <circle cx="50" cy="100" r="20" fill="#e1f5fe" stroke="#03a9f4" stroke-width="2"/>
+        <text x="50" y="105" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#01579b" text-anchor="middle">10</text>
+        <circle cx="130" cy="100" r="20" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+        <text x="130" y="105" font-family="JetBrains Mono, monospace" font-size="12" fill="#333" text-anchor="middle">15</text>
+        <path d="M90 60 L120 85" stroke="#e0e0e0" stroke-width="1"/>
+        <path d="M90 60 L60 85" stroke="#e0e0e0" stroke-width="1"/>
+        <path d="M90 55 Q70 70 50 90" stroke="#03a9f4" stroke-width="2" stroke-dasharray="4 2" fill="none" marker-end="url(#arrow_sink)"/>
+      </g>
+      <rect x="10" y="150" width="180" height="30" rx="4" fill="#fafafa" stroke="#e0e0e0"/>
+      <text x="100" y="170" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">10 与较大子节点 20 交换</text>
+    </g>
+
+    <!-- Logic Description -->
+    <rect x="40" y="260" width="620" height="50" rx="8" fill="#e1f5fe" stroke="#03a9f4" stroke-width="1"/>
+    <text x="350" y="290" font-family="JetBrains Mono, monospace" font-size="12" fill="#01579b" text-anchor="middle">10 &lt; 20，执行 Swap。下沉至此结束（不再小于任何子节点）。</text>
+  </g>
+
+  <defs>
+    <marker id="arrow_gray" markerWidth="10" markerHeight="10" refX="9" refY="5" orientation="auto">
+      <path d="M0,0 L0,10 L9,5 Z" fill="#bdbdbd" />
+    </marker>
+    <marker id="arrow_sink" markerWidth="6" markerHeight="6" refX="5" refY="3" orientation="auto">
+      <path d="M0,0 L0,6 L5,3 Z" fill="#03a9f4" />
+    </marker>
+  </defs>
+</svg>

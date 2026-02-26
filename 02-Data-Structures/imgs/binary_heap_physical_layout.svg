@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="910" viewBox="0 0 800 910" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="910" fill="#f8f9fa" rx="15"/>
+  
+  <!-- Title -->
+  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">BinaryHeap 物理布局演进：从初始化到连续 Push</text>
+
+  <!-- Code Section -->
+  <g transform="translate(50, 80)">
+    <rect width="700" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#f3e5f5"/>
+    <text x="350" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">演示代码</text>
+    <g transform="translate(30, 55)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan><tspan fill="#333">() {</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#6a1b9a">mut</tspan> <tspan fill="#333">heap = </tspan><tspan fill="#1565c0">BinaryHeap</tspan><tspan fill="#333">::</tspan><tspan fill="#2e7d32">new</tspan><tspan fill="#333">(); </tspan><tspan fill="#78909c">// Step 1</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#333">heap.</tspan><tspan fill="#2e7d32">push</tspan><tspan fill="#333">(</tspan><tspan fill="#f57c00">20</tspan><tspan fill="#333">);                </tspan><tspan fill="#78909c">// Step 2</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#333">heap.</tspan><tspan fill="#2e7d32">push</tspan><tspan fill="#333">(</tspan><tspan fill="#f57c00">15</tspan><tspan fill="#333">);                </tspan><tspan fill="#78909c">// Step 3</tspan></tspan>
+        <tspan x="0" dy="1.4em"><tspan fill="#333">}</tspan></tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- Step 1: Initialization -->
+  <g transform="translate(50, 255)">
+    <rect x="-10" y="-15" width="290" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
+    <text x="0" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">Step 1: 惰性初始化 (Lazy Init)</text>
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="250" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H238 Q250 0 250 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      <g transform="translate(15, 45)">
+        <rect width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+        <text x="10" y="18" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">ptr</text>
+        <text x="210" y="18" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c" text-anchor="end">0x1 (Dangling)</text>
+        <rect y="33" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">cap</text>
+        <text x="210" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">0</text>
+        <rect y="66" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">len</text>
+        <text x="210" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">0</text>
+      </g>
+    </g>
+    <!-- Heap -->
+    <g transform="translate(280, 20)">
+      <rect width="420" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H408 Q420 0 420 12 V35 H0 Z" fill="#e8f5e9"/>
+      <text x="210" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
+      <text x="210" y="90" font-family="JetBrains Mono, monospace" font-size="14" fill="#bdbdbd" text-anchor="middle">尚未在堆上分配空间</text>
+    </g>
+  </g>
+
+  <!-- Step 2: First Push -->
+  <g transform="translate(50, 450)">
+    <rect x="-10" y="-15" width="290" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
+    <text x="0" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">Step 2: 首次 Push (触发分配)</text>
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="250" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H238 Q250 0 250 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      <g transform="translate(15, 45)">
+        <rect width="220" height="28" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5"/>
+        <text x="10" y="18" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">ptr</text>
+        <text x="210" y="18" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">0x500</text>
+        <circle cx="220" cy="14" r="3" fill="#ff9800"/>
+        <rect y="33" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">cap</text>
+        <text x="210" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">4</text>
+        <rect y="66" width="220" height="28" rx="4" fill="#fafafa" stroke="#ff9800" stroke-width="1.5"/>
+        <text x="10" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">len</text>
+        <text x="210" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">1</text>
+      </g>
+    </g>
+    <!-- Heap -->
+    <g transform="translate(280, 20)">
+      <rect width="420" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H408 Q420 0 420 12 V35 H0 Z" fill="#e8f5e9"/>
+      <text x="210" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
+      <g transform="translate(20, 60)">
+        <rect width="80" height="50" rx="8" fill="#ffffff" stroke="#4caf50" stroke-width="2.5"/>
+        <text x="40" y="30" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">20</text>
+        <text x="40" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">[0]</text>
+        <rect x="90" y="0" width="80" height="50" rx="8" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+        <rect x="180" y="0" width="80" height="50" rx="8" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+        <rect x="270" y="0" width="80" height="50" rx="8" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+      </g>
+    </g>
+    <!-- Pointer Line -->
+    <path d="M235,79 L280,79" stroke="#ff9800" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- Step 3: Second Push -->
+  <g transform="translate(50, 645)">
+    <rect x="-10" y="-15" width="290" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
+    <text x="0" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">Step 3: 连续追加 (连续布局)</text>
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="250" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H238 Q250 0 250 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      <g transform="translate(15, 45)">
+        <rect width="220" height="28" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
+        <text x="10" y="18" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">ptr</text>
+        <text x="210" y="18" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">0x500</text>
+        <circle cx="220" cy="14" r="3" fill="#ff9800"/>
+        <rect y="33" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">cap</text>
+        <text x="210" y="51" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">4</text>
+        <rect y="66" width="220" height="28" rx="4" fill="#fafafa" stroke="#ff9800" stroke-width="1.5"/>
+        <text x="10" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">len</text>
+        <text x="210" y="84" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">2</text>
+      </g>
+    </g>
+    <!-- Heap -->
+    <g transform="translate(280, 20)">
+      <rect width="420" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H408 Q420 0 420 12 V35 H0 Z" fill="#e8f5e9"/>
+      <text x="210" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
+      <g transform="translate(20, 60)">
+        <rect width="80" height="50" rx="8" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="40" y="30" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#78909c" text-anchor="middle">20</text>
+        <text x="40" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">[0]</text>
+        <rect x="90" y="0" width="80" height="50" rx="8" fill="#ffffff" stroke="#4caf50" stroke-width="2.5"/>
+        <text x="130" y="30" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#333" text-anchor="middle">15</text>
+        <text x="130" y="65" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">[1]</text>
+        <rect x="180" y="0" width="80" height="50" rx="8" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+        <rect x="270" y="0" width="80" height="50" rx="8" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+      </g>
+    </g>
+    <!-- Pointer Line -->
+    <path d="M235,79 L280,79" stroke="#ff9800" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- Legend / Note -->
+  <g transform="translate(50, 840)">
+    <rect width="700" height="40" rx="8" fill="#fff9c4" opacity="0.3"/>
+    <text x="350" y="25" font-family="JetBrains Mono, monospace" font-size="13" fill="#455a64" text-anchor="middle">💡 BinaryHeap 物理结构与 Vec 一致：栈上 24 字节，堆上连续存储。</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orientation="auto">
+      <path d="M0,0 L0,10 L9,5 Z" fill="#ff9800" />
+    </marker>
+  </defs>
+</svg>

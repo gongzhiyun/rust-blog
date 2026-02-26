@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="800" viewBox="0 0 1000 800" style="background:#f8f9fa; font-family:'JetBrains Mono', monospace;">
+    <!-- Background -->
+    <rect width="1000" height="800" fill="#f8f9fa"/>
+    <text x="500" y="30" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">BinaryHeap Pop: 下沉 (Sift Down) 全过程</text>
+
+    <!-- Step 1: Swap & Pop -->
+    <g transform="translate(50, 60)">
+        <rect x="0" y="0" width="650" height="200" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+        <rect x="0" y="0" width="650" height="35" rx="12" fill="#ffebee"/>
+        <text x="20" y="24" font-size="14" font-weight="bold" fill="#c62828">Step 1: 交换首尾 &amp; 移除末尾</text>
+        <text x="250" y="24" font-size="12" fill="#555">最大值 100 被换到末尾移除。弱小的 17 暂时成为新的根节点。</text>
+        
+        <!-- Tree View -->
+        <g transform="translate(30, 60)">
+             <!-- Edges -->
+            <line x1="100" y1="20" x2="60" y2="60" stroke="#ccc" stroke-width="2"/>
+            <line x1="100" y1="20" x2="140" y2="60" stroke="#ccc" stroke-width="2"/>
+            <line x1="60" y1="60" x2="40" y2="100" stroke="#ccc" stroke-width="2"/>
+            <line x1="60" y1="60" x2="80" y2="100" stroke="#ccc" stroke-width="2"/>
+            
+            <!-- Nodes -->
+            <!-- New Root (Weak) -->
+            <circle cx="100" cy="20" r="15" fill="#ffebee" stroke="#c62828" stroke-width="2"/>
+            <text x="100" y="25" font-size="10" font-weight="bold" fill="#c62828" text-anchor="middle">17</text>
+            <text x="125" y="20" font-size="10" fill="#c62828">Unstable</text>
+
+            <circle cx="60" cy="60" r="15" fill="#fff" stroke="#333"/> <text x="60" y="65" font-size="10" text-anchor="middle">50</text>
+            <circle cx="140" cy="60" r="15" fill="#fff" stroke="#333"/> <text x="140" y="65" font-size="10" text-anchor="middle">36</text>
+            
+            <circle cx="40" cy="100" r="15" fill="#fff" stroke="#333"/> <text x="40" y="105" font-size="10" text-anchor="middle">19</text>
+            <circle cx="80" cy="100" r="15" fill="#fff" stroke="#333"/> <text x="80" y="105" font-size="10" text-anchor="middle">3</text>
+
+            <!-- Removed Node -->
+            <g transform="translate(180, 100)">
+                <circle cx="0" cy="0" r="15" fill="#f5f5f5" stroke="#ccc" stroke-dasharray="4"/>
+                <text x="0" y="5" font-size="10" fill="#999" text-anchor="middle">100</text>
+                <text x="20" y="5" font-size="10" fill="#999">Removed</text>
+            </g>
+        </g>
+
+        <!-- Vec View -->
+        <g transform="translate(280, 100)">
+            <rect x="0" y="0" width="40" height="40" fill="#ffebee" stroke="#c62828" stroke-width="2"/> 
+            <text x="20" y="25" font-size="12" font-weight="bold" fill="#c62828" text-anchor="middle">17</text>
+            
+            <rect x="40" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="60" y="25" font-size="12" text-anchor="middle">50</text>
+            <rect x="80" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="100" y="25" font-size="12" text-anchor="middle">36</text>
+            <rect x="120" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="140" y="25" font-size="12" text-anchor="middle">19</text>
+            <rect x="160" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="180" y="25" font-size="12" text-anchor="middle">3</text>
+            
+            <!-- Removed Slot -->
+            <rect x="200" y="0" width="40" height="40" fill="#f5f5f5" stroke="#ddd" stroke-dasharray="4"/> 
+            <text x="220" y="25" font-size="10" fill="#999" text-anchor="middle">X</text>
+        </g>
+
+        <!-- Code Block -->
+        <g transform="translate(680, 0)">
+            <rect x="0" y="0" width="220" height="200" rx="12" fill="#ffebee" stroke="#d32f2f"/>
+            <text x="10" y="24" font-size="12" font-weight="bold" fill="#c62828">Rust Code</text>
+            <line x1="0" y1="35" x2="220" y2="35" stroke="#ef9a9a" stroke-dasharray="4"/>
+            
+            <g transform="translate(10, 50)">
+                 <text x="0" y="0" font-family="monospace" font-size="10" fill="#333">let last = self.data.pop();</text>
+                 <text x="0" y="20" font-family="monospace" font-size="10" fill="#333">if let Some(item) = last {</text>
+                 <text x="10" y="40" font-family="monospace" font-size="10" fill="#333">self.data[0] = item;</text>
+                 <text x="10" y="60" font-family="monospace" font-size="10" fill="#c62828">self.sift_down(0);</text>
+                 <text x="0" y="80" font-family="monospace" font-size="10" fill="#333">}</text>
+            </g>
+        </g>
+    </g>
+
+    <!-- Arrow Down -->
+    <g transform="translate(400, 270)">
+        <line x1="0" y1="0" x2="0" y2="20" stroke="#ccc" stroke-width="2" marker-end="url(#arrow-grey)"/>
+    </g>
+
+    <!-- Step 2: Compare & Swap 1 -->
+    <g transform="translate(50, 300)">
+        <rect x="0" y="0" width="650" height="200" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+        <rect x="0" y="0" width="650" height="35" rx="12" fill="#ffebee"/>
+        <text x="20" y="24" font-size="14" font-weight="bold" fill="#c62828">Step 2: 选贤举能 (17 vs 50 vs 36)</text>
+        <text x="250" y="24" font-size="12" fill="#555">子节点中 50 最大，且 50 &gt; 17。交换位置。</text>
+
+        <!-- Tree View -->
+        <g transform="translate(30, 60)">
+             <!-- Edges -->
+            <line x1="100" y1="20" x2="60" y2="60" stroke="#ccc" stroke-width="2"/>
+            <line x1="100" y1="20" x2="140" y2="60" stroke="#ccc" stroke-width="2"/>
+            <line x1="60" y1="60" x2="40" y2="100" stroke="#ccc" stroke-width="2"/>
+            <line x1="60" y1="60" x2="80" y2="100" stroke="#ccc" stroke-width="2"/>
+
+            <!-- Nodes -->
+            <!-- Swapped Parent -->
+            <circle cx="100" cy="20" r="15" fill="#fff" stroke="#333"/> 
+            <text x="100" y="25" font-size="10" text-anchor="middle">50</text>
+            
+            <!-- Swapped Child -->
+            <circle cx="60" cy="60" r="15" fill="#ffebee" stroke="#c62828" stroke-width="2"/> 
+            <text x="60" y="65" font-size="10" font-weight="bold" fill="#c62828" text-anchor="middle">17</text>
+            
+            <circle cx="140" cy="60" r="15" fill="#fff" stroke="#333"/> <text x="140" y="65" font-size="10" text-anchor="middle">36</text>
+            
+            <circle cx="40" cy="100" r="15" fill="#fff" stroke="#333"/> <text x="40" y="105" font-size="10" text-anchor="middle">19</text>
+            <circle cx="80" cy="100" r="15" fill="#fff" stroke="#333"/> <text x="80" y="105" font-size="10" text-anchor="middle">3</text>
+            
+            <path d="M100,45 L80,55" stroke="#c62828" marker-end="url(#arrow-red)"/>
+            <text x="110" y="50" font-size="10" fill="#c62828">Down!</text>
+        </g>
+        
+        <!-- Vec View -->
+        <g transform="translate(280, 100)">
+            <rect x="0" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="20" y="25" font-size="12" text-anchor="middle">50</text>
+            <rect x="40" y="0" width="40" height="40" fill="#ffebee" stroke="#c62828" stroke-width="2"/> 
+            <text x="60" y="25" font-size="12" font-weight="bold" fill="#c62828" text-anchor="middle">17</text>
+            
+            <rect x="80" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="100" y="25" font-size="12" text-anchor="middle">36</text>
+            <rect x="120" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="140" y="25" font-size="12" text-anchor="middle">19</text>
+            <rect x="160" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="180" y="25" font-size="12" text-anchor="middle">3</text>
+
+             <!-- Swap Arc -->
+            <path d="M20,45 Q40,70 60,45" fill="none" stroke="#c62828" stroke-width="2" marker-end="url(#arrow-red)"/>
+        </g>
+
+        <!-- Code Block -->
+        <g transform="translate(680, 0)">
+            <rect x="0" y="0" width="220" height="200" rx="12" fill="#ffebee" stroke="#d32f2f"/>
+            <text x="10" y="24" font-size="12" font-weight="bold" fill="#c62828">Rust Code</text>
+            <line x1="0" y1="35" x2="220" y2="35" stroke="#ef9a9a" stroke-dasharray="4"/>
+            
+            <g transform="translate(10, 50)">
+                 <text x="0" y="0" font-family="monospace" font-size="10" fill="#333">let mut child = 2 * pos + 1;</text>
+                 <text x="0" y="20" font-family="monospace" font-size="10" fill="#333">if child + 1 &lt; len &amp;&amp;</text>
+                 <text x="15" y="40" font-family="monospace" font-size="10" fill="#333">data[child] &lt; data[child+1] {</text>
+                 <text x="10" y="60" font-family="monospace" font-size="10" fill="#666">child += 1; // Pick Right</text>
+                 <text x="0" y="80" font-family="monospace" font-size="10" fill="#333">}</text>
+                 <text x="0" y="100" font-family="monospace" font-size="10" fill="#c62828">if data[child] &gt; data[pos] {</text>
+                 <text x="10" y="120" font-family="monospace" font-size="10" fill="#c62828">swap(pos, child);</text>
+                 <text x="0" y="140" font-family="monospace" font-size="10" fill="#333">}</text>
+            </g>
+        </g>
+    </g>
+
+    <!-- Arrow Down -->
+    <g transform="translate(400, 510)">
+        <line x1="0" y1="0" x2="0" y2="20" stroke="#ccc" stroke-width="2" marker-end="url(#arrow-grey)"/>
+    </g>
+
+    <!-- Step 3: Compare & Swap 2 -->
+    <g transform="translate(50, 540)">
+        <rect x="0" y="0" width="650" height="200" rx="12" fill="#ffffff" stroke="#e0e0e0"/>
+        <rect x="0" y="0" width="650" height="35" rx="12" fill="#e8f5e9"/>
+        <text x="20" y="24" font-size="14" font-weight="bold" fill="#2e7d32">Step 3: 继续下沉 (17 vs 19 vs 3)</text>
+        <text x="250" y="24" font-size="12" fill="#555">子节点中 19 最大，且 19 &gt; 17。交换后 17 成为叶子节点，完成。</text>
+
+         <!-- Tree View -->
+        <g transform="translate(30, 60)">
+             <!-- Edges -->
+            <line x1="100" y1="20" x2="60" y2="60" stroke="#ccc" stroke-width="2"/>
+            <line x1="100" y1="20" x2="140" y2="60" stroke="#ccc" stroke-width="2"/>
+            <line x1="60" y1="60" x2="40" y2="100" stroke="#ccc" stroke-width="2"/>
+            <line x1="60" y1="60" x2="80" y2="100" stroke="#ccc" stroke-width="2"/>
+
+            <!-- Nodes -->
+            <circle cx="100" cy="20" r="15" fill="#fff" stroke="#333"/> <text x="100" y="25" font-size="10" text-anchor="middle">50</text>
+            
+            <circle cx="60" cy="60" r="15" fill="#fff" stroke="#333"/> <text x="60" y="65" font-size="10" text-anchor="middle">19</text>
+            <circle cx="140" cy="60" r="15" fill="#fff" stroke="#333"/> <text x="140" y="65" font-size="10" text-anchor="middle">36</text>
+            
+            <!-- Swapped Parent -->
+            <circle cx="40" cy="100" r="15" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/> 
+            <text x="40" y="105" font-size="10" font-weight="bold" fill="#2e7d32" text-anchor="middle">17</text>
+            
+            <circle cx="80" cy="100" r="15" fill="#fff" stroke="#333"/> <text x="80" y="105" font-size="10" text-anchor="middle">3</text>
+            
+            <text x="20" y="105" font-size="10" fill="#2e7d32">OK</text>
+        </g>
+
+        <!-- Vec View -->
+        <g transform="translate(280, 100)">
+            <rect x="0" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="20" y="25" font-size="12" text-anchor="middle">50</text>
+            <rect x="40" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="60" y="25" font-size="12" text-anchor="middle">19</text>
+            <rect x="80" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="100" y="25" font-size="12" text-anchor="middle">36</text>
+            
+            <rect x="120" y="0" width="40" height="40" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/> 
+            <text x="140" y="25" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">17</text>
+            
+            <rect x="160" y="0" width="40" height="40" fill="#fff" stroke="#333"/> <text x="180" y="25" font-size="12" text-anchor="middle">3</text>
+
+             <!-- Swap Arc -->
+            <path d="M60,45 Q100,70 140,45" fill="none" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow-green)"/>
+        </g>
+        
+        <!-- Code Block -->
+        <g transform="translate(680, 0)">
+            <rect x="0" y="0" width="220" height="200" rx="12" fill="#e8f5e9" stroke="#2e7d32"/>
+            <text x="10" y="24" font-size="12" font-weight="bold" fill="#2e7d32">Rust Code</text>
+            <line x1="0" y1="35" x2="220" y2="35" stroke="#a5d6a7" stroke-dasharray="4"/>
+            
+            <g transform="translate(10, 50)">
+                 <text x="0" y="0" font-family="monospace" font-size="10" fill="#333">// Continue Loop...</text>
+                 <text x="0" y="20" font-family="monospace" font-size="10" fill="#2e7d32">swap(pos, child);</text>
+                 <text x="0" y="40" font-family="monospace" font-size="10" fill="#333">pos = child;</text>
+            </g>
+        </g>
+    </g>
+
+    <defs>
+        <marker id="arrow-grey" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#ccc" />
+        </marker>
+        <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#c62828" />
+        </marker>
+        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#2e7d32" />
+        </marker>
+    </defs>
+</svg>
