@@ -83,13 +83,13 @@
         <text x="210" y="63" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#f57c00" text-anchor="end">0x55aa</text>
         <rect y="78" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
         <text x="10" y="96" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">bucket_mask</text>
-        <text x="210" y="96" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333" text-anchor="end">255</text>
+        <text x="210" y="96" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333" text-anchor="end">15</text>
         <rect y="111" width="220" height="28" rx="4" fill="#e1f5fe" stroke="#03a9f4" stroke-width="1.5"/>
         <text x="10" y="129" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#01579b">items</text>
         <text x="210" y="129" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#01579b" text-anchor="end">1</text>
         <rect y="144" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
         <text x="10" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">growth_left</text>
-        <text x="210" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">191</text>
+        <text x="210" y="162" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333" text-anchor="end">13</text>
         <text x="110" y="185" text-anchor="middle" font-size="8" fill="#78909c" font-style="italic">(剩余可插入数量，减至0则扩容)</text>
       </g>
     </g>
@@ -118,7 +118,7 @@
         <g transform="translate(10, 30)">
           <rect width="360" height="140" rx="6" fill="#ffffff" stroke="#03a9f4" stroke-width="1.5"/>
           <path d="M0 6 Q0 0 6 0 H354 Q360 0 360 6 V22 H0 Z" fill="#e1f5fe"/>
-          <text x="180" y="15" text-anchor="middle" font-size="10" font-weight="bold" fill="#01579b">Slot (Index: 163)</text>
+          <text x="180" y="15" text-anchor="middle" font-size="10" font-weight="bold" fill="#01579b">Slot (Index: 10)</text>
           <g transform="translate(10, 30)">
             <rect width="165" height="45" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
             <text x="5" y="15" font-size="9" fill="#78909c">Key: ptr</text>
