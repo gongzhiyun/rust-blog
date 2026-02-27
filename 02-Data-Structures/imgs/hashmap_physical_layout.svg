@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="1100" viewBox="0 0 800 1100" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<svg width="800" height="1150" viewBox="0 0 800 1150" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
   <!-- Background -->
-  <rect width="800" height="1100" fill="#f8f9fa" rx="15"/>
+  <rect width="800" height="1150" fill="#f8f9fa" rx="15"/>
   <!-- Title -->
   <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">HashMap 物理布局演进 (SwissTable)</text>
   <!-- Code Section -->
@@ -20,13 +20,13 @@
   </g>
   <!-- Step 1: Lazy Initialization -->
   <g transform="translate(50, 260)">
-    <rect x="-10" y="-15" width="290" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
+    <rect x="-10" y="-15" width="260" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
     <text x="0" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">Step 1: 惰性初始化 (Lazy Init)</text>
     <!-- Stack -->
-    <g transform="translate(0, 20)">
-      <rect width="250" height="220" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <g transform="translate(0, 50)">
+      <rect width="250" height="250" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
       <path d="M0 12 Q0 0 12 0 H238 Q250 0 250 12 V35 H0 Z" fill="#e3f2fd"/>
-      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack (栈)</text>
+      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
       <g transform="translate(15, 45)">
         <rect width="220" height="40" rx="4" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
         <text x="10" y="24" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">hash_builder</text>
@@ -35,39 +35,45 @@
         <text x="10" y="63" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">ctrl</text>
         <text x="210" y="63" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="end">EMPTY_STATIC</text>
         <rect y="78" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
-        <text x="10" y="96" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">items</text>
+        <text x="10" y="96" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">bucket_mask</text>
         <text x="210" y="96" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">0</text>
+        <rect y="111" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="129" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">items</text>
+        <text x="210" y="129" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">0</text>
+        <rect y="144" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">growth_left</text>
+        <text x="210" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">0</text>
       </g>
     </g>
     <!-- Heap -->
-    <g transform="translate(280, 20)">
-      <rect width="420" height="220" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <g transform="translate(280, 50)">
+      <rect width="420" height="250" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
       <path d="M0 12 Q0 0 12 0 H408 Q420 0 420 12 V35 H0 Z" fill="#e8f5e9"/>
-      <text x="210" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap (堆)</text>
-      <text x="210" y="110" font-family="JetBrains Mono, monospace" font-size="14" fill="#bdbdbd" text-anchor="middle">零分配 (Zero Allocation)</text>
+      <text x="210" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
+      <text x="210" y="140" font-family="JetBrains Mono, monospace" font-size="14" fill="#bdbdbd" text-anchor="middle">零分配 (Zero Allocation)</text>
     </g>
   </g>
   <!-- Step 2: First Insertion -->
-  <g transform="translate(50, 540)">
-    <rect x="-10" y="-15" width="310" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
+  <g transform="translate(50, 600)">
+    <rect x="-10" y="-15" width="255" height="25" rx="12.5" fill="#f3e5f5" opacity="0.5"/>
     <text x="0" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">Step 2: 首次插入 (触发堆分配)</text>
     
     <!-- Hash Splitting Logic (Left Corner) -->
     <g transform="translate(25, 340)">
       <rect width="210" height="55" rx="4" fill="#fff3e0" stroke="#ffb74d" stroke-width="1"/>
-      <text x="105" y="15" text-anchor="middle" font-size="9" font-weight="bold" fill="#e65100">Hash("Rust") = 0xABCD...4A</text>
+      <text x="105" y="15" text-anchor="middle" font-size="9" font-weight="bold" fill="#e65100">Hash("Rust") = 0x...004A</text>
       <line x1="10" y1="22" x2="200" y2="22" stroke="#ffb74d" stroke-width="0.5" stroke-dasharray="2 2"/>
-      <text x="55" y="35" text-anchor="middle" font-size="8" fill="#e65100">h1: 定位桶</text>
-      <text x="55" y="46" text-anchor="middle" font-size="7" fill="#f57c00" font-style="italic">(h1 &amp; mask = Index)</text>
+      <text x="55" y="35" text-anchor="middle" font-size="8" fill="#e65100">h1: 0x00 (高位)</text>
+      <text x="55" y="46" text-anchor="middle" font-size="7" fill="#f57c00" font-style="italic">(0 &amp; 15 = Index 0)</text>
       <line x1="105" y1="24" x2="105" y2="48" stroke="#ffb74d" stroke-width="1"/>
       <text x="155" y="35" text-anchor="middle" font-size="8" font-weight="bold" fill="#6a1b9a">h2: 0x4A</text>
       <text x="155" y="46" text-anchor="middle" font-size="7" fill="#9c27b0" font-style="italic">(低7位特征值)</text>
     </g>
     <!-- Stack -->
     <g transform="translate(0, 50)">
-      <rect width="250" height="230" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <rect width="250" height="250" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
       <path d="M0 12 Q0 0 12 0 H238 Q250 0 250 12 V35 H0 Z" fill="#e3f2fd"/>
-      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack (栈)</text>
+      <text x="125" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
       <g transform="translate(15, 45)">
         <rect width="220" height="40" rx="4" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
         <text x="10" y="24" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">hash_builder</text>
@@ -84,13 +90,14 @@
         <rect y="144" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
         <text x="10" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">growth_left</text>
         <text x="210" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">13</text>
+        <text x="110" y="185" text-anchor="middle" font-size="8" fill="#78909c" font-style="italic">(剩余可插入数量，减至0则扩容)</text>
       </g>
     </g>
     <!-- Heap -->
     <g transform="translate(280, 50)">
       <rect width="450" height="420" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
       <path d="M0 12 Q0 0 12 0 H438 Q450 0 450 12 V35 H0 Z" fill="#e8f5e9"/>
-      <text x="225" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap (堆) - 单次连续内存分配</text>
+      <text x="225" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
       <rect x="15" y="50" width="420" height="350" rx="8" fill="#fafafa" stroke="#4caf50" stroke-width="1.5" stroke-dasharray="6 3"/>
       <text x="25" y="68" font-size="10" font-weight="bold" fill="#2e7d32">Layout: [Data Slots] [Control Bytes]</text>
       <!-- Data Slots -->
@@ -137,10 +144,10 @@
           <rect width="360" height="50" rx="4" fill="#ffffff" stroke="#ab47bc" stroke-width="1" stroke-dasharray="4 2"/>
           <text x="180" y="18" text-anchor="middle" font-size="9" fill="#9c27b0" font-style="italic">SIMD Group (16 Bytes 并行匹配)</text>
           <g transform="translate(15, 25)">
-            <rect width="30" height="20" fill="#ffffff" stroke="#e0e0e0"/>
-            <text x="15" y="14" text-anchor="middle" font-size="9" fill="#bdbdbd">FF</text>
-            <rect x="30" width="30" height="20" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-            <text x="45" y="14" text-anchor="middle" font-size="9" fill="#1b5e20" font-weight="bold">4A</text>
+            <rect width="30" height="20" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+            <text x="15" y="14" text-anchor="middle" font-size="9" fill="#1b5e20" font-weight="bold">4A</text>
+            <rect x="30" width="30" height="20" fill="#ffffff" stroke="#e0e0e0"/>
+            <text x="45" y="14" text-anchor="middle" font-size="9" fill="#bdbdbd">FF</text>
             <rect x="60" width="180" height="20" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="2 1"/>
             <text x="146" y="14" text-anchor="middle" font-size="9" fill="#bdbdbd">SIMD 指令一键匹配 0x4A</text>
           </g>
@@ -155,12 +162,12 @@
       </g>
     </g>
     <!-- Flow line from Stack to Hash Logic to Heap (Top Layer) -->
-     <circle cx="125" cy="280" r="3" fill="#9c27b0" />
-      <path d="M125,280 L125,335 L125,340" fill="none" stroke="#9c27b0" stroke-width="1.5" stroke-dasharray="4 2" />
+     <circle cx="125" cy="300" r="3" fill="#9c27b0" />
+      <path d="M125,300 L125,335 L125,340" fill="none" stroke="#9c27b0" stroke-width="1.5" stroke-dasharray="4 2" />
        <path d="M130,395 C130,480 280,380 320,380 L325,380" fill="none" stroke="#9c27b0" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrow-purple)"/>
   </g>
   <!-- Footer Note -->
-  <g transform="translate(50, 1040)">
+  <g transform="translate(50, 1100)">
     <rect width="700" height="30" rx="8" fill="#fff9c4" opacity="0.3"/>
     <text x="350" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#455a64" text-anchor="middle">💡 SwissTable 布局：[Data Slots][Control Bytes]，ctrl 指向元数据起始处，通过负偏移访问数据。</text>
   </g>
