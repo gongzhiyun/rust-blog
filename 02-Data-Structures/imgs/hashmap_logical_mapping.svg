@@ -1,71 +1,179 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-    <!-- Background -->
-    <rect x="0" y="0" width="800" height="450" fill="#f8f9fa"/>
-
-    <!-- Code Area -->
-    <g transform="translate(20, 20)">
-        <rect x="0" y="0" width="760" height="130" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
-        <path d="M 0 35 Q 0 0 12 0 L 748 0 Q 760 0 760 35 L 760 35 L 0 35 Z" fill="#e1bee7"/>
-        <text x="20" y="24" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
-        <text x="20" y="60" font-family="JetBrains Mono, monospace" font-size="13" fill="#333">
-            <tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() {
-        </text>
-        <text x="20" y="80" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" xml:space="preserve">    <tspan fill="#6a1b9a">let</tspan> map: <tspan fill="#1565c0">HashMap</tspan>&lt;&tspan fill="#1565c0">str</tspan>, <tspan fill="#1565c0">i32</tspan>&gt; = <tspan fill="#1565c0">HashMap</tspan>::<tspan fill="#2e7d32">new</tspan>();</text>
-        <text x="20" y="100" font-family="JetBrains Mono, monospace" font-size="13" fill="#333" xml:space="preserve">    <tspan fill="#6a1b9a">let</tspan> hash = map.<tspan fill="#2e7d32">hasher</tspan>().<tspan fill="#2e7d32">hash_one</tspan>(<tspan fill="#f57c00">"Rust"</tspan>); <tspan fill="#78909c">// u64</tspan></text>
-        <text x="20" y="120" font-family="JetBrains Mono, monospace" font-size="13" fill="#333">
-            }
-        </text>
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="800" fill="#f8f9fa" rx="15"/>
+  <!-- Title -->
+  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">HashMap 哈希寻址与匹配逻辑</text>
+  <!-- Code Section -->
+  <g transform="translate(50, 80)">
+    <rect width="700" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#f3e5f5"/>
+    <text x="350" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">演示代码</text>
+    <g transform="translate(30, 55)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan><tspan fill="#333">() {</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#333">hash = map.</tspan><tspan fill="#2e7d32">hasher</tspan><tspan fill="#333">().</tspan><tspan fill="#2e7d32">hash_one</tspan><tspan fill="#333">(</tspan><tspan fill="#f57c00">"Hello"</tspan><tspan fill="#333">); </tspan><tspan fill="#78909c">// 0xB44B29130F6583BA</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#333">h2 = (hash &gt;&gt; </tspan><tspan fill="#f57c00">57</tspan><tspan fill="#333">) </tspan><tspan fill="#6a1b9a">as</tspan> <tspan fill="#1565c0">u8</tspan><tspan fill="#333">; </tspan><tspan fill="#78909c">// 0x5A (特征值)</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#333">h1 = hash; </tspan><tspan fill="#78909c">// 0xB44B29130F6583BA (定位 Group)</tspan></tspan>
+        <tspan x="0" dy="1.4em"><tspan fill="#333">}</tspan></tspan>
+      </text>
     </g>
-
-    <!-- Hash Logic -->
-    <g transform="translate(100, 190)">
-        <text x="300" y="-20" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#333">64-bit Hash Value</text>
-        
-        <!-- 64-bit Rect -->
-        <rect x="0" y="0" width="600" height="60" rx="4" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
-        
-        <!-- H2 Section (Top 7 bits) -->
-        <rect x="0" y="0" width="100" height="60" rx="4" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
-        <text x="50" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">H2</text>
-        <text x="50" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Top 7 bits</text>
-        
-        <!-- H1 Section (Rest) -->
-        <rect x="100" y="0" width="500" height="60" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
-        <text x="350" y="35" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">H1</text>
-        <text x="350" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0">Index (57 bits)</text>
-
-        <!-- Arrows -->
-        <!-- H2 to Control Byte -->
-        <path d="M 50 60 L 50 150 L 150 150" fill="none" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow-green)"/>
-        
-        <!-- H1 to Index -->
-        <path d="M 350 60 L 350 150 L 450 150" fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrow-blue)"/>
-    </g>
-
-    <!-- Target Mapping -->
-    <g transform="translate(150, 310)">
-        <!-- Control Byte Matching -->
-        <g transform="translate(0, 0)">
-            <rect x="0" y="0" width="120" height="80" rx="8" fill="#f1f8e9" stroke="#4caf50"/>
-            <text x="60" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32">Control Tag</text>
-            <text x="60" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">Match 0x.. in Group</text>
+  </g>
+  <!-- Hash Decomposition (Compressed) -->
+  <g transform="translate(100, 250)">
+    <rect x="0" y="0" width="600" height="40" rx="8" fill="#ffffff" stroke="#e0e0e0" stroke-width="1.5"/>
+    <rect x="0" y="0" width="100" height="40" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+    <text x="50" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32">H2: 0x5A</text>
+    <rect x="100" y="0" width="500" height="40" rx="8" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <text x="350" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1565c0">H1: 0x...83BA</text>
+  </g>
+  <!-- Main Flow (Optimized Layout) -->
+  <g transform="translate(50, 320)">
+    <!-- Stage 1: Indexing -->
+    <g transform="translate(0, 0)">
+      <rect x="20" y="0" width="660" height="170" rx="12" fill="#ffffff" stroke="#1565c0" stroke-width="1.2"/>
+      <rect x="20" y="0" width="660" height="28" rx="12" fill="#e3f2fd"/>
+      <text x="350" y="19" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1565c0">Step 1: 定位控制字节组 (Indexing Group)</text>
+      <!-- Calculation -->
+      <g transform="translate(50, 45)">
+        <text x="0" y="0" font-size="11" font-weight="bold" fill="#333">逻辑寻址公式</text>
+        <g transform="translate(0, 15)">
+          <rect width="200" height="85" rx="8" fill="#fafafa" stroke="#e0e0e0"/>
+          <text x="15" y="25" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0">H1:         ... 1011 1010</text>
+          <text x="15" y="42" font-family="JetBrains Mono, monospace" font-size="10" fill="#333">Mask:       ... 0000 1111</text>
+          <line x1="15" y1="50" x2="185" y2="50" stroke="#bdbdbd" stroke-width="1"/>
+          <text x="15" y="68" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32">Index:               1010</text>
+          <text x="167" y="68" font-size="10" fill="#2e7d32">(= 10)</text>
         </g>
-
-        <!-- Indexing -->
-        <g transform="translate(300, 0)">
-            <rect x="0" y="0" width="120" height="80" rx="8" fill="#e3f2fd" stroke="#1e88e5"/>
-            <text x="60" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0">Group Index</text>
-            <text x="60" y="50" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">Select Group</text>
+      </g>
+      <!-- Memory View (Linear array style) -->
+      <g transform="translate(280, 45)">
+        <text x="0" y="0" font-size="11" font-weight="bold" fill="#333">控制字节区 (Control Bytes)</text>
+        <g transform="translate(0, 15)">
+          <rect width="360" height="85" fill="#fafafa" stroke="#e0e0e0" rx="8"/>
+          <!-- Group blocks -->
+          <g transform="translate(15, 30)">
+            <!-- Group 0..8 -->
+            <rect width="60" height="30" fill="#ffffff" stroke="#e0e0e0" rx="2"/>
+            <text x="30" y="19" text-anchor="middle" font-size="9" fill="#9e9e9e">G 0..8</text>
+            <!-- Group 9 -->
+            <rect x="65" width="40" height="30" fill="#ffffff" stroke="#e0e0e0" rx="2"/>
+            <text x="85" y="19" text-anchor="middle" font-size="9" fill="#9e9e9e">G 9</text>
+            <!-- Target Group 10 -->
+            <rect x="110" width="110" height="30" fill="#e3f2fd" stroke="#1565c0" stroke-width="2" rx="4"/>
+            <text x="165" y="19" text-anchor="middle" font-size="10" font-weight="bold" fill="#1565c0">Target Group [10]</text>
+            <!-- Group 11 -->
+            <rect x="225" width="40" height="30" fill="#ffffff" stroke="#e0e0e0" rx="2"/>
+            <text x="245" y="19" text-anchor="middle" font-size="9" fill="#9e9e9e">G 11</text>
+            <!-- Group 12.. -->
+            <rect x="270" width="60" height="30" fill="#ffffff" stroke="#e0e0e0" rx="2"/>
+            <text x="300" y="19" text-anchor="middle" font-size="9" fill="#9e9e9e">G 12..</text>
+          </g>
+          <text x="180" y="75" text-anchor="middle" font-size="9" fill="#78909c">内存地址连续分布，每组 16 字节</text>
         </g>
+      </g>
     </g>
+    <!-- Stage 2: Matching -->
+    <g transform="translate(0, 190)">
+      <rect x="20" y="0" width="660" height="230" rx="12" fill="#ffffff" stroke="#2e7d32" stroke-width="1.2"/>
+      <rect x="20" y="0" width="660" height="28" rx="12" fill="#e8f5e9"/>
+      <text x="350" y="19" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32">Step 2: 组内并行匹配 (SIMD Match)</text>
+      
+      <!-- SIMD Engine Component -->
+      <g transform="translate(40, 45)">
+        <rect width="290" height="170" rx="8" fill="#fafafa" stroke="#e0e0e0"/>
+        <path d="M0 8 Q0 0 8 0 H282 Q290 0 290 8 V25 H0 Z" fill="#c8e6c9" opacity="0.3"/>
+        <text x="145" y="17" text-anchor="middle" font-size="10" font-weight="bold" fill="#1b5e20">SIMD Comparison Engine</text>
+        
+        <g transform="translate(15, 40)">
+          <!-- Broadcast H2 -->
+          <text x="0" y="0" font-size="9" fill="#78909c">H2 特征值广播:</text>
+          <g transform="translate(85, -12)">
+             <rect width="180" height="18" fill="#e8f5e9" stroke="#2e7d32" rx="2" stroke-dasharray="2 1"/>
+             <text x="90" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="bold" fill="#2e7d32">0x5A 0x5A 0x5A ... (16x)</text>
+          </g>
+          
+          <!-- Parallel Comparison Arrows -->
+          <g stroke="#2e7d32" stroke-width="1" opacity="0.6">
+            <path d="M 16 10 L 16 25" marker-end="url(#arrow-green-small)"/>
+            <path d="M 46 10 L 46 25" marker-end="url(#arrow-green-small)"/>
+            <path d="M 76 10 L 76 25" marker-end="url(#arrow-green-small)"/>
+            <path d="M 106 10 L 106 25" marker-end="url(#arrow-green-small)"/>
+            <path d="M 244 10 L 244 25" marker-end="url(#arrow-green-small)"/>
+          </g>
 
-    <defs>
-        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#2e7d32" />
-        </marker>
-        <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#1565c0" />
-        </marker>
-    </defs>
+          <!-- Group Bytes (Slots) -->
+          <g transform="translate(0, 30)">
+            <rect width="260" height="25" fill="#ffffff" stroke="#e0e0e0" rx="2"/>
+            <!-- Slot 0 (Occupied) -->
+            <rect x="2" y="2" width="28" height="21" fill="#eeeeee" stroke="#bdbdbd" rx="1"/>
+            <text x="16" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#757575">1A</text>
+            <!-- Slot 1 (Occupied) -->
+            <rect x="32" y="2" width="28" height="21" fill="#eeeeee" stroke="#bdbdbd" rx="1"/>
+            <text x="46" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#757575">2B</text>
+            <!-- Slot 2 (Occupied) -->
+            <rect x="62" y="2" width="28" height="21" fill="#eeeeee" stroke="#bdbdbd" rx="1"/>
+            <text x="76" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#757575">3C</text>
+            <!-- Slot 3 (Match) -->
+            <rect x="92" y="2" width="28" height="21" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5" rx="1"/>
+            <text x="106" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="bold" fill="#1b5e20">5A</text>
+            <!-- Ellipsis -->
+            <text x="170" y="16" text-anchor="middle" font-size="8" fill="#bdbdbd">...</text>
+            <!-- Slot 15 -->
+            <rect x="230" y="2" width="28" height="21" fill="#f5f5f5" stroke="#e0e0e0" rx="1"/>
+            <text x="244" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#9e9e9e">7F</text>
+            
+            <text x="130" y="36" text-anchor="middle" font-size="8" fill="#78909c">Control Group [10] (16 字节组)</text>
+          </g>
+
+          <!-- Result Bitmask (Register Style) -->
+          <g transform="translate(0, 95)">
+            <text x="0" y="-5" font-size="9" fill="#78909c">匹配位掩码 (Bitmask):</text>
+            <rect width="260" height="18" rx="2" fill="#fff3e0" stroke="#ff9800"/>
+            <!-- Bit display -->
+            <text x="130" y="13" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#e65100">0000 0000 0000 1000</text>
+          </g>
+        </g>
+      </g>
+      
+      <!-- Connecting Flow -->
+      <g transform="translate(335, 130)">
+        <path d="M 0 0 L 50 0" fill="none" stroke="#ff9800" stroke-width="2" marker-end="url(#arrow-orange)"/>
+        <text x="25" y="-8" text-anchor="middle" font-size="9" font-weight="bold" fill="#f57c00">tzcnt</text>
+      </g>
+      
+      <!-- Final Mapping Component -->
+      <g transform="translate(390, 45)">
+        <rect width="260" height="170" rx="8" fill="#ffffff" stroke="#ff9800" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <path d="M0 8 Q0 0 8 0 H252 Q260 0 260 8 V25 H0 Z" fill="#fff3e0" opacity="0.5"/>
+        <text x="130" y="17" text-anchor="middle" font-size="10" font-weight="bold" fill="#e65100">最终数据位置 (Slot Resolution)</text>
+        
+        <g transform="translate(20, 45)">
+          <rect width="220" height="45" rx="6" fill="#fff8e1" stroke="#ffb74d" stroke-width="1.5"/>
+          <text x="110" y="20" text-anchor="middle" font-size="9" fill="#78909c">Data Slot Index</text>
+          <text x="110" y="38" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#f57c00">163</text>
+          
+          <g transform="translate(0, 60)">
+            <text x="110" y="15" text-anchor="middle" font-size="9" font-weight="bold" fill="#333">计算公式:</text>
+            <rect x="10" y="20" width="200" height="40" rx="4" fill="#f5f5f5"/>
+            <text x="110" y="37" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#455a64">(Group_Idx * 16) + Offset</text>
+            <text x="110" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#78909c">(10 * 16) + 3 = 163</text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+  <!-- Footer Note -->
+  <g transform="translate(50, 750)">
+    <rect width="700" height="40" rx="8" fill="#fff9c4" opacity="0.3"/>
+    <text x="350" y="25" font-family="JetBrains Mono, monospace" font-size="11" fill="#455a64" text-anchor="middle">💡 总结：H1 就像邮编定位“小区”(Group)，H2 就像门牌号在小区内通过“摄像头”(SIMD) 瞬间找到你。</text>
+  </g>
+  <defs>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ff9800" />
+    </marker>
+    <marker id="arrow-green-small" markerWidth="8" markerHeight="8" refX="5" refY="2.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,5 L5,2.5 z" fill="#2e7d32" />
+    </marker>
+  </defs>
 </svg>

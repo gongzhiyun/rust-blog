@@ -3,7 +3,7 @@
   <!-- Background -->
   <rect width="800" height="1150" fill="#f8f9fa" rx="15"/>
   <!-- Title -->
-  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">HashMap 物理布局演进 (SwissTable)</text>
+  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">HashMap 物理布局演进</text>
   <!-- Code Section -->
   <g transform="translate(50, 80)">
     <rect width="700" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
@@ -13,7 +13,7 @@
       <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
         <tspan x="0" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan><tspan fill="#333">() {</tspan></tspan>
         <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#6a1b9a">mut</tspan> <tspan fill="#333">map = </tspan><tspan fill="#1565c0">HashMap</tspan><tspan fill="#333">::</tspan><tspan fill="#2e7d32">new</tspan><tspan fill="#333">(); </tspan><tspan fill="#78909c">// Step 1</tspan></tspan>
-        <tspan x="20" dy="1.4em"><tspan fill="#333">map.</tspan><tspan fill="#2e7d32">insert</tspan><tspan fill="#333">(</tspan><tspan fill="#f57c00">"Rust"</tspan><tspan fill="#333">, </tspan><tspan fill="#f57c00">2026</tspan><tspan fill="#333">);   </tspan><tspan fill="#78909c">// Step 2</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#333">map.</tspan><tspan fill="#2e7d32">insert</tspan><tspan fill="#333">(</tspan><tspan fill="#f57c00">"Hello"</tspan><tspan fill="#333">, </tspan><tspan fill="#f57c00">2026</tspan><tspan fill="#333">);   </tspan><tspan fill="#78909c">// Step 2</tspan></tspan>
         <tspan x="0" dy="1.4em"><tspan fill="#333">}</tspan></tspan>
       </text>
     </g>
@@ -61,12 +61,12 @@
     <!-- Hash Splitting Logic (Left Corner) -->
     <g transform="translate(25, 340)">
       <rect width="210" height="55" rx="4" fill="#fff3e0" stroke="#ffb74d" stroke-width="1"/>
-      <text x="105" y="15" text-anchor="middle" font-size="9" font-weight="bold" fill="#e65100">Hash("Rust") = 0x...004A</text>
+      <text x="105" y="15" text-anchor="middle" font-size="9" font-weight="bold" fill="#e65100">Hash("Hello") = 0x...83BA</text>
       <line x1="10" y1="22" x2="200" y2="22" stroke="#ffb74d" stroke-width="0.5" stroke-dasharray="2 2"/>
-      <text x="55" y="35" text-anchor="middle" font-size="8" fill="#e65100">h1: 0x00 (高位)</text>
-      <text x="55" y="46" text-anchor="middle" font-size="7" fill="#f57c00" font-style="italic">(0 &amp; 15 = Index 0)</text>
+      <text x="55" y="35" text-anchor="middle" font-size="8" fill="#e65100">h1: 0x...BA (高位)</text>
+      <text x="55" y="46" text-anchor="middle" font-size="7" fill="#f57c00" font-style="italic">(0xBA &amp; 15 = Index 10)</text>
       <line x1="105" y1="24" x2="105" y2="48" stroke="#ffb74d" stroke-width="1"/>
-      <text x="155" y="35" text-anchor="middle" font-size="8" font-weight="bold" fill="#6a1b9a">h2: 0x4A</text>
+      <text x="155" y="35" text-anchor="middle" font-size="8" font-weight="bold" fill="#6a1b9a">h2: 0x5A</text>
       <text x="155" y="46" text-anchor="middle" font-size="7" fill="#9c27b0" font-style="italic">(低7位特征值)</text>
     </g>
     <!-- Stack -->
@@ -83,13 +83,13 @@
         <text x="210" y="63" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#f57c00" text-anchor="end">0x55aa</text>
         <rect y="78" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
         <text x="10" y="96" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">bucket_mask</text>
-        <text x="210" y="96" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333" text-anchor="end">15</text>
+        <text x="210" y="96" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#333" text-anchor="end">255</text>
         <rect y="111" width="220" height="28" rx="4" fill="#e1f5fe" stroke="#03a9f4" stroke-width="1.5"/>
         <text x="10" y="129" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#01579b">items</text>
         <text x="210" y="129" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#01579b" text-anchor="end">1</text>
         <rect y="144" width="220" height="28" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
         <text x="10" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#546e7a">growth_left</text>
-        <text x="210" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">13</text>
+        <text x="210" y="162" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="end">191</text>
         <text x="110" y="185" text-anchor="middle" font-size="8" fill="#78909c" font-style="italic">(剩余可插入数量，减至0则扩容)</text>
       </g>
     </g>
@@ -118,14 +118,14 @@
         <g transform="translate(10, 30)">
           <rect width="360" height="140" rx="6" fill="#ffffff" stroke="#03a9f4" stroke-width="1.5"/>
           <path d="M0 6 Q0 0 6 0 H354 Q360 0 360 6 V22 H0 Z" fill="#e1f5fe"/>
-          <text x="180" y="15" text-anchor="middle" font-size="10" font-weight="bold" fill="#01579b">Slot (Index: 0)</text>
+          <text x="180" y="15" text-anchor="middle" font-size="10" font-weight="bold" fill="#01579b">Slot (Index: 163)</text>
           <g transform="translate(10, 30)">
             <rect width="165" height="45" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
             <text x="5" y="15" font-size="9" fill="#78909c">Key: ptr</text>
             <text x="160" y="32" text-anchor="end" font-size="11" font-weight="bold" fill="#f57c00">0x8000</text>
             <rect x="175" width="165" height="45" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
             <text x="180" y="15" font-size="9" fill="#78909c">Key: len</text>
-            <text x="335" y="32" text-anchor="end" font-size="11" font-weight="bold" fill="#333">4</text>
+            <text x="335" y="32" text-anchor="end" font-size="11" font-weight="bold" fill="#333">5</text>
           </g>
           <g transform="translate(10, 85)">
             <rect width="165" height="45" rx="4" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1"/>
@@ -142,23 +142,21 @@
         <text x="10" y="18" font-size="10" font-weight="bold" fill="#6a1b9a">Control Bytes (基准地址 / 元数据区)</text>
         <g transform="translate(10, 30)">
           <rect width="360" height="50" rx="4" fill="#ffffff" stroke="#ab47bc" stroke-width="1" stroke-dasharray="4 2"/>
-          <text x="180" y="18" text-anchor="middle" font-size="9" fill="#9c27b0" font-style="italic">SIMD Group (16 Bytes 并行匹配)</text>
+          <text x="180" y="18" text-anchor="middle" font-size="9" fill="#9c27b0" font-style="italic">SIMD Group [10] (16 Bytes 并行匹配)</text>
           <g transform="translate(15, 25)">
-            <rect width="30" height="20" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
-            <text x="15" y="14" text-anchor="middle" font-size="9" fill="#1b5e20" font-weight="bold">4A</text>
-            <rect x="30" width="30" height="20" fill="#ffffff" stroke="#e0e0e0"/>
-            <text x="45" y="14" text-anchor="middle" font-size="9" fill="#bdbdbd">FF</text>
-            <rect x="60" width="180" height="20" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="2 1"/>
-            <text x="146" y="14" text-anchor="middle" font-size="9" fill="#bdbdbd">SIMD 指令一键匹配 0x4A</text>
+            <rect width="30" height="20" fill="#eeeeee" stroke="#bdbdbd"/>
+            <text x="15" y="14" text-anchor="middle" font-size="9" fill="#757575">1A</text>
+            <rect x="30" width="30" height="20" fill="#eeeeee" stroke="#bdbdbd"/>
+            <text x="45" y="14" text-anchor="middle" font-size="9" fill="#757575">2B</text>
+            <rect x="60" width="30" height="20" fill="#eeeeee" stroke="#bdbdbd"/>
+            <text x="75" y="14" text-anchor="middle" font-size="9" fill="#757575">3C</text>
+            <rect x="90" width="30" height="20" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+            <text x="105" y="14" text-anchor="middle" font-size="9" fill="#1b5e20" font-weight="bold">5A</text>
+            <rect x="120" width="210" height="20" fill="#ffffff" stroke="#e0e0e0" stroke-dasharray="2 1"/>
+            <text x="225" y="14" text-anchor="middle" font-size="9" fill="#bdbdbd">SIMD 一键匹配 0x5A</text>
           </g>
         </g>
         <text x="10" y="100" font-size="10" font-weight="bold" fill="#f57c00">ctrl → 0x55aa (物理起始点)</text>
-        <g transform="translate(145, 85)">
-          <rect width="80" height="20" rx="4" fill="#f3e5f5" stroke="#ab47bc" stroke-width="0.5"/>
-          <text x="40" y="13" text-anchor="middle" font-size="8" fill="#6a1b9a">4A = h2("Rust")</text>
-        </g>
-        <rect x="230" y="85" width="140" height="20" rx="4" fill="#fff3e0" stroke="#ffb74d" stroke-width="0.5"/>
-        <text x="300" y="98" text-anchor="middle" font-size="8" fill="#e65100">寻址逻辑: Slot = ctrl - (Index+1)*24B</text>
       </g>
     </g>
     <!-- Flow line from Stack to Hash Logic to Heap (Top Layer) -->
