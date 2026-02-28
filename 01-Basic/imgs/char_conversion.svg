@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="350" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="350" fill="#f8f9fa" rx="15"/>
+<g transform="translate(40, 40)">
+<rect width="720" height="270" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+<rect width="720" height="35" rx="12" fill="#fff3e0" stroke="#ffb74d" stroke-width="1"/>
+<text x="360" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#e65100">类型转换与安全性：char ↔ u32</text>
+<g transform="translate(40, 60)">
+<text x="0" y="20" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">1. char -> u32 (始终安全, O(1))</text>
+<rect x="0" y="35" width="280" height="50" rx="8" fill="#e8f5e9" stroke="#4caf50"/>
+<text x="140" y="65" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#2e7d32">let u = 'A' as u32; // 0x41</text>
+<path d="M300 60 L400 60" stroke="#4caf50" stroke-width="2" marker-end="url(#green_arrow)"/>
+<text x="420" y="65" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">编译器直接解释 4 字节，零成本</text>
+</g>
+<g transform="translate(40, 160)">
+<text x="0" y="20" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">2. u32 -> char (存在失败可能, O(1) + 校验)</text>
+<rect x="0" y="35" width="280" height="50" rx="8" fill="#ffebee" stroke="#ef5350"/>
+<text x="140" y="65" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#c62828">char::from_u32(val)</text>
+<path d="M300 60 L400 60" stroke="#ef5350" stroke-width="2" marker-end="url(#red_arrow)"/>
+<g transform="translate(420, 45)">
+<text x="0" y="15" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">返回 Option&lt;char&gt;:</text>
+<text x="0" y="35" font-family="JetBrains Mono, monospace" font-size="11" fill="#c62828">- Some(c): 合法 Unicode</text>
+<text x="0" y="55" font-family="JetBrains Mono, monospace" font-size="11" fill="#c62828">- None: 超出范围或处于代理对区间</text>
+</g>
+</g>
+</g>
+<defs>
+<marker id="green_arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#4caf50" />
+</marker>
+<marker id="red_arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+<path d="M0,0 L0,6 L9,3 z" fill="#ef5350" />
+</marker>
+</defs>
+</svg>

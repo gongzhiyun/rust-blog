@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="650" viewBox="0 0 800 650" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="650" fill="#f8f9fa" rx="15"/>
+  
+  <!-- Title -->
+  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">Rust vs C/C++ char 内存布局对比</text>
+
+  <!-- Code Section -->
+  <g transform="translate(50, 80)">
+    <rect width="700" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#f3e5f5"/>
+    
+    <!-- Symmetrical Labels -->
+    <text x="175" y="22" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#c62828" text-anchor="middle">C / C++ (ASCII)</text>
+    <text x="525" y="22" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1565c0" text-anchor="middle">Rust (Unicode)</text>
+    
+    <!-- C Code -->
+    <g transform="translate(45, 65)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">int</tspan> <tspan fill="#2e7d32">main</tspan><tspan fill="#333">() {</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">char</tspan> <tspan fill="#333">c = </tspan><tspan fill="#2e7d32">'A'</tspan><tspan fill="#333">;</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#78909c">// 1 byte</tspan></tspan>
+        <tspan x="0" dy="1.4em"><tspan fill="#333">}</tspan></tspan>
+      </text>
+    </g>
+
+    <!-- Rust Code -->
+    <g transform="translate(395, 65)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan><tspan fill="#333">() {</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#333">c: </tspan><tspan fill="#1565c0">char</tspan><tspan fill="#333"> = </tspan><tspan fill="#2e7d32">'A'</tspan><tspan fill="#333">;</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#78909c">// 4 bytes</tspan></tspan>
+        <tspan x="0" dy="1.4em"><tspan fill="#333">}</tspan></tspan>
+      </text>
+    </g>
+    
+    <!-- Vertical Divider -->
+    <line x1="350" y1="0" x2="350" y2="150" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+  </g>
+
+  <!-- C Comparison Section -->
+  <g transform="translate(50, 270)">
+    <rect x="87.5" y="-15" width="145" height="25" rx="12.5" fill="#ffebee" opacity="0.5"/>
+    <text x="160" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#c62828" text-anchor="middle">C / C++ 内存布局</text>
+    
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="320" height="260" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H308 Q320 0 320 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="160" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      
+      <!-- Stack Content -->
+      <g transform="translate(20, 60)">
+        <!-- Byte Box -->
+        <rect width="280" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">c [0]</text>
+        <text x="270" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#c62828" text-anchor="end">0x41</text>
+        
+        <text x="140" y="55" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">1 Byte (Total)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Rust Comparison Section -->
+  <g transform="translate(430, 270)">
+    <rect x="102.5" y="-15" width="115" height="25" rx="12.5" fill="#e3f2fd" opacity="0.5"/>
+    <text x="160" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Rust 内存布局</text>
+    
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="320" height="260" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H308 Q320 0 320 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="160" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      
+      <!-- Stack Content -->
+      <g transform="translate(20, 60)">
+        <!-- 4 Byte segments vertical -->
+        <rect width="280" height="32" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5"/>
+        <text x="10" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">c [0]</text>
+        <text x="270" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#f57c00" text-anchor="end">0x41</text>
+        
+        <rect y="36" width="280" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="56" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">c [1]</text>
+        <text x="270" y="56" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="end">0x00</text>
+        
+        <rect y="72" width="280" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="92" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">c [2]</text>
+        <text x="270" y="92" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="end">0x00</text>
+        
+        <rect y="108" width="280" height="32" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="10" y="128" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">c [3]</text>
+        <text x="270" y="128" font-family="JetBrains Mono, monospace" font-size="12" fill="#78909c" text-anchor="end">0x00</text>
+        
+        <text x="140" y="165" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c">4 Bytes (Total)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Tip -->
+  <g transform="translate(50, 580)">
+    <rect width="700" height="40" rx="8" fill="#fff9c4" opacity="0.3"/>
+    <text x="350" y="25" font-family="JetBrains Mono, monospace" font-size="13" fill="#455a64" text-anchor="middle">💡 Rust 的 char 是固定 4 字节的 Unicode 标量值，而 C 的 char 仅是 1 字节的整数。</text>
+  </g>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orientation="auto">
+      <path d="M0,0 L0,10 L9,5 Z" fill="#9e9e9e" />
+    </marker>
+  </defs>
+</svg>

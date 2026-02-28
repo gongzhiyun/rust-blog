@@ -15,6 +15,7 @@
 ### 01 基础核心 (Basic Core)
 - **[所有权 (Ownership)](./01-Basic/Ownership.md)** - 极简内存安全指南
 - **[生命周期 (Lifetime)](./01-Basic/Lifetime.md)** - 引用能活多久的检查
+- **[字符类型 (Char)](./01-Basic/Char.md)** - 图解 Rust 字符串与文本：字符（char）
 
 ### 02 数据结构 (Data Structures)
 - **[结构体 (Struct)](./02-Data-Structures/Struct.md)** - 内存布局与对齐
@@ -22,6 +23,9 @@
 - **[字符串 (String)](./02-Data-Structures/String.md)** - 彻底搞懂 String 与 &str
 - **[向量 (Vec)](./02-Data-Structures/Vec.md)** - 动态数组的扩容机制
 - **[双端队列 (VecDeque)](./02-Data-Structures/VecDeque.md)** - 跨越物理边界的环形缓冲区
+- **[B 树映射 (BTreeMap)](./02-Data-Structures/BTreeMap.md)** - 缓存友好的有序映射
+- **[哈希映射 (HashMap)](./02-Data-Structures/HashMap.md)** - 基于 Swiss Table 的极致性能
+- **[二叉堆 (BinaryHeap)](./02-Data-Structures/BinaryHeap.md)** - 隐藏在 Vec 里的堆
 
 ### 03 智能指针 (Smart Pointers)
 - **[智能指针 Box](./03-Smart-Pointers/Box.md)** - 堆内存分配与尺寸适配机制
