@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="560" viewBox="0 0 800 560" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="560" fill="#f8f9fa" rx="15"/>
+  <!-- Title -->
+  <text x="400" y="40" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">Rust char 进制转换：数值化处理</text>
+  <!-- Code Section -->
+  <g transform="translate(50, 70)">
+    <rect width="700" height="170" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+    <rect width="700" height="35" rx="12" fill="#f3e5f5" />
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#e1bee7"/>
+    <text x="20" y="23" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
+    <text x="30" y="65" font-family="JetBrains Mono, monospace" font-size="13" fill="#333">
+      <tspan x="30" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() {</tspan>
+      <tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> c = <tspan fill="#f57c00">'a'</tspan>;</tspan>
+      <tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> val = c.<tspan fill="#2e7d32">to_digit</tspan>(<tspan fill="#f57c00">16</tspan>); <tspan fill="#78909c">// Some(10)</tspan></tspan>
+      <tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> back = <tspan fill="#1565c0">char</tspan>::<tspan fill="#2e7d32">from_digit</tspan>(<tspan fill="#f57c00">10</tspan>, <tspan fill="#f57c00">16</tspan>); <tspan fill="#78909c">// Some('a')</tspan></tspan>
+      <tspan x="30" dy="1.5em">}</tspan>
+    </text>
+  </g>
+  <!-- Logic Diagram Section -->
+  <g transform="translate(50, 260)">
+    <!-- Radix Context Box -->
+    <rect width="700" height="260" rx="15" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="6 4"/>
+    <text x="350" y="25" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#78909c" text-anchor="middle">进制上下文 (Radix: 2 - 36)</text>
+    <!-- Left: Char side -->
+    <g transform="translate(50, 60)">
+      <rect width="180" height="150" rx="12" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+      <text x="90" y="30" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#1565c0" text-anchor="middle">字符 (char)</text>
+      <!-- Example bubbles -->
+      <circle cx="90" cy="90" r="40" fill="#ffffff" stroke="#1565c0" stroke-width="1"/>
+      <text x="90" y="100" font-family="JetBrains Mono, monospace" font-size="32" font-weight="bold" fill="#1565c0" text-anchor="middle">'a'</text>
+    </g>
+    <!-- Right: u32 side -->
+    <g transform="translate(470, 60)">
+      <rect width="180" height="150" rx="12" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+      <text x="90" y="30" font-family="JetBrains Mono, monospace" font-size="16" font-weight="bold" fill="#2e7d32" text-anchor="middle">数值 (u32)</text>
+      <!-- Example bubbles -->
+      <circle cx="90" cy="90" r="40" fill="#ffffff" stroke="#2e7d32" stroke-width="1"/>
+      <text x="90" y="100" font-family="JetBrains Mono, monospace" font-size="32" font-weight="bold" fill="#2e7d32" text-anchor="middle">10</text>
+    </g>
+    <!-- Center: Arrows -->
+    <!-- to_digit -->
+    <path d="M240 100 L460 100" stroke="#ff9800" stroke-width="3" marker-end="url(#arrow-orange)"/>
+    <text x="350" y="90" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#f57c00" text-anchor="middle">to_digit(16)</text>
+    <!-- from_digit -->
+    <path d="M460 170 L240 170" stroke="#ab47bc" stroke-width="3" marker-end="url(#arrow-purple)"/>
+    <text x="350" y="195" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#6a1b9a" text-anchor="middle">char::from_digit(10, 16)</text>
+    <!-- Validation Check (is_digit) -->
+    <g transform="translate(310, 30)">
+      <rect width="80" height="30" rx="8" fill="#fff9c4" stroke="#fbc02d" stroke-width="1"/>
+      <text x="40" y="20" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#f57c00" text-anchor="middle">is_digit?</text>
+    </g>
+  </g>
+  <!-- Summary Tip -->
+  <g transform="translate(50, 535)">
+    <rect width="700" height="20" rx="8" fill="#fff9c4" opacity="0.4"/>
+    <text x="350" y="14" font-family="JetBrains Mono, monospace" font-size="11" fill="#455a64" text-anchor="middle">💡 Rust 将字符视作具有“数值潜力”的实体，支持跨进制的安全转换。</text>
+  </g>
+  <!-- Definitions -->
+  <defs>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800" />
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ab47bc" />
+    </marker>
+  </defs>
+</svg>

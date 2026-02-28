@@ -1,63 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-<rect width="800" height="450" fill="#f8f9fa" rx="15"/>
-<g transform="translate(40, 30)">
-<rect width="720" height="100" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
-<rect width="720" height="30" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
-<path d="M0 30 h720" stroke="#9c27b0" stroke-width="1" fill="none"/>
-<text x="20" y="20" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
-<text x="20" y="55" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">
-<tspan x="20" dy="0"><tspan fill="#6a1b9a">let</tspan> c = <tspan fill="#f57c00">'A'</tspan>; <tspan fill="#78909c">// char</tspan></tspan>
-<tspan x="20" dy="1.5em"><tspan fill="#6a1b9a">let</tspan> s = <tspan fill="#f57c00">"A"</tspan>; <tspan fill="#78909c">// &amp;str (UTF-8)</tspan></tspan>
-</text>
-</g>
-<g transform="translate(40, 150)">
-<rect width="720" height="120" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
-<rect width="720" height="35" rx="12" fill="#e3f2fd" stroke="#e0e0e0" stroke-width="1"/>
-<text x="20" y="24" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">场景 1: ASCII 字符 'A'</text>
-<g transform="translate(20, 50)">
-<text x="0" y="15" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">char (4 字节)</text>
-<rect x="0" y="25" width="40" height="30" rx="4" fill="#fff8e1" stroke="#ff9800"/>
-<rect x="45" y="25" width="40" height="30" rx="4" fill="#fff8e1" stroke="#ff9800"/>
-<rect x="90" y="25" width="40" height="30" rx="4" fill="#fff8e1" stroke="#ff9800"/>
-<rect x="135" y="25" width="40" height="30" rx="4" fill="#fff8e1" stroke="#ff9800"/>
-<text x="20" y="45" text-anchor="middle" font-size="10">0x41</text>
-<text x="65" y="45" text-anchor="middle" font-size="10">0x00</text>
-<text x="110" y="45" text-anchor="middle" font-size="10">0x00</text>
-<text x="155" y="45" text-anchor="middle" font-size="10">0x00</text>
-</g>
-<g transform="translate(400, 50)">
-<text x="0" y="15" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">UTF-8 (1 字节)</text>
-<rect x="0" y="25" width="40" height="30" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
-<text x="20" y="45" text-anchor="middle" font-size="10">0x41</text>
-<text x="50" y="45" font-size="11" fill="#78909c">(变长存储，更节省空间)</text>
-</g>
-</g>
-<g transform="translate(40, 290)">
-<rect width="720" height="120" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
-<rect width="720" height="35" rx="12" fill="#e3f2fd" stroke="#e0e0e0" stroke-width="1"/>
-<text x="20" y="24" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">场景 2: Emoji '🦀'</text>
-<g transform="translate(20, 50)">
-<text x="0" y="15" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">char (4 字节)</text>
-<rect x="0" y="25" width="40" height="30" rx="4" fill="#fff8e1" stroke="#ff9800"/>
-<rect x="45" y="25" width="40" height="30" rx="4" fill="#fff8e1" stroke="#ff9800"/>
-<rect x="90" y="25" width="40" height="30" rx="4" fill="#fff8e1" stroke="#ff9800"/>
-<rect x="135" y="25" width="40" height="30" rx="4" fill="#fff8e1" stroke="#ff9800"/>
-<text x="20" y="45" text-anchor="middle" font-size="10">0x80</text>
-<text x="65" y="45" text-anchor="middle" font-size="10">0xF9</text>
-<text x="110" y="45" text-anchor="middle" font-size="10">0x01</text>
-<text x="155" y="45" text-anchor="middle" font-size="10">0x00</text>
-</g>
-<g transform="translate(400, 50)">
-<text x="0" y="15" font-family="JetBrains Mono, monospace" font-size="12" fill="#333333">UTF-8 (4 字节)</text>
-<rect x="0" y="25" width="40" height="30" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
-<rect x="45" y="25" width="40" height="30" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
-<rect x="90" y="25" width="40" height="30" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
-<rect x="135" y="25" width="40" height="30" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
-<text x="20" y="45" text-anchor="middle" font-size="10">0xF0</text>
-<text x="65" y="45" text-anchor="middle" font-size="10">0x9F</text>
-<text x="110" y="45" text-anchor="middle" font-size="10">0xA6</text>
-<text x="155" y="45" text-anchor="middle" font-size="10">0x80</text>
-</g>
-</g>
+<svg width="800" height="700" viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="700" fill="#f8f9fa" rx="15"/>
+  
+  <!-- Title -->
+  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">String (UTF-8) vs Vec&lt;char&gt; 内存布局对比</text>
+
+  <!-- Code Section -->
+  <g transform="translate(50, 80)">
+    <rect width="700" height="130" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#f3e5f5"/>
+    
+    <!-- Shared Header -->
+    <text x="350" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">演示代码</text>
+    
+    <!-- String Code -->
+    <g transform="translate(40, 55)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan><tspan fill="#333">() {</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#333">s = </tspan><tspan fill="#f57c00">"A🦀"</tspan><tspan fill="#333">;</tspan></tspan>
+        <tspan x="0" dy="1.4em"><tspan fill="#333">}</tspan></tspan>
+      </text>
+    </g>
+
+    <!-- Char Code -->
+    <g transform="translate(390, 55)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan><tspan fill="#333">() {</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#333">v = </tspan><tspan fill="#6a1b9a">vec!</tspan><tspan fill="#333">[</tspan><tspan fill="#2e7d32">'A'</tspan><tspan fill="#333">, </tspan><tspan fill="#2e7d32">'🦀'</tspan><tspan fill="#333">];</tspan></tspan>
+        <tspan x="0" dy="1.4em"><tspan fill="#333">}</tspan></tspan>
+      </text>
+    </g>
+    
+    <line x1="350" y1="0" x2="350" y2="130" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4 2"/>
+  </g>
+
+  <!-- String Section (Top) -->
+  <g transform="translate(50, 240)">
+    <rect x="0" y="-15" width="140" height="25" rx="12.5" fill="#e8f5e9" opacity="0.8"/>
+    <text x="70" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32" text-anchor="middle">String (UTF-8)</text>
+    
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="120" height="140" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H108 Q120 0 120 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="60" y="22" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      
+      <g transform="translate(15, 50)">
+        <rect width="90" height="22" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
+        <text x="45" y="15" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr</text>
+        
+        <rect y="28" width="90" height="22" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="45" y="43" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">len: 5</text>
+        
+        <rect y="56" width="90" height="22" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="45" y="71" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">cap: 5</text>
+      </g>
+      
+      <path d="M105 61 C 130 61, 140 61, 155 61" stroke="#ff9800" stroke-width="1.5" fill="none" marker-end="url(#arrow-orange)"/>
+    </g>
+
+    <!-- Heap -->
+    <g transform="translate(155, 20)">
+      <rect width="545" height="140" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H533 Q545 0 545 12 V35 H0 Z" fill="#e8f5e9"/>
+      <text x="272.5" y="22" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
+
+      <g transform="translate(25, 55)">
+        <!-- Bytes for "A🦀" -->
+        <rect width="40" height="45" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+        <text x="20" y="20" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">'A'</text>
+        <text x="20" y="38" font-family="JetBrains Mono, monospace" font-size="10" fill="#2e7d32" text-anchor="middle">41</text>
+
+        <g transform="translate(45, 0)">
+          <rect width="160" height="45" rx="4" fill="#fff3e0" stroke="#ff9800" stroke-width="1" stroke-dasharray="2 2"/>
+          <text x="80" y="-8" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">'🦀'</text>
+          
+          <text x="20" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#e65100" text-anchor="middle">F0</text>
+          <text x="60" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#e65100" text-anchor="middle">9F</text>
+          <text x="100" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#e65100" text-anchor="middle">A6</text>
+          <text x="140" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#e65100" text-anchor="middle">80</text>
+          
+          <line x1="40" y1="5" x2="40" y2="40" stroke="#ffb74d" stroke-width="0.5"/>
+          <line x1="80" y1="5" x2="80" y2="40" stroke="#ffb74d" stroke-width="0.5"/>
+          <line x1="120" y1="5" x2="120" y2="40" stroke="#ffb74d" stroke-width="0.5"/>
+        </g>
+        
+        <text x="215" y="28" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c" text-anchor="start">← 仅占用 5 字节 (变长存储)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Vec<char> Section (Bottom) -->
+  <g transform="translate(50, 440)">
+    <rect x="0" y="-15" width="140" height="25" rx="12.5" fill="#e3f2fd" opacity="0.8"/>
+    <text x="70" y="2" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Vec&lt;char&gt;</text>
+    
+    <!-- Stack -->
+    <g transform="translate(0, 20)">
+      <rect width="120" height="140" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H108 Q120 0 120 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="60" y="22" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      
+      <g transform="translate(15, 50)">
+        <rect width="90" height="22" rx="4" fill="#fff8e1" stroke="#ff9800" stroke-width="1"/>
+        <text x="45" y="15" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">ptr</text>
+        
+        <rect y="28" width="90" height="22" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="45" y="43" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">len: 2</text>
+        
+        <rect y="56" width="90" height="22" rx="4" fill="#fafafa" stroke="#e0e0e0" stroke-width="1"/>
+        <text x="45" y="71" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">cap: 2</text>
+      </g>
+      
+      <path d="M105 61 C 130 61, 140 61, 155 61" stroke="#ff9800" stroke-width="1.5" fill="none" marker-end="url(#arrow-orange)"/>
+    </g>
+
+    <!-- Heap -->
+    <g transform="translate(155, 20)">
+      <rect width="545" height="140" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H533 Q545 0 545 12 V35 H0 Z" fill="#e8f5e9"/>
+      <text x="272.5" y="22" font-family="JetBrains Mono, monospace" font-size="13" font-weight="bold" fill="#2e7d32" text-anchor="middle">Heap</text>
+
+      <g transform="translate(25, 55)">
+        <!-- Fixed 4-byte char 'A' -->
+        <g>
+          <rect width="160" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="1"/>
+          <text x="80" y="-8" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">'A'</text>
+          <text x="20" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0" text-anchor="middle">00</text>
+          <text x="60" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0" text-anchor="middle">00</text>
+          <text x="100" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0" text-anchor="middle">00</text>
+          <text x="140" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0" text-anchor="middle">41</text>
+          <line x1="40" y1="5" x2="40" y2="40" stroke="#90caf9" stroke-width="0.5"/>
+          <line x1="80" y1="5" x2="80" y2="40" stroke="#90caf9" stroke-width="0.5"/>
+          <line x1="120" y1="5" x2="120" y2="40" stroke="#90caf9" stroke-width="0.5"/>
+        </g>
+
+        <!-- Fixed 4-byte char '🦀' -->
+        <g transform="translate(165, 0)">
+          <rect width="160" height="45" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="1"/>
+          <text x="80" y="-8" font-family="JetBrains Mono, monospace" font-size="11" fill="#333" text-anchor="middle">'🦀'</text>
+          <text x="20" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0" text-anchor="middle">00</text>
+          <text x="60" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0" text-anchor="middle">01</text>
+          <text x="100" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0" text-anchor="middle">F9</text>
+          <text x="140" y="28" font-family="JetBrains Mono, monospace" font-size="10" fill="#1565c0" text-anchor="middle">80</text>
+          <line x1="40" y1="5" x2="40" y2="40" stroke="#90caf9" stroke-width="0.5"/>
+          <line x1="80" y1="5" x2="80" y2="40" stroke="#90caf9" stroke-width="0.5"/>
+          <line x1="120" y1="5" x2="120" y2="40" stroke="#90caf9" stroke-width="0.5"/>
+        </g>
+        
+        <text x="335" y="28" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c" text-anchor="start">← 占用 8 字节 (定长 4B)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Tip -->
+  <g transform="translate(50, 630)">
+    <rect width="700" height="40" rx="8" fill="#fff9c4" opacity="0.3"/>
+    <text x="350" y="25" font-family="JetBrains Mono, monospace" font-size="13" fill="#455a64" text-anchor="middle">💡 String (UTF-8) 紧凑但变长；Vec&lt;char&gt; 浪费空间但支持 O(1) 随机访问。</text>
+  </g>
+
+  <defs>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orientation="auto">
+      <path d="M0,0 L0,10 L9,5 Z" fill="#ff9800" />
+    </marker>
+  </defs>
 </svg>

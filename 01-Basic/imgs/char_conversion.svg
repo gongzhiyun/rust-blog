@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="350" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-<rect width="800" height="350" fill="#f8f9fa" rx="15"/>
-<g transform="translate(40, 40)">
+<svg width="800" height="570" viewBox="0 0 800 570" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="570" fill="#f8f9fa" rx="15"/>
+<!-- Code Section -->
+<g transform="translate(40, 30)">
+<rect width="720" height="180" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+<rect width="720" height="35" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+<path d="M0 35 h720" stroke="#9c27b0" stroke-width="1" fill="none"/>
+<text x="20" y="23" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
+<text x="30" y="65" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">
+<tspan x="30" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() {</tspan>
+<tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> u = <tspan fill="#f57c00">'A'</tspan> <tspan fill="#6a1b9a">as</tspan> <tspan fill="#1565c0">u32</tspan>;</tspan>
+<tspan x="30" dy="1.5em">    <tspan fill="#2e7d32">assert_eq!</tspan>(u, <tspan fill="#f57c00">65</tspan>);</tspan>
+<tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> c = <tspan fill="#1565c0">char</tspan>::<tspan fill="#2e7d32">from_u32</tspan>(u);</tspan>
+<tspan x="30" dy="1.5em">    <tspan fill="#2e7d32">assert_eq!</tspan>(c, <tspan fill="#6a1b9a">Some</tspan>(<tspan fill="#f57c00">'A'</tspan>));</tspan>
+<tspan x="30" dy="1.5em">}</tspan>
+</text>
+</g>
+<!-- Logic Section -->
+<g transform="translate(40, 240)">
 <rect width="720" height="270" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
 <rect width="720" height="35" rx="12" fill="#fff3e0" stroke="#ffb74d" stroke-width="1"/>
 <text x="360" y="24" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#e65100">类型转换与安全性：char ↔ u32</text>

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-<rect width="800" height="400" fill="#f8f9fa" rx="15"/>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+<rect width="800" height="450" fill="#f8f9fa" rx="15"/>
 <g transform="translate(40, 30)">
-<rect width="720" height="100" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
-<rect width="720" height="30" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
-<path d="M0 30 h720" stroke="#9c27b0" stroke-width="1" fill="none"/>
-<text x="20" y="20" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
-<text x="20" y="55" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">
-<tspan x="20" dy="0"><tspan fill="#6a1b9a">let</tspan> family = <tspan fill="#f57c00">"👨‍👩‍👧‍👦"</tspan>; <tspan fill="#78909c">// 这是一个字形 (Grapheme)</tspan></tspan>
-<tspan x="20" dy="1.5em"><tspan fill="#6a1b9a">let</tspan> count = family.<tspan fill="#2e7d32">chars</tspan>().<tspan fill="#2e7d32">count</tspan>(); <tspan fill="#78909c">// 结果是 7，不是 1！</tspan></tspan>
+<rect width="720" height="130" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+<rect width="720" height="35" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1"/>
+<path d="M0 35 h720" stroke="#9c27b0" stroke-width="1" fill="none"/>
+<text x="20" y="23" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
+<text x="30" y="65" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">
+<tspan x="30" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() {</tspan>
+<tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> family = <tspan fill="#f57c00">"👨‍👩‍👧‍👦"</tspan>;</tspan>
+<tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> count = family.<tspan fill="#2e7d32">chars</tspan>().<tspan fill="#2e7d32">count</tspan>(); <tspan fill="#78909c">// 结果是 7</tspan></tspan>
+<tspan x="30" dy="1.5em">}</tspan>
 </text>
 </g>
-<g transform="translate(40, 150)">
+<g transform="translate(40, 180)">
 <rect width="720" height="220" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
 <rect width="720" height="35" rx="12" fill="#fff3e0" stroke="#ffb74d" stroke-width="1"/>
 <text x="20" y="24" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#e65100">逻辑差异：Unicode 标量值 vs 用户感知字符</text>
