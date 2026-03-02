@@ -8,8 +8,8 @@
 <text x="20" y="23" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码</text>
 <text x="30" y="65" font-family="JetBrains Mono, monospace" font-size="13" fill="#333333">
 <tspan x="30" dy="0"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() {</tspan>
-<tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> family = <tspan fill="#f57c00">"👨‍👩‍👧‍👦"</tspan>;</tspan>
-<tspan x="30" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> count = family.<tspan fill="#2e7d32">chars</tspan>().<tspan fill="#2e7d32">count</tspan>(); <tspan fill="#78909c">// 结果是 7</tspan></tspan>
+<tspan x="50" dy="1.5em"><tspan fill="#6a1b9a">let</tspan> family = <tspan fill="#f57c00">"👨‍👩‍👧‍👦"</tspan>;</tspan>
+<tspan x="50" dy="1.5em"><tspan fill="#6a1b9a">let</tspan> count = family.<tspan fill="#2e7d32">chars</tspan>().<tspan fill="#2e7d32">count</tspan>(); <tspan fill="#78909c">// 结果是 7</tspan></tspan>
 <tspan x="30" dy="1.5em">}</tspan>
 </text>
 </g>

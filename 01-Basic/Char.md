@@ -18,23 +18,14 @@
 
 ![Char vs UTF-8](./imgs/char_vs_utf8.svg)
 
-## 3. 类型转换与进制操作
+## 3. 类型转换 (char ↔ u32)
 
-Rust 在类型转换上非常严格，不像 C/C++ 那样容易出现隐式的溢出或截断。
+Rust 在类型转换上非常严格，以确保 `char` 始终包含有效的 Unicode 标量值。
 
 ![Char Conversion](./imgs/char_conversion.svg)
 
-### 3.1 安全转换 (`u32` <-> `char`)
-- **`char as u32`**：**零开销**，始终安全。
-- **`char::from_u32`**：**有开销**，返回 `Option<char>`。因为必须检查数值是否在合法区域（非代理区、且不超过最大值）。
-
-### 3.2 进制转换 (`Digit`)
-如果你需要处理十六进制或自定义进制，`char` 自带的方法很方便：
-
-![Char Digit](./imgs/char_digit_conversion.svg)
-
-- **`to_digit(radix)`**：字符转数字。比如 `'a'.to_digit(16)` 得到 `Some(10)`。
-- **`from_digit(num, radix)`**：数字转字符。比如 `char::from_digit(10, 16)` 得到 `Some('a')`。
+- **`char as u32`**：**零开销**，始终安全。这是直接的内存拷贝，将 4 字节的 `char` 解释为整数。
+- **`char::from_u32(val)`**：**有校验开销**，返回 `Option<char>`。因为必须检查数值是否在合法 Unicode 区域（非代理区、且不超过 `0x10FFFF`）。
 
 ## 4. 字符不等于字形 (Grapheme)
 
