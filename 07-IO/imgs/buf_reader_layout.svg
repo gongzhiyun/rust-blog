@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" style="background-color:#f8f9fa" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Code Area -->
+  <rect x="20" y="20" width="760" height="120" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+  <rect x="20" y="20" width="760" height="30" rx="8" fill="#e1bee7"/>
+  <text x="40" y="40" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码：BufReader 内存布局</text>
+  
+  <text x="40" y="70" font-family="JetBrains Mono, monospace" font-size="12" fill="#333">
+    <tspan x="40" dy="1.2em"><tspan fill="#6a1b9a">use</tspan> std::io::<tspan fill="#1565c0">BufReader</tspan>;</tspan>
+    <tspan x="40" dy="1.5em"><tspan fill="#6a1b9a">use</tspan> std::fs::<tspan fill="#1565c0">File</tspan>;</tspan>
+    <tspan x="40" dy="2.0em"><tspan fill="#6a1b9a">let</tspan> f = <tspan fill="#1565c0">File</tspan>::<tspan fill="#2e7d32">open</tspan>(<tspan fill="#f57c00">"log.txt"</tspan>)?;</tspan>
+    <tspan x="40" dy="1.5em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#6a1b9a">mut</tspan> reader = <tspan fill="#1565c0">BufReader</tspan>::<tspan fill="#2e7d32">new</tspan>(f); <tspan fill="#78909c">// buffer: [h, e, l, l, o, \n, ...]</tspan></tspan>
+  </text>
+
+  <!-- Memory Layout Area -->
+  <g transform="translate(0, 160)">
+    <!-- Stack Area -->
+    <rect x="20" y="0" width="360" height="320" rx="12" fill="#e3f2fd" stroke="#e0e0e0" stroke-width="2"/>
+    <rect x="20" y="0" width="360" height="35" rx="12" fill="#bbdefb"/>
+    <text x="180" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">Stack</text>
+    
+    <!-- BufReader Struct -->
+    <rect x="50" y="50" width="300" height="250" rx="8" fill="#ffffff" stroke="#1565c0" stroke-width="2"/>
+    <text x="60" y="70" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0">reader: BufReader&lt;File&gt;</text>
+    
+    <!-- Inner File -->
+    <rect x="70" y="85" width="260" height="40" rx="4" fill="#fafafa" stroke="#e0e0e0"/>
+    <text x="80" y="110" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">inner: File (fd: 3)</text>
+    
+    <!-- Buffer Pointer -->
+    <rect x="70" y="135" width="260" height="40" rx="4" fill="#fff8e1" stroke="#ff9800"/>
+    <text x="80" y="160" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">buf: Box&lt;[u8]&gt; (ptr)</text>
+    <circle cx="310" cy="155" r="3" fill="#f57c00"/>
+    
+    <!-- Pos -->
+    <rect x="70" y="185" width="260" height="40" rx="4" fill="#fafafa" stroke="#e0e0e0"/>
+    <text x="80" y="210" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">pos: usize = 0</text>
+    
+    <!-- Cap -->
+    <rect x="70" y="235" width="260" height="40" rx="4" fill="#fafafa" stroke="#e0e0e0"/>
+    <text x="80" y="260" font-family="JetBrains Mono, monospace" font-size="11" fill="#333">cap: usize = 8192</text>
+    
+    <!-- Heap Area -->
+    <rect x="420" y="0" width="360" height="320" rx="12" fill="#e8f5e9" stroke="#e0e0e0" stroke-width="2"/>
+    <rect x="420" y="0" width="360" height="35" rx="12" fill="#c8e6c9"/>
+    <text x="600" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">Heap</text>
+    
+    <!-- Buffer Content -->
+    <rect x="450" y="130" width="300" height="80" rx="4" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
+    <text x="460" y="120" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32">Buffer Data</text>
+    
+    <!-- Byte Cells -->
+    <g transform="translate(460, 140)">
+        <rect x="0" y="0" width="30" height="40" fill="#fff" stroke="#e0e0e0"/>
+        <text x="15" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12">h</text>
+        
+        <rect x="30" y="0" width="30" height="40" fill="#fff" stroke="#e0e0e0"/>
+        <text x="45" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12">e</text>
+        
+        <rect x="60" y="0" width="30" height="40" fill="#fff" stroke="#e0e0e0"/>
+        <text x="75" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12">l</text>
+        
+        <rect x="90" y="0" width="30" height="40" fill="#fff" stroke="#e0e0e0"/>
+        <text x="105" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12">l</text>
+        
+        <rect x="120" y="0" width="30" height="40" fill="#fff" stroke="#e0e0e0"/>
+        <text x="135" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12">o</text>
+        
+        <rect x="150" y="0" width="30" height="40" fill="#fff" stroke="#e0e0e0"/>
+        <text x="165" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12">\n</text>
+        
+        <rect x="180" y="0" width="100" height="40" fill="#f5f5f5" stroke="#e0e0e0" stroke-dasharray="4 2"/>
+        <text x="230" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#9e9e9e">...</text>
+    </g>
+    
+    <!-- Pointer Line -->
+    <path d="M310 155 C350 155, 380 150, 450 150" fill="none" stroke="#f57c00" stroke-width="2" marker-end="url(#arrow-orange)"/>
+    
+    <!-- Pointer Definition -->
+    <defs>
+      <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L0,6 L9,3 z" fill="#f57c00" />
+      </marker>
+    </defs>
+
+    <!-- Pos Indicator -->
+    <path d="M460 190 L460 210" stroke="#1565c0" stroke-width="2"/>
+    <text x="460" y="225" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#1565c0">pos (0)</text>
+
+  </g>
+</svg>
