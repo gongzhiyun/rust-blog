@@ -1,34 +1,14 @@
 # 图解 Rust I/O：Read与Write
 
-> **副标题：Byte Stream 的搬运工与 Buffer 的艺术**
-
-## 引言
-
-在 Rust 的世界里，`Read` 和 `Write` trait 是所有 I/O 操作的基石。它们不仅仅是简单的函数集合，而是对 **Byte Stream (字节流)** 这一抽象概念的精确建模。不同于 C 语言中裸露的 **File Descriptor (文件描述符)**，Rust 通过 trait 系统将文件、套接字、甚至内存缓冲区统一为相同的 **Interface (接口)**，让数据在不同介质间的流动如同水流般自然。
+在 Rust 中，`Read` 和 `Write` trait 是处理一切 I/O 操作的核心。它们将文件、网络套接字甚至内存缓冲区抽象为统一的“字节流”接口，让你可以用同样的方式在不同介质间搬运数据，而无需关心底层是磁盘还是网络。
 
 ---
 
-## 1. 物理本质：带状态的缓冲区
+## 1. 内存布局：带状态的缓冲区
 
-当我们谈论高效 I/O 时，不得不提 `BufReader` 和 `BufWriter`。它们并非魔法，而是通过在内存中引入一个中间层——**Buffer (缓冲区)**，来减少昂贵的 **System Call (系统调用)** 次数。
-
-让我们看看 `BufReader` 在内存中的真实模样：
+`BufReader` 和 `BufWriter` 的高效源于内存中的 **Buffer (缓冲区)**。它们在 **Stack ** 上维护一个指向 **Heap **的指针，将零散的小次读写暂存在这块连续内存中。这样，大部分操作只是简单的内存拷贝，只有当缓冲区空了或满了，才会触发一次真正的 **System Call (系统调用)** 去读写磁盘。
 
 ![BufReader 内存布局](./imgs/buf_reader_layout.svg)
-
-### 图解解析
-
-1.  **Stack (栈)**：
-    *   `BufReader` 结构体本身位于栈上。
-    *   它包含一个 `inner` 字段，持有底层的 reader（如 `File`）。
-    *   关键在于 `buf` 字段，它是一个指向堆内存的 **Fat Pointer (胖指针)**，包含 `ptr` (地址)、`cap` (容量) 和 `len` (长度)。
-    *   `pos` 和 `cap` 两个 `usize` 字段分别记录当前读取 cursor 和缓冲区内的有效数据量。
-
-2.  **Heap (堆)**：
-    *   实际的数据存储在堆上的连续内存块 (**Contiguous Memory Block**) 中。
-    *   这块内存充当了用户代码与操作系统之间的 **Intermediate Buffer (中间缓冲)**。
-
-这种物理结构决定了 `BufReader` 的高效性：多次小的 `read` 调用可以直接从堆上的缓冲区拿数据 (**Memory Copy**)，只有当缓冲区 **Exhausted (耗尽)** 时，才会触发真正的 `read` syscall 去 **Refill (填充)** 它。
 
 ---
 
