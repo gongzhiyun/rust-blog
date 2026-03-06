@@ -1,66 +1,97 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" style="background-color:#f8f9fa" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-  <!-- Code Area -->
-  <rect x="20" y="20" width="760" height="160" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
-  <rect x="20" y="20" width="760" height="30" rx="8" fill="#e1bee7"/>
-  <text x="40" y="40" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码：基本 I/O 复制流</text>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa" rx="15"/>
   
-  <text x="40" y="70" font-family="JetBrains Mono, monospace" font-size="12" fill="#333">
-    <tspan x="40" dy="1.2em"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">copy_data</tspan>&lt;R: <tspan fill="#1565c0">Read</tspan>, W: <tspan fill="#1565c0">Write</tspan>&gt;(reader: &amp;<tspan fill="#6a1b9a">mut</tspan> R, writer: &amp;<tspan fill="#6a1b9a">mut</tspan> W) -&gt; io::Result&lt;()&gt; {</tspan>
-    <tspan x="40" dy="1.5em">    <tspan fill="#6a1b9a">let</tspan> <tspan fill="#6a1b9a">mut</tspan> buffer = [<tspan fill="#f57c00">0</tspan>; <tspan fill="#f57c00">1024</tspan>]; <tspan fill="#78909c">// Stack buffer</tspan></tspan>
-    <tspan x="40" dy="1.5em">    <tspan fill="#6a1b9a">loop</tspan> {</tspan>
-    <tspan x="40" dy="1.5em">        <tspan fill="#6a1b9a">let</tspan> n = reader.<tspan fill="#2e7d32">read</tspan>(&amp;<tspan fill="#6a1b9a">mut</tspan> buffer)?;</tspan>
-    <tspan x="40" dy="1.5em">        <tspan fill="#6a1b9a">if</tspan> n == <tspan fill="#f57c00">0</tspan> { <tspan fill="#6a1b9a">break</tspan>; }</tspan>
-    <tspan x="40" dy="1.5em">        writer.<tspan fill="#2e7d32">write_all</tspan>(&amp;buffer[..n])?;</tspan>
-    <tspan x="40" dy="1.5em">    }</tspan>
-    <tspan x="40" dy="1.5em">    Ok(())</tspan>
-    <tspan x="40" dy="1.5em">}</tspan>
-  </text>
+  <!-- Global Title -->
+  <text x="400" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">std::io::copy：零堆分配的高效搬运</text>
 
-  <!-- Diagram Area -->
-  <g transform="translate(0, 200)">
-    <!-- Source (Abstract) -->
-    <rect x="50" y="50" width="120" height="100" rx="8" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
-    <text x="110" y="80" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">Reader</text>
-    <text x="110" y="105" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#333">(File/Socket)</text>
-    <path d="M110 120 L110 140" stroke="#1565c0" stroke-width="2" stroke-dasharray="4 2"/>
-
-    <!-- Buffer (Stack) -->
-    <rect x="300" y="50" width="200" height="100" rx="8" fill="#fff8e1" stroke="#ff9800" stroke-width="2"/>
-    <text x="400" y="40" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#f57c00">Stack Buffer</text>
-    <rect x="310" y="70" width="30" height="60" fill="#fff" stroke="#ff9800"/>
-    <rect x="340" y="70" width="30" height="60" fill="#fff" stroke="#ff9800"/>
-    <rect x="370" y="70" width="30" height="60" fill="#fff" stroke="#ff9800"/>
-    <rect x="400" y="70" width="30" height="60" fill="#e0e0e0" stroke="#ff9800" stroke-dasharray="4 2"/>
-    <rect x="430" y="70" width="30" height="60" fill="#e0e0e0" stroke="#ff9800" stroke-dasharray="4 2"/>
-    <rect x="460" y="70" width="30" height="60" fill="#e0e0e0" stroke="#ff9800" stroke-dasharray="4 2"/>
-    <text x="355" y="105" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#333">Data</text>
-
-    <!-- Destination (Abstract) -->
-    <rect x="630" y="50" width="120" height="100" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
-    <text x="690" y="80" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">Writer</text>
-    <text x="690" y="105" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#333">(File/Socket)</text>
-    <path d="M690 120 L690 140" stroke="#2e7d32" stroke-width="2" stroke-dasharray="4 2"/>
-
-    <!-- Arrows -->
-    <defs>
-      <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-        <path d="M0,0 L0,6 L9,3 z" fill="#1565c0" />
-      </marker>
-      <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-        <path d="M0,0 L0,6 L9,3 z" fill="#2e7d32" />
-      </marker>
-    </defs>
-
-    <!-- Read Flow -->
-    <path d="M170 100 L300 100" stroke="#1565c0" stroke-width="3" marker-end="url(#arrow-blue)"/>
-    <text x="235" y="90" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#1565c0">read()</text>
-
-    <!-- Write Flow -->
-    <path d="M500 100 L630 100" stroke="#2e7d32" stroke-width="3" marker-end="url(#arrow-green)"/>
-    <text x="565" y="90" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#2e7d32">write_all()</text>
-
-    <!-- Loop Indicator -->
-    <path d="M350 160 Q400 190 450 160" stroke="#9c27b0" stroke-width="2" fill="none" stroke-dasharray="5 5"/>
-    <text x="400" y="185" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#9c27b0">Loop until n == 0</text>
+  <!-- Code Section (Benchmark Style) -->
+  <g transform="translate(50, 80)">
+    <rect width="700" height="150" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H688 Q700 0 700 12 V35 H0 Z" fill="#f3e5f5"/>
+    <text x="350" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">演示代码</text>
+    <g transform="translate(30, 55)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">use</tspan> <tspan fill="#1565c0">std::io</tspan>;</tspan>
+        <tspan x="0" dy="1.4em"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() -&gt; <tspan fill="#1565c0">io::Result</tspan>&lt;()&gt; {</tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> (mut r, mut w) = (<tspan fill="#1565c0">io</tspan>::<tspan fill="#2e7d32">stdin</tspan>(), <tspan fill="#1565c0">io</tspan>::<tspan fill="#2e7d32">stdout</tspan>());</tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#1565c0">io</tspan>::<tspan fill="#2e7d32">copy</tspan>(&amp;mut r, &amp;mut w)<tspan fill="#6a1b9a">?</tspan>; <tspan fill="#78909c">// 自动 8KB 循环搬运</tspan></tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">Ok</tspan>(())</tspan>
+        <tspan x="0" dy="1.4em">}</tspan>
+      </text>
+    </g>
   </g>
+
+  <!-- Flow Diagram Area -->
+  <g transform="translate(50, 260)">
+    <!-- Source Box -->
+    <g transform="translate(0, 40)">
+      <rect width="160" height="200" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H148 Q160 0 160 12 V35 H0 Z" fill="#eceff1"/>
+      <text x="80" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64" text-anchor="middle">Source (输入源)</text>
+      <g transform="translate(20, 60)">
+        <path d="M10 20 H110 M10 40 H90 M10 60 H100 M10 80 H80" stroke="#b0bec5" stroke-width="2" stroke-linecap="round"/>
+        <text x="60" y="120" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">字节流 (Stream)</text>
+      </g>
+    </g>
+
+    <!-- Stack Box (Buffer) -->
+    <g transform="translate(250, 20)">
+      <rect width="200" height="250" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H188 Q200 0 200 12 V35 H0 Z" fill="#e3f2fd"/>
+      <text x="100" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0" text-anchor="middle">Stack</text>
+      <g transform="translate(20, 55)">
+        <text x="0" y="-8" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#1565c0">内部数组 [u8; 8192]</text>
+        <rect width="160" height="110" rx="8" fill="#fff8e1" stroke="#ff9800" stroke-width="1.5"/>
+        <g transform="translate(15, 15)">
+          <rect x="0" y="0" width="25" height="80" rx="4" fill="#ffffff" stroke="#ff9800"/>
+          <rect x="30" y="0" width="25" height="80" rx="4" fill="#ffffff" stroke="#ff9800"/>
+          <rect x="60" y="0" width="25" height="80" rx="4" fill="#ffffff" stroke="#ff9800"/>
+          <rect x="90" y="0" width="40" height="80" rx="4" fill="#f5f5f5" stroke="#ff9800" stroke-dasharray="4 2"/>
+          <text x="72.5" y="45" font-family="JetBrains Mono, monospace" font-size="12" fill="#ffb74d" text-anchor="middle">...</text>
+        </g>
+        <text x="80" y="142" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#f57c00" text-anchor="middle">"零堆分配的中转站"</text>
+      </g>
+      <!-- Loop Arrow & Text -->
+      <path d="M60 225 Q100 255 140 225" stroke="#78909c" stroke-width="1.5" fill="none" marker-end="url(#arrow-loop)"/>
+      <text x="100" y="218" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">循环读写直到 EOF</text>
+    </g>
+
+    <!-- Sink Box -->
+    <g transform="translate(540, 40)">
+      <rect width="160" height="200" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+      <path d="M0 12 Q0 0 12 0 H148 Q160 0 160 12 V35 H0 Z" fill="#eceff1"/>
+      <text x="80" y="22" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64" text-anchor="middle">Sink (输出目标)</text>
+      <g transform="translate(20, 60)">
+        <path d="M10 20 H110 M10 40 H90 M10 60 H100 M10 80 H80" stroke="#b0bec5" stroke-width="2" stroke-linecap="round"/>
+        <text x="60" y="120" font-family="JetBrains Mono, monospace" font-size="10" fill="#78909c" text-anchor="middle">数据接收</text>
+      </g>
+    </g>
+
+    <!-- Flow Arrows -->
+    <path d="M165 140 L245 140" stroke="#1565c0" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+    <text x="205" y="130" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0" text-anchor="middle">Read</text>
+
+    <path d="M455 140 L535 140" stroke="#2e7d32" stroke-width="2" fill="none" marker-end="url(#arrow-green)"/>
+    <text x="495" y="130" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32" text-anchor="middle">Write</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(50, 540)">
+    <rect width="700" height="40" rx="8" fill="#fff9c4" opacity="0.3"/>
+    <text x="350" y="25" font-family="JetBrains Mono, monospace" font-size="13" fill="#455a64" text-anchor="middle">💡 std::io::copy 的 8KB 缓冲区完全开辟在栈上，避免了任何昂贵的堆内存申请。</text>
+  </g>
+
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L0,10 L9,5 Z" fill="#1565c0" />
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L0,10 L9,5 Z" fill="#2e7d32" />
+    </marker>
+    <marker id="arrow-loop" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L7,4 Z" fill="#78909c" />
+    </marker>
+  </defs>
 </svg>

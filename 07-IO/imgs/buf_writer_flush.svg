@@ -1,92 +1,179 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="550" viewBox="0 0 800 550" style="background-color:#f8f9fa" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-  <!-- Code Area -->
-  <rect x="20" y="20" width="760" height="150" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
-  <rect x="20" y="20" width="760" height="30" rx="8" fill="#e1bee7"/>
-  <text x="40" y="40" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a">演示代码：BufWriter 缓冲与刷新</text>
-  
-  <text x="40" y="70" font-family="JetBrains Mono, monospace" font-size="12" fill="#333">
-    <tspan x="40" dy="1.2em"><tspan fill="#6a1b9a">use</tspan> std::io::<tspan fill="#1565c0">BufWriter</tspan>;</tspan>
-    <tspan x="40" dy="1.5em"><tspan fill="#6a1b9a">use</tspan> std::fs::<tspan fill="#1565c0">File</tspan>;</tspan>
-    <tspan x="40" dy="2.0em"><tspan fill="#6a1b9a">let</tspan> f = <tspan fill="#1565c0">File</tspan>::<tspan fill="#2e7d32">create</tspan>(<tspan fill="#f57c00">"out.txt"</tspan>)?;</tspan>
-    <tspan x="40" dy="1.5em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#6a1b9a">mut</tspan> writer = <tspan fill="#1565c0">BufWriter</tspan>::<tspan fill="#2e7d32">new</tspan>(f);</tspan>
-    <tspan x="40" dy="1.5em">writer.<tspan fill="#2e7d32">write</tspan>(<tspan fill="#f57c00">b"hello"</tspan>)?; <tspan fill="#78909c">// 1. Write to Buffer</tspan></tspan>
-    <tspan x="40" dy="1.5em">writer.<tspan fill="#2e7d32">flush</tspan>()?;         <tspan fill="#78909c">// 2. Flush to Disk</tspan></tspan>
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700" style="background-color:#f8f9fa" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+  <!-- Global Title -->
+  <text x="500" y="45" font-family="JetBrains Mono, monospace" font-size="22" font-weight="bold" fill="#333" text-anchor="middle">std::io::BufWriter：合并写入与缓冲区刷新</text>
 
-  <!-- Flow Diagram Area -->
-  <g transform="translate(0, 190)">
-    
-    <!-- Step 1: Write to Buffer -->
-    <g transform="translate(50, 0)">
-      <rect x="0" y="0" width="300" height="300" rx="12" fill="#fff3e0" stroke="#ffb74d" stroke-width="2"/>
-      <rect x="0" y="0" width="300" height="35" rx="12" fill="#ffe0b2"/>
-      <text x="150" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#ef6c00">Step 1: Write to Buffer</text>
+  <!-- Code Section (Benchmark Style) -->
+  <g transform="translate(60, 80)">
+    <rect width="880" height="240" rx="12" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+    <path d="M0 12 Q0 0 12 0 H868 Q880 0 880 12 V35 H0 Z" fill="#f3e5f5"/>
+    <text x="440" y="22" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#6a1b9a" text-anchor="middle">演示代码</text>
+    <g transform="translate(40, 60)">
+      <text font-family="JetBrains Mono, monospace" font-size="13" line-height="1.5em">
+        <tspan x="0" dy="0"><tspan fill="#6a1b9a">use</tspan> std::fs::<tspan fill="#1565c0">File</tspan>;</tspan>
+        <tspan x="0" dy="1.4em"><tspan fill="#6a1b9a">use</tspan> std::io::{<tspan fill="#6a1b9a">self</tspan>, <tspan fill="#1565c0">BufWriter</tspan>, <tspan fill="#1565c0">Write</tspan>};</tspan>
+        <tspan x="0" dy="1.8em"><tspan fill="#6a1b9a">fn</tspan> <tspan fill="#2e7d32">main</tspan>() -&gt; <tspan fill="#1565c0">io::Result</tspan>&lt;()&gt; {</tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">let</tspan> <tspan fill="#6a1b9a">mut</tspan> writer = <tspan fill="#1565c0">BufWriter</tspan>::<tspan fill="#2e7d32">new</tspan>(<tspan fill="#1565c0">File</tspan>::<tspan fill="#2e7d32">create</tspan>(<tspan fill="#f57c00">"logs.txt"</tspan>)<tspan fill="#6a1b9a">?</tspan>);</tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">for</tspan> i <tspan fill="#6a1b9a">in</tspan> <tspan fill="#f57c00">0..1000</tspan> {</tspan>
+        <tspan x="40" dy="1.4em"><tspan fill="#1565c0">writeln!</tspan>(writer, <tspan fill="#f57c00">"Log line {}"</tspan>, i)<tspan fill="#6a1b9a">?</tspan>;</tspan>
+        <tspan x="20" dy="1.4em">}</tspan>
+        <tspan x="20" dy="1.4em">writer.<tspan fill="#2e7d32">flush</tspan>()<tspan fill="#6a1b9a">?</tspan>;</tspan>
+        <tspan x="20" dy="1.4em"><tspan fill="#6a1b9a">Ok</tspan>(())</tspan>
+        <tspan x="0" dy="1.4em">}</tspan>
+      </text>
+    </g>
+  </g>
 
-      <!-- User Data -->
-      <rect x="30" y="60" width="80" height="40" rx="4" fill="#e1bee7" stroke="#8e24aa"/>
-      <text x="70" y="85" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#4a148c">"hello"</text>
-
-      <!-- Arrow -->
-      <path d="M110 80 L140 80" stroke="#8e24aa" stroke-width="2" marker-end="url(#arrow-purple)"/>
-
-      <!-- Buffer -->
-      <rect x="140" y="50" width="120" height="150" rx="8" fill="#fff" stroke="#ef6c00"/>
-      <text x="200" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#ef6c00">Internal Buf</text>
+  <!-- Memory Layout Area -->
+  <g transform="translate(0, 360)">
+    <!-- Stack Area (Left) -->
+    <g transform="translate(60, 0)">
+      <rect width="220" height="280" rx="12" fill="#e3f2fd" stroke="#e0e0e0" stroke-width="1"/>
+      <rect width="220" height="35" rx="12" fill="#bbdefb"/>
+      <text x="110" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#1565c0">Stack</text>
       
-      <!-- Buffer Content -->
-      <g transform="translate(150, 80)">
-         <rect x="0" y="0" width="100" height="20" fill="#ffe0b2" stroke="#ef6c00"/>
-         <text x="50" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10">hello</text>
-         <rect x="0" y="20" width="100" height="100" fill="#f5f5f5" stroke="#ef6c00" stroke-dasharray="4 2"/>
-         <text x="50" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#9e9e9e">Empty</text>
+      <!-- Memory Slots -->
+      <g transform="translate(30, 60)">
+        <!-- writer: BufWriter -->
+        <rect x="0" y="0" width="160" height="140" rx="8" fill="#ffffff" stroke="#1565c0" stroke-width="1.5" stroke-dasharray="none"/>
+        <text x="80" y="-12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#1565c0">writer: BufWriter</text>
+
+        <!-- Slots -->
+        <g transform="translate(0, 0)">
+          <path d="M0 8 Q0 0 8 0 H152 Q160 0 160 8 V30 H0 Z" fill="#f1f8ff"/>
+          <line x1="0" y1="30" x2="160" y2="30" stroke="#e1e4e8" stroke-width="1"/>
+          <text x="8" y="19" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#1565c0">inner</text>
+          <text x="152" y="19" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#333">File(fd: 3)</text>
+        </g>
+        <g transform="translate(0, 30)">
+          <rect width="160" height="30" fill="#fffdf5" stroke="none"/>
+          <line x1="0" y1="30" x2="160" y2="30" stroke="#e1e4e8" stroke-width="1"/>
+          <text x="8" y="19" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#b08800">buf.ptr</text>
+          <text x="152" y="19" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="#333">0x55aa...</text>
+          <circle cx="160" cy="15" r="3" fill="#f57c00"/>
+        </g>
+        <g transform="translate(0, 60)">
+          <rect width="160" height="30" fill="#fffdf5" stroke="none"/>
+          <line x1="0" y1="30" x2="160" y2="30" stroke="#e1e4e8" stroke-width="1"/>
+          <text x="8" y="19" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#b08800">buf.len</text>
+          <text x="152" y="19" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#333">4096</text>
+        </g>
+        <g transform="translate(0, 90)">
+          <rect width="160" height="30" fill="#fffdf5" stroke="none"/>
+          <line x1="0" y1="30" x2="160" y2="30" stroke="#e1e4e8" stroke-width="1"/>
+          <text x="8" y="19" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#b08800">buf.cap</text>
+          <text x="152" y="19" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="#333">8192</text>
+        </g>
+        <g transform="translate(0, 120)">
+          <path d="M0 0 H160 V12 Q160 20 152 20 H8 Q0 20 0 12 Z" fill="#f6f8fa"/>
+          <text x="80" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#959da5">...</text>
+        </g>
       </g>
 
-      <!-- Disk (Greyed out) -->
-      <rect x="80" y="220" width="140" height="60" rx="8" fill="#f5f5f5" stroke="#bdbdbd" stroke-width="2"/>
-      <text x="150" y="255" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#bdbdbd">Disk File</text>
-      
-      <!-- Blocked Path -->
-      <path d="M200 200 L200 220" stroke="#bdbdbd" stroke-width="2" stroke-dasharray="4 2"/>
-      <text x="230" y="215" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#bdbdbd">No syscall</text>
-    </g>
-
-    <!-- Step 2: Flush -->
-    <g transform="translate(450, 0)">
-      <rect x="0" y="0" width="300" height="300" rx="12" fill="#e8f5e9" stroke="#81c784" stroke-width="2"/>
-      <rect x="0" y="0" width="300" height="35" rx="12" fill="#c8e6c9"/>
-      <text x="150" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">Step 2: Flush to Disk</text>
-
-      <!-- Buffer -->
-      <rect x="140" y="50" width="120" height="150" rx="8" fill="#fff" stroke="#2e7d32"/>
-      <text x="200" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32">Internal Buf</text>
-      
-      <!-- Buffer Content (Emptying) -->
-      <g transform="translate(150, 80)">
-         <rect x="0" y="0" width="100" height="20" fill="#fff" stroke="#2e7d32"/>
-         <text x="50" y="15" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#9e9e9e">(cleared)</text>
-         <rect x="0" y="20" width="100" height="100" fill="#f5f5f5" stroke="#2e7d32" stroke-dasharray="4 2"/>
+      <!-- User Data Label (Visualized as a Call Frame) -->
+      <g transform="translate(20, 220)">
+        <rect width="180" height="40" rx="10" fill="#ffffff" stroke="#9c27b0" stroke-width="1.5" stroke-dasharray="none"/>
+        <path d="M0 10 Q0 0 10 0 H170 Q180 0 180 10 V18 H0 Z" fill="#f3e5f5"/>
+        <text x="90" y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="bold" fill="#6a1b9a">Stack Frame: main</text>
+        <text x="90" y="32" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#6a1b9a">User App: 高频循环写入</text>
       </g>
-
-      <!-- Arrow Down -->
-      <path d="M200 200 L200 220" stroke="#2e7d32" stroke-width="3" marker-end="url(#arrow-green)"/>
-
-      <!-- Disk (Active) -->
-      <rect x="80" y="220" width="140" height="60" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
-      <text x="150" y="255" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">Disk File</text>
-      
-      <!-- Data on Disk -->
-      <text x="250" y="255" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#4a148c">"hello"</text>
     </g>
 
-    <!-- Definitions -->
+    <!-- Heap Area (Center) -->
+    <g transform="translate(340, 0)">
+      <rect width="320" height="280" rx="12" fill="#e8f5e9" stroke="#e0e0e0" stroke-width="1"/>
+      <rect width="320" height="35" rx="12" fill="#c8e6c9"/>
+      <text x="160" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#2e7d32">Heap</text>
+      
+      <!-- Buffer Box -->
+      <rect x="20" y="55" width="280" height="210" rx="8" fill="#ffffff" stroke="#2e7d32" stroke-width="1.5"/>
+      <text x="160" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#2e7d32">Internal Buffer (8KB Capacity)</text>
+      
+      <!-- Byte Grid -->
+      <g transform="translate(35, 90)">
+        <!-- Row 1: Active Data -->
+        <g fill="#e8f5e9" stroke="#c8e6c9" stroke-width="1">
+          <rect width="25" height="25" rx="3"/><text x="12.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'L'</text>
+          <rect x="28" width="25" height="25" rx="3"/><text x="40.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'o'</text>
+          <rect x="56" width="25" height="25" rx="3"/><text x="68.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'g'</text>
+          <rect x="84" width="25" height="25" rx="3"/><text x="96.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">' '</text>
+          <rect x="112" width="25" height="25" rx="3"/><text x="124.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'l'</text>
+          <rect x="140" width="25" height="25" rx="3"/><text x="152.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'i'</text>
+          <rect x="168" width="25" height="25" rx="3"/><text x="180.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'n'</text>
+          <rect x="196" width="25" height="25" rx="3"/><text x="208.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'e'</text>
+          <rect x="224" width="25" height="25" rx="3"/><text x="236.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">' '</text>
+        </g>
+        <!-- Row 2: Active Data + Transition -->
+        <g transform="translate(0, 28)">
+          <g fill="#e8f5e9" stroke="#c8e6c9" stroke-width="1">
+            <rect width="25" height="25" rx="3"/><text x="12.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'1'</text>
+            <rect x="28" width="25" height="25" rx="3"/><text x="40.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'\n'</text>
+            <rect x="56" width="25" height="25" rx="3"/><text x="68.5" y="16" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#2e7d32" stroke="none">'L'</text>
+          </g>
+          <g fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1">
+            <rect x="84" width="25" height="25" rx="3"/>
+            <rect x="112" width="25" height="25" rx="3"/>
+            <rect x="140" width="25" height="25" rx="3"/>
+            <rect x="168" width="25" height="25" rx="3"/>
+            <rect x="196" width="25" height="25" rx="3"/>
+            <rect x="224" width="25" height="25" rx="3"/>
+          </g>
+        </g>
+        <!-- Rows 3-6: Empty Slots (Dashed) -->
+        <g transform="translate(0, 56)" fill="none" stroke="#eeeeee" stroke-width="1" stroke-dasharray="2 1">
+          <rect width="25" height="25" rx="3"/><rect x="28" width="25" height="25" rx="3"/><rect x="56" width="25" height="25" rx="3"/><rect x="84" width="25" height="25" rx="3"/><rect x="112" width="25" height="25" rx="3"/><rect x="140" width="25" height="25" rx="3"/><rect x="168" width="25" height="25" rx="3"/><rect x="196" width="25" height="25" rx="3"/><rect x="224" width="25" height="25" rx="3"/>
+          <g transform="translate(0, 28)">
+            <rect width="25" height="25" rx="3"/><rect x="28" width="25" height="25" rx="3"/><rect x="56" width="25" height="25" rx="3"/><rect x="84" width="25" height="25" rx="3"/><rect x="112" width="25" height="25" rx="3"/><rect x="140" width="25" height="25" rx="3"/><rect x="168" width="25" height="25" rx="3"/><rect x="196" width="25" height="25" rx="3"/><rect x="224" width="25" height="25" rx="3"/>
+          </g>
+          <g transform="translate(0, 56)">
+            <rect width="25" height="25" rx="3"/><rect x="28" width="25" height="25" rx="3"/><rect x="56" width="25" height="25" rx="3"/><rect x="84" width="25" height="25" rx="3"/><rect x="112" width="25" height="25" rx="3"/><rect x="140" width="25" height="25" rx="3"/><rect x="168" width="25" height="25" rx="3"/><rect x="196" width="25" height="25" rx="3"/><rect x="224" width="25" height="25" rx="3"/>
+          </g>
+          <g transform="translate(0, 84)">
+            <rect width="25" height="25" rx="3"/><rect x="28" width="25" height="25" rx="3"/><rect x="56" width="25" height="25" rx="3"/><rect x="84" width="25" height="25" rx="3"/><rect x="112" width="25" height="25" rx="3"/><rect x="140" width="25" height="25" rx="3"/><rect x="168" width="25" height="25" rx="3"/><rect x="196" width="25" height="25" rx="3"/><rect x="224" width="25" height="25" rx="3"/>
+          </g>
+        </g>
+      </g>
+    </g>
+
+    <!-- Disk Area (Right) -->
+    <g transform="translate(720, 0)">
+      <rect width="220" height="280" rx="12" fill="#eceff1" stroke="#e0e0e0" stroke-width="1"/>
+      <rect width="220" height="35" rx="12" fill="#cfd8dc"/>
+      <text x="110" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="bold" fill="#455a64">Disk</text>
+      
+      <!-- File on Disk -->
+      <rect x="20" y="55" width="180" height="210" rx="8" fill="#ffffff" stroke="#455a64" stroke-width="1.5"/>
+      <text x="110" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="bold" fill="#455a64">logs.txt</text>
+      
+      <g transform="translate(60, 100)">
+        <path d="M0 10 H100 M0 25 H80 M0 40 H90" stroke="#b0bec5" stroke-width="2" stroke-linecap="round"/>
+        <text x="50" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#78909c">大量日志数据</text>
+      </g>
+    </g>
+
+    <!-- Data Flow Arrows -->
+    <!-- Pointer from buf.ptr (Stack) to Heap Buffer (Base Address) -->
+    <path d="M250 105 L375 102.5" fill="none" stroke="#f57c00" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+
+    <!-- Write Arrow: From User App to Buffer (Active Data) -->
+    <circle cx="260" cy="240" r="3" fill="#6a1b9a"/>
+    <path d="M260 240 C310 240, 340 200, 375 130.5" fill="none" stroke="#6a1b9a" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrow-purple)"/>
+    <text x="310" y="255" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#6a1b9a">1. writeln!</text>
+
+    <!-- Flush Arrow: From Buffer to Disk (IO Operation) -->
+    <circle cx="640" cy="130.5" r="3" fill="#2e7d32"/>
+    <path d="M640 130.5 L740 130.5" fill="none" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+    <text x="690" y="155" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="bold" fill="#2e7d32">2. flush</text>
+
     <defs>
-      <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-        <path d="M0,0 L0,6 L9,3 z" fill="#8e24aa" />
+      <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+        <path d="M0,0 L0,10 L9,5 Z" fill="#6a1b9a" />
       </marker>
-      <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-        <path d="M0,0 L0,6 L9,3 z" fill="#2e7d32" />
+      <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+        <path d="M0,0 L0,10 L9,5 Z" fill="#2e7d32" />
+      </marker>
+      <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+        <path d="M0,0 L0,10 L9,5 Z" fill="#f57c00" />
       </marker>
     </defs>
-
   </g>
 </svg>
